@@ -1,40 +1,24 @@
 :root {
-    --primary: #89CFF0;
-    --bg: #F0F7FF;
-    --text: #333;
+    --accent: #89CFF0; /* Pastel Blue */
+    --bg: #FFFFFF;
+    --text: #111;
 }
 
-body {
-    margin: 0;
-    font-family: 'Inter', sans-serif;
-    background-color: var(--bg);
-    color: var(--text);
-    display: flex; 
-    flex-direction: column; 
-    align-items: center;
+body { margin: 0; font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); }
+
+.screen { display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; }
+
+.hero-text { font-size: 80px; line-height: 0.9; margin-bottom: 20px; color: var(--text); }
+
+.sub-text { font-size: 20px; color: #666; max-width: 400px; margin-bottom: 40px; }
+
+.btn-primary { 
+    background: var(--accent); color: white; border: none; padding: 15px 30px; 
+    border-radius: 12px; font-weight: 700; cursor: pointer; box-shadow: 0 10px 20px rgba(137, 207, 240, 0.3);
 }
 
-header { text-align: center; padding: 40px 20px; }
+.btn-secondary { background: transparent; border: 2px solid #eee; padding: 15px 30px; border-radius: 12px; margin-top: 15px; cursor: pointer; }
 
-.screen { padding: 20px; width: 100%; max-width: 800px; display: flex; flex-direction: column; align-items: center; }
-
-.start-btn {
-    padding: 12px 24px; font-size: 18px; font-weight: 600;
-    background: var(--primary); color: white; border: none;
-    border-radius: 50px; cursor: pointer; transition: 0.3s;
-}
-
-.start-btn:hover { opacity: 0.9; }
-
-.controls {
-    background: white; padding: 20px; border-radius: 12px;
-    display: flex; gap: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-}
-
-canvas {
-    border-radius: 16px; margin-top: 30px;
-    background: white; box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-    max-width: 90%; height: auto;
-}
-
-.download-btn { background: var(--primary); color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; }
+/* Editor styles */
+.controls { display: flex; gap: 10px; margin-bottom: 20px; }
+canvas { border-radius: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); max-width: 90%; height: auto; }
