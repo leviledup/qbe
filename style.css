@@ -1,24 +1,51 @@
 :root {
-    --accent: #89CFF0; /* Pastel Blue */
-    --bg: #FFFFFF;
+    --accent: #89CFF0;
+    --bg: #F0F7FF;
     --text: #111;
 }
 
-body { margin: 0; font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); }
+* { box-sizing: border-box; }
 
-.screen { display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; }
-
-.hero-text { font-size: 80px; line-height: 0.9; margin-bottom: 20px; color: var(--text); }
-
-.sub-text { font-size: 20px; color: #666; max-width: 400px; margin-bottom: 40px; }
-
-.btn-primary { 
-    background: var(--accent); color: white; border: none; padding: 15px 30px; 
-    border-radius: 12px; font-weight: 700; cursor: pointer; box-shadow: 0 10px 20px rgba(137, 207, 240, 0.3);
+body { 
+    margin: 0; 
+    font-family: 'Inter', sans-serif; 
+    background: var(--bg); 
+    color: var(--text);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
 }
 
-.btn-secondary { background: transparent; border: 2px solid #eee; padding: 15px 30px; border-radius: 12px; margin-top: 15px; cursor: pointer; }
+.screen { 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    text-align: center;
+    width: 90%;
+    max-width: 1000px;
+}
 
-/* Editor styles */
-.controls { display: flex; gap: 10px; margin-bottom: 20px; }
-canvas { border-radius: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); max-width: 90%; height: auto; }
+.hero-text { font-size: 80px; font-weight: 700; margin-bottom: 5px; }
+.sub-text { font-size: 20px; color: #555; margin-bottom: 40px; }
+
+.controls { 
+    background: white; padding: 15px; border-radius: 16px; 
+    display: flex; gap: 10px; margin-bottom: 20px; 
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+.btn-primary { 
+    background: var(--accent); color: white; border: none; 
+    padding: 12px 24px; border-radius: 12px; font-weight: 700; cursor: pointer; 
+}
+
+.btn-secondary { 
+    background: white; border: 1px solid #ddd; padding: 12px 24px; 
+    border-radius: 12px; cursor: pointer; 
+}
+
+canvas { 
+    border-radius: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); 
+    max-width: 100%; height: auto; background: white;
+}
