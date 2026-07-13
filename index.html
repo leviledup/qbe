@@ -1,1 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Qbe | Minecraft Thumbnail Maker</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <h1>Qbe</h1>
+        <p>Minecraft Thumbnail Maker</p>
+    </header>
+
+    <div class="controls">
+        <input type="file" id="imageLoader" accept="image/*">
+        <input type="text" id="textInput" placeholder="Enter text...">
+        <button onclick="addText()">Add Text</button>
+        <button onclick="downloadImage()" class="download-btn">Download</button>
+    </div>
+
+    <canvas id="thumbCanvas" width="1280" height="720"></canvas>
+
+    <script src="script.js"></script>
+</body>
+</html>
 
