@@ -2,29 +2,41 @@
 
 body { margin: 0; font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); }
 
-/* Topbar */
+/* Topbar - Ensures everything stays in one clean row */
 .topbar { 
     display: flex; justify-content: space-between; align-items: center; 
-    padding: 20px 40px; 
+    padding: 15px 40px; border-bottom: 1px solid rgba(0,0,0,0.05);
 }
-.logo-group { display: flex; align-items: center; gap: 10px; }
-.logo-img { width: 32px; height: 32px; }
-.logo-text { font-weight: 900; font-size: 1.2rem; text-transform: lowercase; }
 
-.nav-group { display: flex; align-items: center; gap: 20px; }
+.logo-group { display: flex; align-items: center; gap: 12px; }
+
+/* Critical Fix: Force the image to stay small and professional */
+.logo-img { 
+    width: 32px; 
+    height: 32px; 
+    object-fit: contain; 
+}
+
+.logo-text { font-weight: 900; font-size: 1.4rem; text-transform: lowercase; }
+
+.nav-group { display: flex; align-items: center; gap: 24px; }
+
+/* Discord Button */
 .discord-btn { 
     background: #5865F2; color: white; padding: 8px 16px; border-radius: 8px; 
-    text-decoration: none; font-weight: 700; font-size: 0.9rem; display: flex; align-items: center; gap: 8px;
+    text-decoration: none; font-weight: 700; font-size: 0.85rem; display: flex; align-items: center; gap: 8px;
 }
-.staircase-menu { display: flex; flex-direction: column; gap: 4px; cursor: pointer; }
-.staircase-menu span { width: 20px; height: 2px; background: var(--text); }
 
-/* Hero Fade */
+/* Staircase Menu */
+.staircase-menu { display: flex; flex-direction: column; gap: 4px; cursor: pointer; }
+.staircase-menu span { width: 22px; height: 2px; background: var(--text); border-radius: 2px; }
+
+/* Hero Section */
 .hero-fade { 
     display: flex; flex-direction: column; justify-content: center; align-items: center; 
-    height: 80vh; animation: fadeIn 1.2s ease-in; 
+    height: 70vh; animation: fadeIn 1.2s ease-in; 
 }
-@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
 .main-title { font-size: 8rem; font-weight: 900; margin: 0; letter-spacing: -5px; text-transform: lowercase; }
 .motto { font-size: 1.2rem; color: #666; margin-top: 0; }
+
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
