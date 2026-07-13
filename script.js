@@ -10,8 +10,8 @@ function showEditor() {
     setTimeout(() => {
         landing.style.display = 'none';
         editor.style.display = 'flex';
-        editor.style.opacity = '1';
-    }, 500);
+        requestAnimationFrame(() => { editor.style.opacity = '1'; });
+    }, 400);
 }
 
 imageLoader.addEventListener('change', (e) => {
@@ -30,9 +30,9 @@ imageLoader.addEventListener('change', (e) => {
 function addText() {
     const text = document.getElementById('textInput').value;
     ctx.fillStyle = "white";
-    ctx.strokeStyle = "#89CFF0";
+    ctx.strokeStyle = "black";
     ctx.lineWidth = 15;
-    ctx.font = "bold 120px Inter, sans-serif";
+    ctx.font = "900 120px Inter, sans-serif";
     ctx.textAlign = "center";
     ctx.strokeText(text, canvas.width / 2, canvas.height / 2);
     ctx.fillText(text, canvas.width / 2, canvas.height / 2);
