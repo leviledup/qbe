@@ -1,27 +1,41 @@
-:root { --bg: #F0F7FF; --blue: #D6E9FF; --text: #050505; }
-body { margin: 0; font-family: 'Inter', sans-serif; background: var(--bg); height: 100vh; overflow: hidden; }
+:root { --bg: #f0f7ff; --text: #050505; }
 
-.background-shapes { position: fixed; inset: 0; z-index: -1; }
-.cube-shape {
-    position: absolute; width: 300px; height: 300px; background: var(--blue);
-    border-radius: 60px; filter: blur(60px); opacity: 0.6; animation: float 8s infinite ease-in-out;
+body { 
+    margin: 0; font-family: 'Inter', sans-serif; background: var(--bg); 
+    height: 100vh; overflow: hidden; 
 }
-.cube-shape:nth-child(1) { top: 10%; left: -50px; }
-.cube-shape:nth-child(2) { bottom: 10%; right: -50px; animation-delay: -4s; }
 
-.topbar { display: flex; justify-content: space-between; align-items: center; padding: 20px; width: 100%; box-sizing: border-box; }
-.logo-group { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+/* Moving background effect */
+.bg-layer {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
+    background: linear-gradient(135deg, #f0f7ff 0%, #d6e9ff 100%);
+    background-size: 200% 200%;
+    animation: moveBg 15s ease infinite;
+}
+@keyframes moveBg {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.topbar { display: flex; justify-content: space-between; align-items: center; padding: 20px; }
+.logo-group { display: flex; align-items: center; gap: 8px; }
 .logo-img { width: 32px; height: 32px; object-fit: contain; }
 .logo-text { font-weight: 900; font-size: 1.2rem; text-transform: lowercase; }
 
 .nav-group { display: flex; align-items: center; gap: 15px; }
-.discord-btn { background: #5865F2; color: #fff; padding: 8px 12px; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 0.8rem; white-space: nowrap; }
-.staircase-menu { display: flex; flex-direction: column; gap: 4px; cursor: pointer; padding: 5px; }
-.staircase-menu span { width: 20px; height: 2px; background: var(--text); border-radius: 2px; }
+.discord-btn { 
+    background: #5865F2; color: #fff; padding: 8px 16px; border-radius: 8px; 
+    text-decoration: none; font-weight: 700; font-size: 0.8rem; 
+}
+.staircase-menu { display: flex; flex-direction: column; gap: 4px; padding: 5px; cursor: pointer; }
+.staircase-menu span { width: 22px; height: 2px; background: var(--text); border-radius: 2px; }
 
-.hero-fade { display: flex; flex-direction: column; justify-content: center; align-items: center; height: calc(100vh - 80px); text-align: center; animation: fadeIn 1.2s ease-in; }
-.main-title { font-size: clamp(4rem, 15vw, 8rem); font-weight: 900; margin: 0; letter-spacing: -4px; text-transform: lowercase; }
-.motto { font-size: 1rem; color: #666; }
+.hero-fade { 
+    display: flex; flex-direction: column; justify-content: center; align-items: center; 
+    height: calc(100vh - 80px); animation: fadeIn 1s ease; 
+}
+.main-title { font-size: 7rem; font-weight: 900; margin: 0; letter-spacing: -5px; }
+.motto { font-size: 1.1rem; color: #555; }
 
-@keyframes float { 0%, 100% { transform: translate(0,0); } 50% { transform: translate(20px, -20px); } }
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
