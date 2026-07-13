@@ -1,12 +1,12 @@
-/*
- * Project: Qbe
- * Copyright (c) 2026 leviledup
- * This project is licensed under the GNU GPLv3.
- */
-
+/* too lazy blablabla ts is mine */
 const canvas = document.getElementById('thumbCanvas');
 const ctx = canvas.getContext('2d');
 const imageLoader = document.getElementById('imageLoader');
+
+function showEditor() {
+    document.getElementById('landingPage').style.display = 'none';
+    document.getElementById('editorPage').style.display = 'flex';
+}
 
 imageLoader.addEventListener('change', (e) => {
     const reader = new FileReader();
