@@ -4,27 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Qbe | Thumbnail Studio</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <div id="landingPage" class="screen">
-        <h1 class="hero-text">Qbe.</h1>
-        <p class="sub-text">Create GFXes of your favourite "qbe" styled game!</p>
+        <div class="hero-wrapper">
+            <h1 class="hero-text">Qbe.</h1>
+            <p class="sub-text">The premium GFX studio for the "qbe" community. Create high-fidelity thumbnails in seconds.</p>
+        </div>
         
-        <div class="button-container">
-            <button onclick="showEditor()" class="btn-primary">Get started →</button>
-            <a href="https://discord.gg/documentary" target="_blank" class="btn-secondary">View community</a>
+        <div class="action-zone">
+            <button onclick="showEditor()" class="btn-main">Create Now →</button>
+            <a href="https://discord.gg/documentary" target="_blank" class="btn-sub">Join Discord</a>
         </div>
     </div>
 
     <div id="editorPage" class="screen" style="display:none; opacity: 0;">
         <div class="controls">
             <input type="file" id="imageLoader" accept="image/*">
-            <input type="text" id="textInput" placeholder="Enter text...">
-            <button onclick="addText()" class="btn-secondary">Apply</button>
-            <button onclick="downloadImage()" class="btn-primary">Download</button>
+            <input type="text" id="textInput" placeholder="Add text...">
+            <button onclick="addText()" class="btn-sub">Apply</button>
+            <button onclick="downloadImage()" class="btn-main">Save</button>
         </div>
         <canvas id="thumbCanvas" width="1280" height="720"></canvas>
     </div>
