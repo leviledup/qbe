@@ -3,8 +3,15 @@ const ctx = canvas.getContext('2d');
 const imageLoader = document.getElementById('imageLoader');
 
 function showEditor() {
-    document.getElementById('landingPage').style.display = 'none';
-    document.getElementById('editorPage').style.display = 'flex';
+    const landing = document.getElementById('landingPage');
+    const editor = document.getElementById('editorPage');
+    
+    landing.style.opacity = '0';
+    setTimeout(() => {
+        landing.style.display = 'none';
+        editor.style.display = 'flex';
+        editor.style.opacity = '1';
+    }, 500);
 }
 
 imageLoader.addEventListener('change', (e) => {
