@@ -9,8 +9,8 @@ body { margin: 0; font-family: 'Inter', sans-serif; background: var(--bg); heigh
 .cube-shape:nth-child(1) { top: 10%; left: -50px; }
 .cube-shape:nth-child(2) { bottom: 10%; right: -50px; animation-delay: -4s; }
 
-.topbar { display: flex; justify-content: space-between; align-items: center; padding: 20px; }
-.logo-group { display: flex; align-items: center; gap: 10px; }
+.topbar { display: flex; justify-content: space-between; align-items: center; padding: 20px; width: 100%; box-sizing: border-box; }
+.logo-group { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
 .logo-img { width: 32px; height: 32px; object-fit: contain; }
 .logo-text { font-weight: 900; font-size: 1.2rem; text-transform: lowercase; }
 
