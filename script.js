@@ -1,4 +1,3 @@
-/* too lazy blablabla ts is mine */
 const canvas = document.getElementById('thumbCanvas');
 const ctx = canvas.getContext('2d');
 const imageLoader = document.getElementById('imageLoader');
@@ -12,9 +11,7 @@ imageLoader.addEventListener('change', (e) => {
     const reader = new FileReader();
     reader.onload = (event) => {
         const img = new Image();
-        img.onload = () => {
-            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-        };
+        img.onload = () => { ctx.drawImage(img, 0, 0, 1280, 720); };
         img.src = event.target.result;
     };
     reader.readAsDataURL(e.target.files[0]);
@@ -23,18 +20,17 @@ imageLoader.addEventListener('change', (e) => {
 function addText() {
     const text = document.getElementById('textInput').value;
     ctx.fillStyle = "white";
-    ctx.strokeStyle = "black";
-    ctx.lineWidth = 10;
-    ctx.font = "bold 100px sans-serif";
+    ctx.strokeStyle = "#89CFF0";
+    ctx.lineWidth = 15;
+    ctx.font = "bold 120px Inter";
     ctx.textAlign = "center";
-    
-    ctx.strokeText(text, canvas.width / 2, canvas.height / 2);
-    ctx.fillText(text, canvas.width / 2, canvas.height / 2);
+    ctx.strokeText(text, 640, 360);
+    ctx.fillText(text, 640, 360);
 }
 
 function downloadImage() {
     const link = document.createElement('a');
-    link.download = 'qbe-thumbnail.png';
+    link.download = 'qbe-thumb.png';
     link.href = canvas.toDataURL('image/png');
     link.click();
 }
