@@ -1,36 +1,27 @@
-:root { --bg: #F0F7FF; --light-blue: #D6E9FF; --text: #050505; }
+:root { --bg: #F0F7FF; --blue: #D6E9FF; --text: #050505; }
+body { margin: 0; font-family: 'Inter', sans-serif; background: var(--bg); height: 100vh; overflow: hidden; }
 
-body { margin: 0; font-family: 'Inter', sans-serif; background: var(--bg); overflow-x: hidden; height: 100vh; }
-
-.background-shapes { 
-    position: fixed; inset: 0; z-index: -1; overflow: hidden; 
-}
+.background-shapes { position: fixed; inset: 0; z-index: -1; }
 .cube-shape {
-    position: absolute; width: 300px; height: 300px; background: var(--light-blue);
-    border-radius: 60px; filter: blur(60px); opacity: 0.6;
-    animation: float 8s infinite ease-in-out;
+    position: absolute; width: 300px; height: 300px; background: var(--blue);
+    border-radius: 60px; filter: blur(60px); opacity: 0.6; animation: float 8s infinite ease-in-out;
 }
 .cube-shape:nth-child(1) { top: 10%; left: -50px; }
 .cube-shape:nth-child(2) { bottom: 10%; right: -50px; animation-delay: -4s; }
 
-.topbar { 
-    display: flex; justify-content: space-between; align-items: center; padding: 20px;
-}
-.logo-img { width: 32px; height: 32px; }
-.logo-text { font-weight: 900; font-size: 1.2rem; }
-.discord-btn { background: #5865F2; color: white; padding: 8px 16px; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 0.8rem; }
-.staircase-menu { display: flex; flex-direction: column; gap: 4px; cursor: pointer; }
-.staircase-menu span { width: 22px; height: 2px; background: var(--text); }
+.topbar { display: flex; justify-content: space-between; align-items: center; padding: 20px; }
+.logo-group { display: flex; align-items: center; gap: 10px; }
+.logo-img { width: 32px; height: 32px; object-fit: contain; }
+.logo-text { font-weight: 900; font-size: 1.2rem; text-transform: lowercase; }
 
-.hero-fade { 
-    display: flex; flex-direction: column; justify-content: center; align-items: center; 
-    height: calc(100vh - 80px); 
-    text-align: center;
-}
-.main-title { font-size: 6rem; font-weight: 900; margin: 0; letter-spacing: -4px; }
+.nav-group { display: flex; align-items: center; gap: 15px; }
+.discord-btn { background: #5865F2; color: #fff; padding: 8px 12px; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 0.8rem; white-space: nowrap; }
+.staircase-menu { display: flex; flex-direction: column; gap: 4px; cursor: pointer; padding: 5px; }
+.staircase-menu span { width: 20px; height: 2px; background: var(--text); border-radius: 2px; }
+
+.hero-fade { display: flex; flex-direction: column; justify-content: center; align-items: center; height: calc(100vh - 80px); text-align: center; animation: fadeIn 1.2s ease-in; }
+.main-title { font-size: clamp(4rem, 15vw, 8rem); font-weight: 900; margin: 0; letter-spacing: -4px; text-transform: lowercase; }
 .motto { font-size: 1rem; color: #666; }
 
-@keyframes float {
-    0%, 100% { transform: translate(0, 0); }
-    50% { transform: translate(20px, -20px); }
-}
+@keyframes float { 0%, 100% { transform: translate(0,0); } 50% { transform: translate(20px, -20px); } }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
