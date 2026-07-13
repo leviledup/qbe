@@ -3,29 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>qbe BETA | Make Minecraft GFX like never before</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <title>Qbe | Thumbnail Studio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <header>
-        <h1>Qbe</h1>
-        <p>Minecraft GFX Studio</p>
-    </header>
-
     <div id="landingPage" class="screen">
-        <h2>Create Stunning Thumbnails and/or Profile Pictures</h2>
-        <p>Fast, simple, and professional.</p>
-        <button onclick="showEditor()" class="start-btn">Start Creating</button>
+        <h1 class="hero-text">create.<br>craft.<br>Qbe.</h1>
+        <p class="sub-text">The minimalist Minecraft thumbnail studio for creators.</p>
+        
+        <button onclick="showEditor()" class="btn-primary">Get started →</button>
+        <button class="btn-secondary">view community</button>
     </div>
 
     <div id="editorPage" class="screen" style="display:none;">
         <div class="controls">
             <input type="file" id="imageLoader" accept="image/*">
-            <input type="text" id="textInput" placeholder="Enter text...">
-            <button onclick="addText()">Add Text</button>
-            <button onclick="downloadImage()" class="download-btn">Download</button>
+            <input type="text" id="textInput" placeholder="Thumbnail text...">
+            <button onclick="addText()">Apply</button>
+            <button onclick="downloadImage()" class="btn-primary">Download</button>
         </div>
         <canvas id="thumbCanvas" width="1280" height="720"></canvas>
     </div>
