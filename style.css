@@ -1,18 +1,40 @@
-body { 
-    display: flex; flex-direction: column; align-items: center; 
-    font-family: 'Segoe UI', sans-serif; background: #1a1a1a; color: #fff; 
+:root {
+    --primary: #89CFF0;
+    --bg: #F0F7FF;
+    --text: #333;
 }
 
-header { text-align: center; margin: 20px 0; }
-
-.controls { 
-    background: #333; padding: 15px; border-radius: 10px; 
-    display: flex; gap: 10px; align-items: center; 
+body {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg);
+    color: var(--text);
+    display: flex; 
+    flex-direction: column; 
+    align-items: center;
 }
 
-canvas { 
-    border: 4px solid #444; margin-top: 20px; 
-    background: #000; max-width: 90vw; height: auto;
+header { text-align: center; padding: 40px 20px; }
+
+.screen { padding: 20px; width: 100%; max-width: 800px; display: flex; flex-direction: column; align-items: center; }
+
+.start-btn {
+    padding: 12px 24px; font-size: 18px; font-weight: 600;
+    background: var(--primary); color: white; border: none;
+    border-radius: 50px; cursor: pointer; transition: 0.3s;
 }
 
-.download-btn { background: #4CAF50; color: white; border: none; cursor: pointer; padding: 10px; }
+.start-btn:hover { opacity: 0.9; }
+
+.controls {
+    background: white; padding: 20px; border-radius: 12px;
+    display: flex; gap: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+canvas {
+    border-radius: 16px; margin-top: 30px;
+    background: white; box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    max-width: 90%; height: auto;
+}
+
+.download-btn { background: var(--primary); color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; }
