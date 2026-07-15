@@ -1,2 +1,2 @@
 # qbe
-QBE is a website-app which makes Minecraft thumbnail creating far easier than it ever was. Overpriced Fiverr commissions? Say not anymore!
+qbe is a website full of tools to make content creation a step easier and potentially gives the user 1-2 more minutes of sleeping on their fat fucking ass.
