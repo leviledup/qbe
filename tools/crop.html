@@ -1,28 +1,84 @@
 <!DOCTYPE html>
-<html>
-<head><link rel="stylesheet" href="../style.css"></head>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Crop Helper | qbe.</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
 <body>
     <div class="grid-bg"></div>
+
     <nav class="topbar">
-        <a href="../index.html" class="logo-text" style="text-decoration:none; color:inherit;">qbe</a>
-        <div class="staircase-menu" id="menuBtn"><span></span><span></span><span></span></div>
+        <a href="../index.html" class="logo-text">qbe</a>
+        <div class="staircase-menu" id="menuBtn">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
     </nav>
 
-    <main style="text-align:center; padding: 20px;">
+    <main class="tool-container">
         <h2>Smart Crop Helper</h2>
+        <p class="tool-subtitle">Upload assets to check your padding composition against app interface masks.</p>
+        
+        <label class="file-upload-btn" for="imageInput">
+            Choose Asset Image
+        </label>
         <input type="file" id="imageInput" accept="image/*">
+
         <div class="preview-wrapper">
-            <img id="preview" style="width:100%; height:100%; object-fit:cover;">
-            <div class="safe-zone-overlay">SAFE ZONE</div>
+            <img id="preview" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'><rect width='100%' height='100%' fill='%231e293b'/></svg>" alt="Preview Frame">
+            
+            <div class="safe-zone-overlay">
+                <div class="ui-top-shadow">
+                    <span>Following</span>
+                    <span style="border-bottom: 2px solid #fff; padding-bottom: 2px;">For You</span>
+                </div>
+                
+                <div class="ui-side-icons">
+                    <div class="ui-icon-circle profile"></div>
+                    <div class="ui-icon-circle"></div>
+                    <div class="ui-icon-circle"></div>
+                    <div class="ui-icon-circle"></div>
+                </div>
+
+                <div class="ui-bottom-shadow">
+                    <div class="username">@creator_brand</div>
+                    <div class="caption">Important typography, graphic assets, or lower titles shouldn't drop under this zone profile...</div>
+                </div>
+
+                <div class="safe-box-outline"></div>
+            </div>
         </div>
     </main>
 
+    <div id="toolDrawer" class="tool-drawer">
+        <div class="drawer-header">
+            <h2>Studio Tools</h2>
+            <span class="close-btn" id="closeDrawer">✕</span>
+        </div>
+        <div class="tool-grid">
+            <a href="crop.html" class="tool-card">Smart Crop Helper</a>
+            <a href="#" class="tool-card" style="opacity: 0.4; pointer-events: none;">Color Picker (Soon)</a>
+            <a href="#" class="tool-card" style="opacity: 0.4; pointer-events: none;">Script Timer (Soon)</a>
+        </div>
+    </div>
+
     <script src="../script.js"></script>
     <script>
-        document.getElementById('imageInput').addEventListener('change', function(e) {
-            const reader = new FileReader();
-            reader.onload = (event) => { document.getElementById('preview').src = event.target.result; };
-            reader.readAsDataURL(e.target.files[0]);
+        const imageInput = document.getElementById('imageInput');
+        const preview = document.getElementById('preview');
+
+        imageInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    preview.src = event.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
         });
     </script>
 </body>
