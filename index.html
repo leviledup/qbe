@@ -1,19 +1,43 @@
 <!DOCTYPE html>
-<html>
-<head><link rel="stylesheet" href="style.css"></head>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>qbe. | studio</title>
+    <link rel="stylesheet" href="style.css">
+</head>
 <body>
     <div class="grid-bg"></div>
+
     <nav class="topbar">
-        <span class="logo-text">qbe</span>
-        <div class="staircase-menu" id="menuBtn"><span></span><span></span><span></span></div>
+        <a href="index.html" class="logo-text">qbe</a>
+        <div class="nav-group">
+            <a href="https://discord.gg/qbe" target="_blank" class="discord-btn">Join Discord</a>
+            <div class="staircase-menu" id="menuBtn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
     </nav>
 
+    <main class="hero-fade">
+        <h1 class="main-title">qbe</h1>
+        <p class="motto">Professional tools for simple creators.</p>
+    </main>
+
     <div id="toolDrawer" class="tool-drawer">
-        <span class="close-btn" id="closeDrawer">✕</span>
+        <div class="drawer-header">
+            <h2>Studio Tools</h2>
+            <span class="close-btn" id="closeDrawer">✕</span>
+        </div>
         <div class="tool-grid">
             <a href="tools/crop.html" class="tool-card">Smart Crop Helper</a>
+            <a href="#" class="tool-card" style="opacity: 0.4; pointer-events: none;">Color Picker (Soon)</a>
+            <a href="#" class="tool-card" style="opacity: 0.4; pointer-events: none;">Script Timer (Soon)</a>
         </div>
     </div>
+
+    <script src="script.js"></script>
 </body>
-<script src="script.js"></script>
 </html>
