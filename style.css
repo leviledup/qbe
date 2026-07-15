@@ -20,7 +20,7 @@ body {
     height: 100vh;
     width: 100vw;
     overflow-x: hidden;
-    overflow-y: auto; /* Allows smooth scrolling down through profiles */
+    overflow-y: auto;
     position: relative;
 }
 
@@ -117,13 +117,13 @@ body {
 .page-container {
     max-width: 600px;
     margin: 0 auto;
-    padding: 20px 24px 80px; /* Extra bottom breathing room */
+    padding: 20px 24px 80px;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-/* Clean Divider Rules matching the sketches */
+/* Clean Divider Rules */
 .divider {
     width: 85%;
     border: none;
@@ -176,36 +176,61 @@ body {
     transform: translateX(4px);
 }
 
-/* Profile Grid Styles */
+/* --- THE FIX: Force columns to allow shrinking below image min-content sizes --- */
 .team-section {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); 
     gap: 30px;
     width: 100%;
     max-width: 440px;
     margin: 0 auto;
 }
 
+/* --- THE FIX: Block card flex items from expanding beyond parent boundary --- */
 .profile-card {
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.2s;
+    min-width: 0; 
 }
 
+/* --- THE FIX: Explicitly lock the container size to 90px --- */
 .avatar-holder {
     width: 90px;
     height: 90px;
+    min-width: 90px;
+    min-height: 90px;
+    flex-shrink: 0;
     margin-bottom: 12px;
-    transition: transform 0.2s;
-}
-.profile-card:hover .avatar-holder {
-    transform: scale(1.08);
+    border-radius: 50%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 3px solid transparent;
+    transition: border-color 0.2s, transform 0.2s;
+    background-color: rgba(137, 207, 240, 0.1);
+    position: relative;
 }
 
-.avatar-svg {
+.profile-card:hover .avatar-holder {
+    transform: scale(1.08);
+    border-color: var(--primary);
+}
+
+/* --- THE FIX: Circular crop the image and constrain it to container limits --- */
+.avatar-img {
     width: 100%;
     height: 100%;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover;
+    border-radius: 50%; /* Direct rounding fixes Safari & mobile WebView overflow clipping */
+    display: block;
 }
 
 .profile-name {
@@ -213,6 +238,10 @@ body {
     font-weight: 800;
     color: var(--text);
     margin-bottom: 2px;
+}
+
+.profile-card:hover .profile-name {
+    color: var(--primary);
 }
 
 .profile-role {
@@ -251,7 +280,7 @@ body {
     width: 100%;
     max-width: 380px;
     height: 100%;
-    background-color: #ffffff !important; /* Forces solid background to prevent element overlap bleed */
+    background-color: #ffffff !important;
     box-shadow: -10px 0 35px rgba(0,0,0,0.12);
     z-index: 1000;
     transform: translateX(100%);
