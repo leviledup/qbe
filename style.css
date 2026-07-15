@@ -1,34 +1,26 @@
 :root { --bg: #F0F7FF; --text: #050505; --grid-color: rgba(137, 207, 240, 0.4); }
+body { margin: 0; font-family: 'Inter', sans-serif; background: var(--bg); height: 100vh; overflow: auto; }
 
-body { margin: 0; font-family: 'Inter', sans-serif; background: var(--bg); height: 100vh; overflow: hidden; isolation: isolate; }
+/* Grid Background */
+.grid-bg { position: fixed; inset: -50%; width: 200%; height: 200%; z-index: -1; background-image: linear-gradient(var(--grid-color) 1px, transparent 1px), linear-gradient(90deg, var(--grid-color) 1px, transparent 1px); background-size: 40px 40px; }
 
-.grid-bg { position: fixed; inset: -50%; width: 200%; height: 200%; z-index: 0; background-image: linear-gradient(var(--grid-color) 1px, transparent 1px), linear-gradient(90deg, var(--grid-color) 1px, transparent 1px); background-size: 40px 40px; animation: moveGrid 20s linear infinite; }
-@keyframes moveGrid { from { transform: translate(-20px, -20px); } to { transform: translate(20px, 20px); } }
-
-.topbar { position: relative; z-index: 10; display: flex; justify-content: space-between; align-items: center; padding: 20px; }
-.logo-group { display: flex; align-items: center; gap: 8px; }
-.logo-img { width: 32px; height: 32px; object-fit: contain; }
-.logo-text { font-weight: 900; font-size: 1.2rem; text-transform: lowercase; }
-
-.nav-group { display: flex; align-items: center; gap: 15px; }
+/* Navigation */
+.topbar { display: flex; justify-content: space-between; align-items: center; padding: 20px 40px; }
+.logo-text { font-weight: 900; font-size: 1.5rem; text-transform: lowercase; }
 .discord-btn { background: #5865F2; color: #fff; padding: 8px 16px; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 0.8rem; }
-.staircase-menu { display: flex; flex-direction: column; gap: 4px; padding: 5px; cursor: pointer; }
-.staircase-menu span { width: 22px; height: 2px; background: var(--text); border-radius: 2px; }
 
-.hero-fade { 
-    position: absolute; top: 30%; left: 50%; transform: translate(-50%, -50%);
-    z-index: 5; text-align: center; width: 90%;
-    padding: 30px; /* Breathing room for the text */
-    animation: fadeIn 1.2s ease; 
-}
+/* Main Content */
+.hero-fade { text-align: center; padding: 60px 20px; }
+.main-title { font-size: 6rem; font-weight: 900; margin: 0; letter-spacing: -4px; }
+.motto { font-size: 1.1rem; color: #555; margin-bottom: 40px; }
 
-.main-title { font-size: 5.5rem; font-weight: 900; margin: 0; letter-spacing: -4px; }
-.motto { font-size: 1rem; color: #555; margin-top: 10px; }
+/* Tool Grid */
+.tool-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; max-width: 800px; margin: 0 auto; }
+.tool-card { padding: 30px; background: #fff; border: 1px solid #e0e0e0; border-radius: 16px; text-decoration: none; color: var(--text); font-weight: 600; transition: transform 0.2s; }
+.tool-card:hover { transform: translateY(-5px); border-color: #5865F2; }
 
-.tool-grid { display: grid; grid-template-columns: 1fr; gap: 15px; margin-top: 40px; }
-.tool-card { 
-    padding: 22px; background: #fff; border: 1px solid #e0e0e0; 
-    border-radius: 16px; cursor: pointer; font-weight: 600; text-align: left;
-    transition: all 0.2s ease;
-}
-.tool-card:hover { border-color: #5865F2; transform: translateX(5px); }
+/* Tool Page Specifics */
+.tool-page { text-align: center; padding: 40px; }
+.preview-wrapper { position: relative; width: 300px; height: 450px; background: #ddd; margin: 30px auto; border-radius: 12px; overflow: hidden; }
+#preview { width: 100%; height: 100%; object-fit: cover; }
+.safe-zone-overlay { position: absolute; top: 15%; bottom: 15%; left: 10%; right: 10%; border: 2px dashed #ff4757; pointer-events: none; display: flex; justify-content: center; align-items: center; color: #ff4757; font-weight: bold; background: rgba(255, 71, 87, 0.1); }
