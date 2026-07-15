@@ -7,8 +7,10 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <!-- Animated Grid Background -->
     <div class="grid-bg"></div>
 
+    <!-- Topbar Navigation -->
     <nav class="topbar">
         <a href="index.html" class="logo-group">
             <img src="qbe.png" alt="qbe logo" class="logo-img" onerror="this.style.display='none'">
@@ -24,8 +26,10 @@
         </div>
     </nav>
 
+    <!-- Main Content Stream (Scrollable) -->
     <main class="page-container">
         
+        <!-- Hero Section -->
         <section class="hero-section">
             <h1 class="main-title">qbe</h1>
             <button class="cta-pill" id="checkToolsBtn">
@@ -35,18 +39,21 @@
 
         <hr class="divider">
 
+        <!-- Team Profiles Section -->
         <section class="team-section">
+            <!-- Profile 1: Levi -->
             <a href="https://www.youtube.com/@leviledup" target="_blank" class="profile-card">
                 <div class="avatar-holder">
-                    <img src="levi.png" alt="Levi" class="avatar-img" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'><circle cx=\'50\' cy=\'50\' r=\'48\' fill=\'%2310b981\' fill-opacity=\'0.15\' stroke=\'%2310b981\' stroke-width=\'3\'/><path d=\'M50 25 L75 38 L75 62 L50 75 L25 62 L25 38 Z\' fill=\'none\' stroke=\'%2310b981\' stroke-width=\'4\' stroke-linejoin=\'round\'/><path d=\'M50 25 L50 75 M50 50 L25 38 M50 50 L75 38\' fill=\'none\' stroke=\'%2310b981\' stroke-width=\'3\'/></svg>'">
+                    <img src="levi.png" alt="Levi" class="avatar-img">
                 </div>
                 <h3 class="profile-name">Levi</h3>
                 <p class="profile-role">Founder</p>
             </a>
 
+            <!-- Profile 2: iLost -->
             <a href="https://ilost-artz404.vercel.app/" target="_blank" class="profile-card">
                 <div class="avatar-holder">
-                    <img src="ilost.png" alt="iLost" class="avatar-img" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'><circle cx=\'50\' cy=\'50\' r=\'48\' fill=\'%238b5cf6\' fill-opacity=\'0.15\' stroke=\'%238b5cf6\' stroke-width=\'3\'/><path d=\'M50 20 L75 32 L75 68 L50 80 L25 68 L25 32 Z M25 32 L50 45 L75 32 M50 45 L50 80\' fill=\'none\' stroke=\'%238b5cf6\' stroke-width=\'4\' stroke-linejoin=\'round\'/><rect x=\'40\' y=\'52\' width=\'20\' height=\'15\' rx=\'3\' fill=\'none\' stroke=\'%238b5cf6\' stroke-width=\'3\'/></svg>'">
+                    <img src="ilost.png" alt="iLost" class="avatar-img">
                 </div>
                 <h3 class="profile-name">iLost</h3>
                 <p class="profile-role">Contributor</p>
@@ -55,14 +62,16 @@
 
         <hr class="divider">
 
+        <!-- "What is this?" Explainer Section -->
         <section class="about-section">
             <h2 class="about-title">What is this?</h2>
             <p class="about-text">
-                qbe is a minimal, ultra-fast workspace built for creators who value simplicity. No BS, no complex configurations. Just clean, responsive web utilities designed to keep your focus on creating.
+                qbe is a minimal, ultra-fast workspace built for creators who value simplicity. No bloated software, no complex configurations—just clean, responsive web utilities designed to keep your focus on creating.
             </p>
         </section>
     </main>
 
+    <!-- Side Menu Drawer Panel (Safe & Opaque) -->
     <div id="toolDrawer" class="tool-drawer">
         <div class="drawer-header">
             <h2>Studio Tools</h2>
