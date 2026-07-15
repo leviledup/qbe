@@ -3,6 +3,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const closeBtn = document.getElementById('closeDrawer');
     const drawer = document.getElementById('toolDrawer');
 
-    if (menuBtn) menuBtn.addEventListener('click', () => drawer.classList.add('active'));
-    if (closeBtn) closeBtn.addEventListener('click', () => drawer.classList.remove('active'));
+    if (menuBtn && drawer) {
+        menuBtn.addEventListener('click', () => {
+            drawer.classList.add('active');
+        });
+    }
+
+    if (closeBtn && drawer) {
+        closeBtn.addEventListener('click', () => {
+            drawer.classList.remove('active');
+        });
+    }
 });
