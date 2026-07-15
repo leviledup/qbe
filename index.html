@@ -1,32 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Qbe. | Professional Tools</title>
-    <link rel="stylesheet" href="style.css">
-</head>
+<html>
+<head><link rel="stylesheet" href="style.css"></head>
 <body>
     <div class="grid-bg"></div>
-
     <nav class="topbar">
-        <div class="logo-group">
-            <span class="logo-text">qbe</span>
-        </div>
-        <div class="nav-group">
-            <a href="https://discord.gg/qbe" target="_blank" class="discord-btn">Join Discord</a>
-        </div>
+        <span class="logo-text">qbe</span>
+        <div class="staircase-menu" id="menuBtn"><span></span><span></span><span></span></div>
     </nav>
 
-    <main class="hero-fade">
-        <h1 class="main-title">qbe</h1>
-        <p class="motto">Professional tools for simple creators.</p>
-        
+    <div id="toolDrawer" class="tool-drawer">
+        <span class="close-btn" id="closeDrawer">✕</span>
         <div class="tool-grid">
             <a href="tools/crop.html" class="tool-card">Smart Crop Helper</a>
-            <a href="#" class="tool-card">Color Picker</a>
-            <a href="#" class="tool-card">Script Timer</a>
         </div>
-    </main>
+    </div>
 </body>
+<script src="script.js"></script>
 </html>
