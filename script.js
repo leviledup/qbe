@@ -1,25 +1,37 @@
 document.addEventListener('DOMContentLoaded', () => {
     const menuBtn = document.getElementById('menuBtn');
+    const checkToolsBtn = document.getElementById('checkToolsBtn');
     const closeBtn = document.getElementById('closeDrawer');
     const drawer = document.getElementById('toolDrawer');
 
-    if (menuBtn && drawer) {
-        menuBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            drawer.classList.add('active');
-        });
-    }
+    // Drawer opener function
+    const openDrawer = (e) => {
+        e.stopPropagation();
+        if (drawer) drawer.classList.add('active');
+    };
 
-    if (closeBtn && drawer) {
-        closeBtn.addEventListener('click', () => {
-            drawer.classList.remove('active');
-        });
-    }
+    // Drawer closer function
+    const closeDrawer = () => {
+        if (drawer) drawer.classList.remove('active');
+    };
 
-    // Auto close drawer panel if user taps outside of it
+    // Hook up both triggers
+    if (menuBtn) menuBtn.addEventListener('click', openDrawer);
+    if (checkToolsBtn) checkToolsBtn.addEventListener('click', openDrawer);
+    
+    // Close on click of Close Button
+    if (closeBtn) closeBtn.addEventListener('click', closeDrawer);
+
+    // Close automatically when user taps outside the panel space
     document.addEventListener('click', (e) => {
-        if (drawer && drawer.classList.contains('active') && !drawer.contains(e.target) && e.target !== menuBtn) {
-            drawer.classList.remove('active');
+        if (drawer && drawer.classList.contains('active')) {
+            const clickedInsideDrawer = drawer.contains(e.target);
+            const clickedMenuBtn = menuBtn && menuBtn.contains(e.target);
+            const clickedCtaBtn = checkToolsBtn && checkToolsBtn.contains(e.target);
+            
+            if (!clickedInsideDrawer && !clickedMenuBtn && !clickedCtaBtn) {
+                closeDrawer();
+            }
         }
     });
 });
