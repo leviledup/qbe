@@ -5,19 +5,24 @@
     --primary: #5865F2;
 }
 
-* { box-sizing: border-box; }
+/* Hard CSS Reset to stop mobile browser styling overrides */
+* { 
+    box-sizing: border-box; 
+    margin: 0; 
+    padding: 0;
+}
 
 body {
-    margin: 0;
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
     background: var(--bg);
     color: var(--text);
     height: 100vh;
+    width: 100vw;
     overflow: hidden;
     position: relative;
 }
 
-/* Fluid Moving Grid Background */
+/* Seamless Grid Background Animation */
 .grid-bg {
     position: fixed;
     inset: -50%;
@@ -36,68 +41,257 @@ body {
     to { transform: translate(40px, 40px); }
 }
 
-/* Topbar Navigation Header */
+/* Navigation Header bar styling */
 .topbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 24px 32px;
+    padding: 20px;
     position: relative;
     z-index: 10;
+    width: 100%;
+}
+
+.logo-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    color: inherit;
+}
+
+.logo-img {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
 }
 
 .logo-text {
     font-weight: 900;
-    font-size: 1.5rem;
+    font-size: 1.4rem;
     text-transform: lowercase;
     letter-spacing: -1px;
-    text-decoration: none;
-    color: var(--text);
 }
 
 .nav-group {
     display: flex;
     align-items: center;
-    gap: 20px;
+    gap: 15px;
 }
 
 .discord-btn {
     background: var(--primary);
-    color: #fff;
-    padding: 10px 18px;
-    border-radius: 10px;
+    color: #ffffff !important;
+    padding: 8px 16px;
+    border-radius: 8px;
     text-decoration: none;
     font-weight: 700;
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     transition: opacity 0.2s;
 }
 
-.discord-btn:hover { opacity: 0.9; }
-
-/* Hamburger Icon Structure */
+/* Mobile Adaptive Hamburger Menu */
 .staircase-menu {
     display: flex;
     flex-direction: column;
-    gap: 5px;
-    padding: 8px;
+    gap: 4px;
+    padding: 6px;
     cursor: pointer;
 }
 
 .staircase-menu span {
-    width: 24px;
+    width: 22px;
     height: 2px;
     background: var(--text);
     border-radius: 2px;
 }
 
-/* Landing Page Hero Section */
+/* Fluid Hero Center Text Section */
 .hero-fade {
     position: absolute;
     top: 45%;
     left: 50%;
     transform: translate(-50%, -50%);
     text-align: center;
-    width: 90%;
+    width: 100%;
+    padding: 0 24px;
+    z-index: 5;
+}
+
+/* Dynamically scales text so it never clips or wraps terribly on mobile */
+.main-title {
+    font-size: clamp(4rem, 18vw, 7.5rem);
+    font-weight: 900;
+    margin: 0;
+    letter-spacing: -4px;
+    line-height: 0.85;
+}
+
+.motto {
+    font-size: clamp(0.95rem, 4vw, 1.15rem);
+    color: #444;
+    margin-top: 12px;
+    font-weight: 500;
+}
+
+/* Slide-In Side Drawer Panel Layout */
+.tool-drawer {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 100%;
+    max-width: 400px;
+    height: 100%;
+    background-color: #ffffff !important; /* Thick white overlay blocks out elements underneath */
+    box-shadow: -10px 0 30px rgba(0,0,0,0.1);
+    z-index: 9999;
+    transform: translateX(100%);
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    padding: 30px 24px;
+    display: flex;
+    flex-direction: column;
+}
+
+.tool-drawer.active {
+    transform: translateX(0);
+}
+
+.drawer-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.drawer-header h2 { 
+    margin: 0; 
+    font-size: 1.6rem; 
+    font-weight: 800; 
+}
+
+.close-btn {
+    font-size: 1.75rem;
+    cursor: pointer;
+    font-weight: bold;
+    color: #94a3b8;
+}
+
+.tool-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* Clean, fully responsive button layout styles */
+.tool-card {
+    display: block;
+    padding: 18px;
+    background: var(--bg);
+    border: 1px solid #cbd5e1;
+    border-radius: 12px;
+    text-decoration: none !important;
+    color: var(--text) !important;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: all 0.2s ease;
+}
+
+.tool-card:hover {
+    border-color: var(--primary);
+    background: #ffffff;
+    transform: translateX(-4px);
+}
+
+/* Crop Tool Workspace Page Container */
+.tool-container {
     max-width: 600px;
-    padding: 20px;
-    z-index
+    margin: 20px auto 0;
+    text-align: center;
+    padding: 0 20px;
+    z-index: 5;
+    position: relative;
+}
+
+.tool-container h2 { font-size: 1.8rem; font-weight: 800; margin-bottom: 6px; }
+.tool-subtitle { color: #64748b; margin-bottom: 20px; font-size: 0.9rem; }
+
+.file-upload-btn {
+    background: #ffffff;
+    border: 1px solid #cbd5e1;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    display: inline-block;
+    margin-bottom: 20px;
+}
+
+input[type="file"] { display: none; }
+
+/* Phone Mockup Screen Framework Aspect Ratio */
+.preview-wrapper {
+    position: relative;
+    width: 280px;
+    height: 497px;
+    background: #0f172a;
+    margin: 0 auto;
+    border-radius: 28px;
+    overflow: hidden;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+    border: 6px solid #1e293b;
+}
+
+#preview {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* Social System Interface UI Mockup */
+.safe-zone-overlay {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.ui-top-shadow {
+    height: 70px;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.5), transparent);
+    padding: 12px;
+    color: rgba(255,255,255,0.8);
+    font-size: 0.75rem;
+    font-weight: 600;
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+}
+
+.ui-side-icons {
+    position: absolute;
+    right: 8px;
+    bottom: 100px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.ui-icon-circle {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.2);
+    border: 1px dashed rgba(255,255,255,0.4);
+}
+.ui-icon-circle.profile {
+    border: 1px solid #ffffff;
+    background: rgba(255,255,255,0.5);
+}
+
+.ui-bottom-shadow {
+    height: 100px;
+    background: linear-gradient(to top, rgba(0,0,0,0.6), transparent);
+    padding: 12
