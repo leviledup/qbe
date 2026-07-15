@@ -3,58 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Qbe.</title>
+    <title>Qbe. | Professional Tools</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
     <div class="grid-bg"></div>
 
     <nav class="topbar">
         <div class="logo-group">
-            <img src="qbe.png" alt="Logo" class="logo-img">
             <span class="logo-text">qbe</span>
         </div>
         <div class="nav-group">
             <a href="https://discord.gg/qbe" target="_blank" class="discord-btn">Join Discord</a>
-            <div class="staircase-menu" id="menuBtn"><span></span><span></span><span></span></div>
         </div>
     </nav>
 
     <main class="hero-fade">
         <h1 class="main-title">qbe</h1>
         <p class="motto">Professional tools for simple creators.</p>
-    </main>
-
-    <div id="toolDrawer" class="tool-drawer">
-        <div class="drawer-header">
-            <span class="close-btn" id="closeDrawer">✕</span>
-        </div>
         
-        <div class="drawer-content" id="drawerContent">
-            <!-- Main Menu View -->
-            <div id="mainMenu">
-                <h2>Studio Tools</h2>
-                <div class="tool-grid">
-                    <button class="tool-card" onclick="openTool('crop')">Smart Crop Helper</button>
-                    <button class="tool-card" onclick="openTool('color')">Color Picker</button>
-                    <button class="tool-card" onclick="openTool('timer')">Script Timer</button>
-                </div>
-            </div>
-
-            <!-- Tool Interface View -->
-            <div id="toolInterface" style="display: none;">
-                <button onclick="backToMenu()" class="back-btn">← Back to Menu</button>
-                <h2 id="toolTitle">Smart Crop Helper</h2>
-                <input type="file" id="imageInput" accept="image/*" style="margin-bottom: 20px;">
-                <div id="previewWrapper" class="preview-wrapper">
-                    <img id="preview" src="" alt="Upload a file to preview">
-                    <div class="safe-zone-overlay"><span>SAFE ZONE</span></div>
-                </div>
-            </div>
+        <div class="tool-grid">
+            <a href="tools/crop.html" class="tool-card">Smart Crop Helper</a>
+            <a href="#" class="tool-card">Color Picker</a>
+            <a href="#" class="tool-card">Script Timer</a>
         </div>
-    </div>
-
-    <script src="script.js"></script>
+    </main>
 </body>
 </html>
