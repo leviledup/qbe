@@ -1,1 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Smart Crop | qbe.</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <div class="grid-bg"></div>
+    
+    <nav class="topbar">
+        <a href="../index.html" class="logo-group" style="text-decoration:none; color:inherit;">
+            <span class="logo-text">qbe</span>
+        </a>
+        <a href="../index.html" class="back-link">← Home</a>
+    </nav>
+
+    <main class="tool-page">
+        <h2>Smart Crop Helper</h2>
+        <input type="file" id="imageInput" accept="image/*">
+        <div id="previewWrapper" class="preview-wrapper">
+            <img id="preview" src="" alt="Upload a file">
+            <div class="safe-zone-overlay"><span>SAFE ZONE</span></div>
+        </div>
+    </main>
+
+    <script src="../script.js"></script>
+    <script>
+        // Specific logic for this tool
+        const input = document.getElementById('imageInput');
+        const preview = document.getElementById('preview');
+        input.addEventListener('change', (e) => {
+            const reader = new FileReader();
+            reader.onload = (event) => { preview.src = event.target.result; };
+            reader.readAsDataURL(e.target.files[0]);
+        });
+    </script>
+</body>
+</html>
 
