@@ -6,14 +6,13 @@
     <title>Thumbnail Preview | qbe.</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        /* --- Reset & Layout --- */
+        /* --- Reset & Layout (Transparent to preserve moving canvas grid) --- */
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
         }
 
-        /* Keep background transparent so the site's moving canvas grid shows through */
         html, body {
             width: 100%;
             min-height: 100vh;
@@ -23,14 +22,13 @@
             overflow-x: hidden;
         }
 
-        /* --- Top Navigation Bar --- */
+        /* --- Header Navigation --- */
         .topbar {
             display: flex;
             align-items: center;
             justify-content: space-between;
             padding: 0 24px;
             height: 64px;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.08);
             background: transparent;
         }
 
@@ -40,7 +38,7 @@
             gap: 8px;
             text-decoration: none;
             font-weight: 800;
-            font-size: 1.2rem;
+            font-size: 1.5rem;
             color: #000000;
         }
 
@@ -56,24 +54,24 @@
 
         .theme-toggle-btn {
             background: #ffffff;
-            border: 1px solid rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(0, 0, 0, 0.08);
             color: #000000;
-            padding: 8px 14px;
+            padding: 8px 16px;
             border-radius: 20px;
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             font-weight: 700;
             cursor: pointer;
             display: flex;
             align-items: center;
             gap: 6px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
         }
 
-        /* --- Main Content Container --- */
+        /* --- Workspace Container --- */
         .preview-container {
             max-width: 600px;
             margin: 0 auto;
-            padding: 32px 16px 80px;
+            padding: 24px 16px 80px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -81,32 +79,36 @@
         }
 
         .preview-container h1 {
-            font-size: 2.2rem;
+            font-size: 2.4rem;
             font-weight: 900;
             letter-spacing: -1.2px;
             margin-bottom: 4px;
+            color: #000000;
         }
 
         .preview-subtitle {
             font-size: 1rem;
             font-weight: 700;
             color: #4a5568;
-            margin-bottom: 24px;
+            margin-bottom: 20px;
         }
 
-        /* --- Fail Example Card (Apple Liquid Ass) --- */
+        /* --- Apple Crop Fail Card --- */
         .fail-card-wrapper {
             width: 100%;
             max-width: 340px;
-            margin-bottom: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 24px;
         }
 
         .fail-image {
             width: 100%;
             height: auto;
-            display: block;
             border-radius: 20px;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            display: block;
         }
 
         .disclaimer-text {
@@ -116,9 +118,9 @@
             font-weight: 600;
         }
 
-        /* --- Choose Asset Upload Action --- */
+        /* --- Choose Asset Upload --- */
         .upload-section {
-            margin: 16px 0 28px;
+            margin-bottom: 24px;
         }
 
         #assetInput {
@@ -128,22 +130,23 @@
         .action-btn {
             background-color: #000000;
             color: #ffffff;
-            padding: 12px 28px;
+            padding: 12px 32px;
             border-radius: 50px;
             font-weight: 800;
-            font-size: 0.95rem;
+            font-size: 1rem;
             cursor: pointer;
             border: none;
-            transition: transform 0.15s ease;
+            transition: transform 0.15s ease, background-color 0.15s ease;
             box-shadow: 0 4px 12px rgba(0,0,0,0.15);
             display: inline-block;
         }
 
         .action-btn:hover {
             transform: scale(1.03);
+            background-color: #111111;
         }
 
-        /* --- Active Live Mockup Card (e.g., Twitter 16:9) --- */
+        /* --- Live Mockup Card Wrapper --- */
         .active-mockup-wrapper {
             width: 100%;
             max-width: 440px;
@@ -153,17 +156,24 @@
             padding: 12px;
             box-shadow: 0 10px 25px rgba(0,0,0,0.05);
             margin-bottom: 24px;
-            position: relative;
         }
 
         .mockup-media-container {
             position: relative;
             width: 100%;
-            aspect-ratio: 16 / 9;
             background-color: #e2e8f0;
             border-radius: 16px;
             overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: aspect-ratio 0.25s ease;
         }
+
+        /* Render Aspect Ratio States dynamically */
+        .aspect-twitter { aspect-ratio: 16 / 9; }
+        .aspect-instagram { aspect-ratio: 1 / 1; }
+        .aspect-youtube { aspect-ratio: 16 / 9; }
 
         .mockup-media-container img {
             width: 100%;
@@ -172,7 +182,6 @@
             display: none;
         }
 
-        /* Placeholder graphic if no user asset is uploaded yet */
         .mockup-placeholder {
             position: absolute;
             inset: 0;
@@ -181,10 +190,10 @@
             justify-content: center;
             color: #a0aec0;
             font-weight: 700;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
         }
 
-        /* Twitter Overlay Badges */
+        /* --- Mockup Overlays --- */
         .alt-badge {
             position: absolute;
             left: 12px;
@@ -195,8 +204,10 @@
             font-weight: 800;
             padding: 2px 6px;
             border-radius: 4px;
+            z-index: 2;
         }
 
+        /* Twitter Interactive Metrics */
         .twitter-metrics-bar {
             position: absolute;
             bottom: 0;
@@ -204,6 +215,7 @@
             right: 0;
             background: rgba(0, 0, 0, 0.6);
             backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
             display: flex;
             align-items: center;
             justify-content: space-around;
@@ -211,6 +223,7 @@
             color: #ffffff;
             font-size: 0.75rem;
             font-weight: 600;
+            z-index: 2;
         }
 
         .metric-item {
@@ -219,7 +232,22 @@
             gap: 4px;
         }
 
-        /* --- Platform Filter Selection Tabs --- */
+        /* YouTube Duration Badge Overlay */
+        .yt-duration-badge {
+            position: absolute;
+            bottom: 8px;
+            right: 8px;
+            background: rgba(0, 0, 0, 0.8);
+            color: #ffffff;
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 3px 6px;
+            border-radius: 4px;
+            display: none;
+            z-index: 2;
+        }
+
+        /* --- Platform Switcher Tabs --- */
         .platform-tabs {
             display: flex;
             gap: 8px;
@@ -239,6 +267,9 @@
             cursor: pointer;
             transition: all 0.2s ease;
             box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
 
         .tab-btn:hover {
@@ -257,8 +288,7 @@
     <!-- Header Navigation Bar -->
     <nav class="topbar">
         <a href="index.html" class="logo-group">
-            <img src="qbe.png" alt="Logo" class="logo-img" onerror="this.style.display='none'">
-            <span>qbe</span>
+            <span class="logo-text">qbe</span>
         </a>
         <div class="header-actions">
             <button class="theme-toggle-btn">
@@ -273,9 +303,9 @@
         <h1>Thumbnail Preview</h1>
         <p class="preview-subtitle">So this doesn't happen to you:</p>
 
-        <!-- Static Apple Liquid Ass Fail Example -->
+        <!-- Static Apple Liquid Ass Fail Example Card -->
         <div class="fail-card-wrapper">
-            <img class="fail-image" src="assets/cropexample.png" alt="Apple Crop Fail Example">
+            <img class="fail-image" src="assets/cropexample.png" alt="Apple Crop Fail Example" onerror="this.src='/assets/cropexample.png'">
             <p class="disclaimer-text">The Apple logo is a trademark of Apple Inc.</p>
         </div>
 
@@ -287,26 +317,30 @@
 
         <!-- Active Live Preview Card -->
         <div class="active-mockup-wrapper">
-            <div class="mockup-media-container">
+            <div class="mockup-media-container aspect-twitter" id="mediaContainer">
                 <div class="mockup-placeholder" id="placeholderText">No Image Uploaded</div>
                 <img id="userPreviewImg" src="" alt="Live Preview Asset">
                 
-                <!-- Platform Overlays -->
-                <div class="alt-badge">ALT</div>
+                <!-- Alt tag badge overlay -->
+                <div class="alt-badge" id="altBadge">ALT</div>
                 
-                <div class="twitter-metrics-bar">
+                <!-- Twitter metrics overlay -->
+                <div class="twitter-metrics-bar" id="twitterOverlay">
                     <div class="metric-item">💬 <span>14</span></div>
                     <div class="metric-item">🔁 <span>38</span></div>
                     <div class="metric-item">❤️ <span>512</span></div>
                 </div>
+
+                <!-- YouTube duration badge overlay -->
+                <div class="yt-duration-badge" id="ytOverlay">14:57</div>
             </div>
         </div>
 
         <!-- Platform Switcher Filters -->
         <div class="platform-tabs">
-            <button class="tab-btn">Instagram (1:1)</button>
-            <button class="tab-btn active">Twitter (16:9)</button>
-            <button class="tab-btn">YouTube (16:9)</button>
+            <button class="tab-btn" data-platform="instagram">Instagram (1:1)</button>
+            <button class="tab-btn active" data-platform="twitter">Twitter (16:9)</button>
+            <button class="tab-btn" data-platform="youtube">YouTube (16:9)</button>
         </div>
     </main>
 
@@ -316,6 +350,12 @@
         const assetInput = document.getElementById('assetInput');
         const userPreviewImg = document.getElementById('userPreviewImg');
         const placeholderText = document.getElementById('placeholderText');
+        const mediaContainer = document.getElementById('mediaContainer');
+        
+        // Overlay Element Controls
+        const altBadge = document.getElementById('altBadge');
+        const twitterOverlay = document.getElementById('twitterOverlay');
+        const ytOverlay = document.getElementById('ytOverlay');
 
         // Handle local image upload preview
         assetInput.addEventListener('change', function(e) {
@@ -329,6 +369,37 @@
                 };
                 reader.readAsDataURL(file);
             }
+        });
+
+        // Handle live multi-platform switcher tabs
+        const tabs = document.querySelectorAll('.tab-btn');
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                tabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+
+                const platform = tab.dataset.platform;
+                
+                // Reset container classes
+                mediaContainer.className = "mockup-media-container";
+
+                if (platform === 'instagram') {
+                    mediaContainer.classList.add('aspect-instagram');
+                    altBadge.style.display = 'none';
+                    twitterOverlay.style.display = 'none';
+                    ytOverlay.style.display = 'none';
+                } else if (platform === 'twitter') {
+                    mediaContainer.classList.add('aspect-twitter');
+                    altBadge.style.display = 'block';
+                    twitterOverlay.style.display = 'flex';
+                    ytOverlay.style.display = 'none';
+                } else if (platform === 'youtube') {
+                    mediaContainer.classList.add('aspect-youtube');
+                    altBadge.style.display = 'none';
+                    twitterOverlay.style.display = 'none';
+                    ytOverlay.style.display = 'block';
+                }
+            });
         });
     </script>
 </body>
