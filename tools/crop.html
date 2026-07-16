@@ -6,11 +6,11 @@
     <title>Smart Crop Helper | qbe.</title>
     <link rel="stylesheet" href="../style.css">
     <style>
-        /* --- Tool Workspace Layout (Grid Floating Style) --- */
+        /* --- Compact Layout Spacing Rules --- */
         .tool-container {
-            max-width: 650px;
+            max-width: 600px;
             margin: 0 auto;
-            padding: 10px 24px 80px;
+            padding: 10px 16px 60px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -20,20 +20,54 @@
         .tool-container h2 {
             font-size: 2.2rem;
             font-weight: 900;
-            margin-bottom: 6px;
+            margin-bottom: 4px;
             text-align: center;
             letter-spacing: -1px;
         }
 
         .tool-subtitle {
             font-size: 1.1rem;
-            font-weight: 600;
+            font-weight: 700;
             color: #475569;
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 12px;
         }
 
-        /* --- Choose Asset Image Button (Direct Page-Level Pill) --- */
+        /* --- Static Bad Example Warning Block --- */
+        .bad-example-wrapper {
+            width: 100%;
+            max-width: 320px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 18px;
+        }
+
+        .bad-example-card {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            background: #1e293b;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            border: 3px solid #cbd5e1;
+        }
+
+        .bad-example-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .disclaimer-text {
+            font-size: 0.75rem;
+            color: #64748b;
+            font-weight: 600;
+            margin-top: 6px;
+            text-align: center;
+        }
+
+        /* --- File Upload Trigger --- */
         #imageInput {
             display: none;
         }
@@ -48,50 +82,49 @@
             cursor: pointer;
             transition: all 0.2s ease-in-out;
             display: inline-block;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            margin-bottom: 35px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            margin-bottom: 24px;
             text-align: center;
         }
         .file-upload-btn:hover {
             transform: scale(1.03);
-            opacity: 0.95;
         }
 
-        /* --- Simulator Screen Frame & Container --- */
+        /* --- Simulator Screen Display Window --- */
         .preview-frame-container {
             width: 100%;
             display: flex;
             justify-content: center;
             align-items: center;
-            margin-bottom: 30px;
+            margin-bottom: 18px;
         }
 
         .preview-wrapper {
             position: relative;
             width: 100%;
             background-color: #111827;
-            border-radius: 24px;
+            border-radius: 20px;
             overflow: hidden;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
             border: 5px solid #000;
-            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        /* Dynamic Aspect Ratios */
+        /* Responsive Form Factor Ratios */
         .preview-wrapper.platform-youtube {
-            max-width: 460px;
+            max-width: 440px;
             aspect-ratio: 16 / 9;
         }
         .preview-wrapper.platform-tiktok {
-            max-width: 300px;
+            max-width: 280px;
             aspect-ratio: 9 / 16;
         }
         .preview-wrapper.platform-instagram {
-            max-width: 340px;
+            max-width: 320px;
             aspect-ratio: 1 / 1;
         }
         .preview-wrapper.platform-twitter {
-            max-width: 460px;
+            max-width: 440px;
             aspect-ratio: 16 / 9;
         }
 
@@ -99,10 +132,36 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            display: block;
+            display: none; /* Hidden by default until upload */
         }
 
-        /* --- Overlay Simulation Layers --- */
+        /* Default Empty State Placeholder Styling */
+        .empty-placeholder {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: #1e293b;
+            color: #64748b;
+            text-align: center;
+            padding: 20px;
+            z-index: 1;
+        }
+        .empty-placeholder .placeholder-icon {
+            font-size: 2.5rem;
+            margin-bottom: 6px;
+            opacity: 0.6;
+        }
+        .empty-placeholder p {
+            font-size: 0.85rem;
+            font-weight: 700;
+            max-width: 180px;
+            line-height: 1.3;
+        }
+
+        /* --- Real-world App Mask Elements --- */
         .overlay-layer {
             position: absolute;
             inset: 0;
@@ -113,9 +172,10 @@
             color: #ffffff;
             font-family: system-ui, sans-serif;
             z-index: 2;
+            opacity: 0.85;
         }
 
-        /* YouTube Overlay Layout */
+        /* YouTube UI Specs */
         .youtube-overlay {
             position: absolute;
             inset: 0;
@@ -127,8 +187,8 @@
             bottom: 10px;
             background: rgba(0, 0, 0, 0.85);
             color: #fff;
-            font-size: 0.75rem;
-            padding: 2px 6px;
+            font-size: 0.7rem;
+            padding: 2px 5px;
             border-radius: 4px;
             font-weight: 700;
             z-index: 3;
@@ -147,36 +207,35 @@
             height: 100%;
             background: #ff0000;
         }
-        /* Translucent Middle Play Button (From the sketch) */
         .yt-play-btn {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
             background: rgba(0, 0, 0, 0.6);
-            width: 50px;
-            height: 50px;
+            width: 44px;
+            height: 44px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             color: #fff;
             border: 2px solid rgba(255, 255, 255, 0.8);
             z-index: 3;
-            padding-left: 4px;
+            padding-left: 3px;
         }
 
-        /* TikTok Overlay Layout */
+        /* TikTok UI Specs */
         .tiktok-overlay {
-            padding: 16px 12px;
+            padding: 12px 10px;
             background: linear-gradient(180deg, rgba(0,0,0,0.3) 0%, transparent 15%, transparent 80%, rgba(0,0,0,0.4) 100%);
         }
         .tiktok-overlay .ui-top-shadow {
             display: flex;
             justify-content: center;
-            gap: 16px;
-            font-size: 0.85rem;
+            gap: 14px;
+            font-size: 0.8rem;
             font-weight: 700;
         }
         .tiktok-overlay .ui-top-shadow span { opacity: 0.7; }
@@ -185,14 +244,14 @@
         .tiktok-overlay .ui-side-icons {
             position: absolute;
             right: 10px;
-            bottom: 110px;
+            bottom: 100px;
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 10px;
         }
         .tiktok-overlay .ui-icon-circle {
-            width: 36px;
-            height: 36px;
+            width: 32px;
+            height: 32px;
             border-radius: 50%;
             background: rgba(255,255,255,0.15);
             backdrop-filter: blur(4px);
@@ -200,18 +259,17 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.95rem;
+            font-size: 0.85rem;
         }
-        .tiktok-overlay .ui-icon-circle.profile { border: 2px solid #fff; }
 
         .tiktok-overlay .ui-bottom-shadow {
             margin-top: auto;
-            padding-right: 42px;
+            padding-right: 36px;
         }
-        .tiktok-overlay .username { font-weight: 700; font-size: 0.85rem; margin-bottom: 4px; }
-        .tiktok-overlay .caption { font-size: 0.75rem; line-height: 1.3; opacity: 0.9; }
+        .tiktok-overlay .username { font-weight: 700; font-size: 0.8rem; margin-bottom: 2px; }
+        .tiktok-overlay .caption { font-size: 0.7rem; line-height: 1.2; opacity: 0.9; }
 
-        /* Instagram Overlay Layout */
+        /* Instagram UI Specs */
         .instagram-overlay {
             justify-content: space-between;
         }
@@ -219,56 +277,56 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 8px 12px;
+            padding: 6px 10px;
             background: rgba(0, 0, 0, 0.6);
             backdrop-filter: blur(8px);
             width: 100%;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
         }
-        .instagram-overlay .ig-user { display: flex; align-items: center; gap: 8px; }
-        .instagram-overlay .ig-avatar { width: 20px; height: 20px; border-radius: 50%; background: #fff; }
+        .instagram-overlay .ig-user { display: flex; align-items: center; gap: 6px; }
+        .instagram-overlay .ig-avatar { width: 18px; height: 18px; border-radius: 50%; background: #fff; }
         .instagram-overlay .ig-username { font-weight: 700; }
 
         .instagram-overlay .ig-footer {
             background: rgba(0, 0, 0, 0.6);
             backdrop-filter: blur(8px);
-            padding: 10px 12px;
+            padding: 8px 10px;
             width: 100%;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
         }
-        .instagram-overlay .ig-actions { display: flex; justify-content: space-between; margin-bottom: 4px; }
-        .instagram-overlay .ig-left-actions { display: flex; gap: 10px; }
+        .instagram-overlay .ig-actions { display: flex; justify-content: space-between; margin-bottom: 2px; }
+        .instagram-overlay .ig-left-actions { display: flex; gap: 8px; }
         .instagram-overlay .ig-likes { font-weight: 700; }
 
-        /* Twitter Overlay Layout */
+        /* Twitter UI Specs */
         .twitter-overlay {
             background: rgba(0, 0, 0, 0.15);
             justify-content: space-between;
-            padding: 12px;
+            padding: 10px;
         }
         .twitter-overlay .tw-badge {
             background: rgba(0, 0, 0, 0.75);
-            padding: 4px 8px;
+            padding: 3px 6px;
             border-radius: 4px;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             align-self: flex-start;
         }
         .twitter-overlay .tw-footer-bar {
             background: rgba(0, 0, 0, 0.75);
-            padding: 8px 12px;
-            border-radius: 8px;
-            font-size: 0.75rem;
+            padding: 6px 10px;
+            border-radius: 6px;
+            font-size: 0.7rem;
             display: flex;
             justify-content: space-between;
             width: 100%;
         }
 
-        /* --- Safe Action Limit Box Guides --- */
+        /* --- Safe Boundary Guideline Boxes --- */
         .safe-box-outline {
             position: absolute;
             border: 1.5px dashed rgba(255, 255, 255, 0.75);
-            border-radius: 8px;
-            box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.35); /* Soft outer shade mask */
+            border-radius: 6px;
+            box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.35);
             z-index: 1;
         }
         .safe-box-outline.horizontal-safe {
@@ -290,33 +348,43 @@
             right: 5%;
         }
 
-        /* --- Platform Switcher Tabs (Bottom Pill Strip) --- */
+        /* --- Horizontal Platform Switcher (Fully Scrollable on Mobile) --- */
+        .platform-tabs-container {
+            width: 100%;
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
         .platform-tabs {
             display: flex;
-            gap: 8px;
+            gap: 10px;
             width: 100%;
-            max-width: 480px;
             overflow-x: auto;
-            padding: 4px;
-            justify-content: center;
+            padding: 8px 4px;
+            justify-content: flex-start; /* Permits scroll overflow from the left starting edge */
             scrollbar-width: none;
+            -webkit-overflow-scrolling: touch;
         }
         .platform-tabs::-webkit-scrollbar {
             display: none;
         }
 
         .tab-btn {
+            flex-shrink: 0; /* Prevents text squeezing on narrow viewports */
             background: rgba(255, 255, 255, 0.85);
-            border: 1px solid #cbd5e1;
+            border: 1.5px solid #cbd5e1;
             color: #475569;
             padding: 8px 16px;
             border-radius: 50px;
             font-weight: 700;
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             cursor: pointer;
-            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 6px;
             transition: all 0.2s ease;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
         }
         .tab-btn:hover {
             background: #f1f5f9;
@@ -349,17 +417,32 @@
         <h2>Smart Crop Helper</h2>
         <p class="tool-subtitle">So this doesn't happen to you:</p>
         
-        <!-- Upload Trigger Button (Floating on Blueprint Grid) -->
+        <!-- Static Bad Example Warn Box (Your sketch's Liquid Ass error) -->
+        <div class="bad-example-wrapper">
+            <div class="bad-example-card">
+                <img src="../assets/cropexample.png" alt="Crop Warning Example" onerror="handleMissingWarning(this)">
+            </div>
+            <p class="disclaimer-text">Apple logo is a trademark of Apple Inc.</p>
+        </div>
+
+        <!-- Custom Upload Trigger (Direct Layout Pillar) -->
         <label class="file-upload-btn" for="imageInput">Choose Asset Image</label>
         <input type="file" id="imageInput" accept="image/*">
 
-        <!-- Simulator Screen Context Box -->
+        <!-- Simulator Screen context frame -->
         <div class="preview-frame-container">
             <div class="preview-wrapper platform-youtube" id="previewWrapper">
-                <!-- Default checks directly inside the active layout frame -->
-                <img id="simulatorImg" src="../assets/cropexample.png" alt="Simulator Frame" onerror="handleMissingAsset(this)">
                 
-                <!-- YouTube Overlay Module (Active Default) -->
+                <!-- Default Empty State State (Inside of preview is empty) -->
+                <div class="empty-placeholder" id="emptyPlaceholder">
+                    <div class="placeholder-icon">📸</div>
+                    <p>Your uploaded target asset will render directly inside this frame context</p>
+                </div>
+
+                <!-- Custom Image display holder -->
+                <img id="simulatorImg" src="" alt="Simulator Frame">
+                
+                <!-- YouTube Overlay Mask -->
                 <div class="overlay-layer youtube-overlay" id="youtubeOverlay">
                     <div class="yt-play-btn">▶</div>
                     <div class="yt-duration">10:15</div>
@@ -369,7 +452,7 @@
                     <div class="safe-box-outline horizontal-safe"></div>
                 </div>
 
-                <!-- TikTok Overlay Module -->
+                <!-- TikTok Overlay Mask -->
                 <div class="overlay-layer tiktok-overlay" id="tiktokOverlay" style="display: none;">
                     <div class="ui-top-shadow">
                         <span>Following</span>
@@ -377,7 +460,7 @@
                     </div>
                     
                     <div class="ui-side-icons">
-                        <div class="ui-icon-circle profile">👤</div>
+                        <div class="ui-icon-circle">👤</div>
                         <div class="ui-icon-circle">❤️</div>
                         <div class="ui-icon-circle">💬</div>
                         <div class="ui-icon-circle">🏷️</div>
@@ -386,13 +469,13 @@
 
                     <div class="ui-bottom-shadow">
                         <div class="username">@creator_brand</div>
-                        <div class="caption">Important graphics, text, or faces should stay inside the safety margin! #branding #tips</div>
+                        <div class="caption">Layout safe margins checked and approved inside crop helper simulator context! #design #mockup</div>
                     </div>
 
                     <div class="safe-box-outline vertical-safe"></div>
                 </div>
 
-                <!-- Instagram Overlay Module -->
+                <!-- Instagram Overlay Mask -->
                 <div class="overlay-layer instagram-overlay" id="instagramOverlay" style="display: none;">
                     <div class="ig-header">
                         <div class="ig-user">
@@ -417,7 +500,7 @@
                     <div class="safe-box-outline square-safe"></div>
                 </div>
 
-                <!-- Twitter / X Overlay Module -->
+                <!-- Twitter / X Overlay Mask -->
                 <div class="overlay-layer twitter-overlay" id="twitterOverlay" style="display: none;">
                     <div class="tw-badge">ALT</div>
                     <div class="tw-footer-bar">
@@ -431,16 +514,18 @@
             </div>
         </div>
 
-        <!-- Platform Switcher Tabs (Perfectly layout-anchored underneath) -->
-        <div class="platform-tabs">
-            <button class="tab-btn active" data-platform="youtube">🎥 YouTube (16:9)</button>
-            <button class="tab-btn" data-platform="tiktok">📱 TikTok (9:16)</button>
-            <button class="tab-btn" data-platform="instagram">📸 Instagram (1:1)</button>
-            <button class="tab-btn" data-platform="twitter">🐦 Twitter (16:9)</button>
+        <!-- Scrollable Platform Switcher Tabs Panel (Anchor at bottom) -->
+        <div class="platform-tabs-container">
+            <div class="platform-tabs">
+                <button class="tab-btn active" data-platform="youtube">▶ YouTube (16:9)</button>
+                <button class="tab-btn" data-platform="tiktok">📱 TikTok (9:16)</button>
+                <button class="tab-btn" data-platform="instagram">📸 Instagram (1:1)</button>
+                <button class="tab-btn" data-platform="twitter">🐦 Twitter (16:9)</button>
+            </div>
         </div>
     </main>
 
-    <!-- Drawer Navigation Slide Panel -->
+    <!-- Side Panel Panel Navigation drawer -->
     <div id="toolDrawer" class="tool-drawer">
         <div class="drawer-header">
             <h2>Studio Tools</h2>
@@ -453,18 +538,18 @@
         </div>
     </div>
 
-    <!-- Script integrations -->
     <script src="../script.js"></script>
     <script>
-        // Provide clean SVG vector error handle block if assets are missing
-        function handleMissingAsset(imageElement) {
+        // Clean fallback handling for missing images
+        function handleMissingWarning(imageElement) {
             imageElement.onerror = null; 
             imageElement.src = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'><rect width='100%' height='100%' fill='%231e293b'/><text x='50%' y='54%' dominant-baseline='middle' text-anchor='middle' fill='%2364748b' font-family='sans-serif' font-size='8' font-weight='600'>cropexample.png missing</text></svg>";
         }
 
-        // Handle Custom Image Imports
+        // Live Custom Image Asset Upload Logic
         const imageInput = document.getElementById('imageInput');
         const simulatorImg = document.getElementById('simulatorImg');
+        const emptyPlaceholder = document.getElementById('emptyPlaceholder');
 
         if (imageInput && simulatorImg) {
             imageInput.addEventListener('change', function(e) {
@@ -472,14 +557,19 @@
                 if (file) {
                     const reader = new FileReader();
                     reader.onload = function(event) {
+                        // Switch source elements and clear fallback states
                         simulatorImg.src = event.target.result;
+                        simulatorImg.style.display = 'block';
+                        if (emptyPlaceholder) {
+                            emptyPlaceholder.style.display = 'none';
+                        }
                     };
                     reader.readAsDataURL(file);
                 }
             });
         }
 
-        // Platform Tab Controller Switcher
+        // Interactive Platform Tab Controller Switching
         const tabs = document.querySelectorAll('.tab-btn');
         const wrapper = document.getElementById('previewWrapper');
         
@@ -498,12 +588,12 @@
 
                 const platform = tab.dataset.platform;
 
-                // Adjust the viewport frame boundaries
+                // Adjust viewport mock layouts
                 if (wrapper) {
                     wrapper.className = `preview-wrapper platform-${platform}`;
                 }
 
-                // Render correct platform overlay layer
+                // Render matching active mask layouts
                 Object.keys(overlays).forEach(key => {
                     if (overlays[key]) {
                         overlays[key].style.display = (key === platform) ? 'flex' : 'none';
