@@ -2,10 +2,22 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>YouTube Thumbnail Tester | qbe.</title>
     <link rel="stylesheet" href="../style.css">
     <style>
+        /* --- Reset & Global Box Sizing --- */
+        * {
+            box-sizing: border-box;
+        }
+
+        html, body {
+            overflow-x: hidden;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
         /* --- YouTube Dark Mode Color Palette --- */
         :root {
             --yt-black: #0f0f0f;
@@ -29,7 +41,7 @@
         }
 
         .tool-container h2 {
-            font-size: 2.4rem;
+            font-size: 2.1rem;
             font-weight: 900;
             margin-bottom: 4px;
             text-align: center;
@@ -37,7 +49,7 @@
         }
 
         .tool-subtitle {
-            font-size: 1.1rem;
+            font-size: 1rem;
             font-weight: 600;
             color: #64748b;
             text-align: center;
@@ -160,7 +172,7 @@
         .preview-grid {
             width: 100%;
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr));
             gap: 24px;
             justify-items: center;
             align-items: start;
@@ -170,7 +182,7 @@
         .group-header {
             grid-column: 1 / -1;
             width: 100%;
-            font-size: 1.4rem;
+            font-size: 1.3rem;
             font-weight: 800;
             color: var(--yt-text-main);
             margin: 24px 0 12px 0;
@@ -179,7 +191,7 @@
             text-align: left;
         }
 
-        /* --- Standard YouTube Mockup Cards --- */
+        /* --- Standard Fluid YouTube Mockup Cards --- */
         .yt-mock-card {
             background: var(--yt-black);
             font-family: Roboto, Arial, sans-serif;
@@ -188,42 +200,27 @@
             flex-direction: column;
             text-align: left;
             position: relative;
+            width: 100%;
         }
 
-        /* Container sizes matching user's specs exactly */
-        .mock-home-large { width: 360px; }
-        .mock-home-large .thumb-wrapper { width: 360px; height: 205px; }
-
-        .mock-home-small { width: 240px; }
-        .mock-home-small .thumb-wrapper { width: 240px; height: 135px; }
-        .mock-home-small .avatar { width: 28px; height: 28px; }
-        .mock-home-small .title { font-size: 0.8rem; line-height: 1.1rem; }
-        .mock-home-small .meta { font-size: 0.75rem; }
-
-        .mock-channel { width: 270px; }
-        .mock-channel .thumb-wrapper { width: 270px; height: 150px; }
-        
-        .mock-channel-small { width: 198px; }
-        .mock-channel-small .thumb-wrapper { width: 198px; height: 112px; }
-
-        .mock-mobile-home { width: 320px; }
-        .mock-mobile-home .thumb-wrapper { width: 320px; height: 180px; }
-
-        .mock-tv-home { width: 512px; }
-        .mock-tv-home .thumb-wrapper { width: 512px; height: 288px; }
-        .mock-tv-home .title { font-size: 1.1rem; line-height: 1.5rem; }
-
-        .mock-tv-watch-later { width: 360px; }
-        .mock-tv-watch-later .thumb-wrapper { width: 360px; height: 200px; }
-
-        /* Thumb Image Frame base class */
+        /* Base Thumbnail Frame with Bulletproof Mobile Clipping */
         .thumb-wrapper {
             position: relative;
+            width: 100%;
             background: #212121;
             border-radius: 12px;
             overflow: hidden;
-            aspect-ratio: 16 / 9;
+            -webkit-mask-image: -webkit-radial-gradient(white, black); /* Standard iOS Rounding Fix */
             box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        /* Redundant rounding fallback to force WebKit compatibility */
+        .thumb-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: none;
+            border-radius: 12px;
         }
 
         /* Default fallback icon inside empty thumbnails */
@@ -237,6 +234,7 @@
             background: linear-gradient(135deg, #1f1f2e, #0d0d13);
             border: 2px dashed #334155;
             border-radius: 12px;
+            -webkit-mask-image: -webkit-radial-gradient(white, black);
         }
 
         .thumb-fallback svg {
@@ -253,12 +251,31 @@
             text-transform: uppercase;
         }
 
-        .thumb-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: none;
-        }
+        /* Proportional Aspect Ratios mapping to exact layout templates */
+        .mock-home-large { max-width: 360px; }
+        .mock-home-large .thumb-wrapper { aspect-ratio: 360 / 205; }
+
+        .mock-home-small { max-width: 240px; }
+        .mock-home-small .thumb-wrapper { aspect-ratio: 240 / 135; }
+        .mock-home-small .avatar { width: 28px; height: 28px; }
+        .mock-home-small .title { font-size: 0.8rem; line-height: 1.1rem; }
+        .mock-home-small .meta { font-size: 0.75rem; }
+
+        .mock-channel { max-width: 270px; }
+        .mock-channel .thumb-wrapper { aspect-ratio: 270 / 150; }
+        
+        .mock-channel-small { max-width: 198px; }
+        .mock-channel-small .thumb-wrapper { aspect-ratio: 198 / 112; }
+
+        .mock-mobile-home { max-width: 320px; }
+        .mock-mobile-home .thumb-wrapper { aspect-ratio: 320 / 180; }
+
+        .mock-tv-home { max-width: 512px; }
+        .mock-tv-home .thumb-wrapper { aspect-ratio: 512 / 288; }
+        .mock-tv-home .title { font-size: 1.1rem; line-height: 1.5rem; }
+
+        .mock-tv-watch-later { max-width: 360px; }
+        .mock-tv-watch-later .thumb-wrapper { aspect-ratio: 360 / 200; }
 
         /* Duration Stamp bottom right */
         .yt-duration-badge {
@@ -351,19 +368,19 @@
         }
 
         /* Sidebar Suggested ($168 x $94) */
-        .mock-sidebar { width: 360px; }
-        .mock-sidebar .thumb-wrapper { width: 168px; height: 94px; }
+        .mock-sidebar { max-width: 360px; }
+        .mock-sidebar .thumb-wrapper { width: 168px; aspect-ratio: 168 / 94; }
         .mock-sidebar .title { font-size: 0.8rem; line-height: 1.1rem; -webkit-line-clamp: 2; }
         .mock-sidebar .creator, .mock-sidebar .meta { font-size: 0.75rem; }
 
-        /* Watch Later horizontal list row ($540 x $106 thumbnail height mapping) */
+        /* Watch Later horizontal list row */
         .mock-watch-later { width: 100%; max-width: 720px; grid-column: 1 / -1; }
-        .mock-watch-later .thumb-wrapper { width: 220px; height: 124px; }
+        .mock-watch-later .thumb-wrapper { width: 220px; aspect-ratio: 220 / 124; }
         .mock-watch-later .title { font-size: 1.1rem; line-height: 1.5rem; }
 
         /* Search Result Large Horizontal Card */
         .mock-search-large { width: 100%; max-width: 840px; grid-column: 1 / -1; }
-        .mock-search-large .thumb-wrapper { width: 360px; height: 202px; }
+        .mock-search-large .thumb-wrapper { width: 360px; aspect-ratio: 360 / 202; }
         .mock-search-large .title { font-size: 1.15rem; line-height: 1.6rem; margin-bottom: 4px; }
         .mock-search-large .creator-row { display: flex; align-items: center; gap: 8px; margin: 10px 0; }
         .mock-search-large .creator-row .avatar { width: 24px; height: 24px; font-size: 0.7rem; }
@@ -418,6 +435,7 @@
             background: #1e1f22;
             border-radius: 8px;
             overflow: hidden;
+            -webkit-mask-image: -webkit-radial-gradient(white, black);
             margin-top: 4px;
         }
 
@@ -444,6 +462,33 @@
             border-bottom: 8px solid transparent;
             border-left: 14px solid #ffffff;
             margin-left: 4px;
+        }
+
+        /* Mobile specific styling overrides to prevent squash text overlap */
+        @media (max-width: 640px) {
+            .yt-mock-horizontal {
+                align-items: center;
+            }
+            
+            .mock-watch-later {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .mock-watch-later .thumb-wrapper {
+                width: 100%;
+                max-width: 100%;
+            }
+
+            .mock-search-large {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .mock-search-large .thumb-wrapper {
+                width: 100%;
+                max-width: 100%;
+            }
         }
 
     </style>
@@ -672,7 +717,7 @@
 
             <!-- Mobile Suggested Horizontal Card -->
             <div class="yt-mock-horizontal mock-sidebar" data-section="mobile">
-                <div class="thumb-wrapper" style="width: 140px; height: 78px;">
+                <div class="thumb-wrapper" style="width: 140px; aspect-ratio: 140 / 78;">
                     <div class="thumb-fallback">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
                         <span>140 x 78</span>
