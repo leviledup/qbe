@@ -329,35 +329,6 @@
             width: 100%;
         }
 
-        /* --- Perfect Outer Edge-Aligned Guides --- */
-        .safe-box-outline {
-            position: absolute;
-            border: 2px dashed rgba(255, 255, 255, 0.9);
-            border-radius: 8px;
-            pointer-events: none;
-            z-index: 4;
-            box-shadow: none; /* Removed heavy mask shading to prevent cramped look */
-            filter: drop-shadow(0px 0px 3px rgba(0, 0, 0, 0.8)); /* Sharp contrast on dark/light assets */
-        }
-        .safe-box-outline.horizontal-safe {
-            top: 4%;
-            bottom: 4%;
-            left: 4%;
-            right: 4%;
-        }
-        .safe-box-outline.vertical-safe {
-            top: 4%;
-            bottom: 4%;
-            left: 4%;
-            right: 4%;
-        }
-        .safe-box-outline.square-safe {
-            top: 4%;
-            bottom: 4%;
-            left: 4%;
-            right: 4%;
-        }
-
         /* --- Optimized Horizontal Platform Switcher (Fully Scrollable on Mobile) --- */
         .platform-tabs-container {
             width: 100%;
@@ -459,7 +430,6 @@
                     <div class="yt-progress-bar">
                         <div class="yt-progress-red"></div>
                     </div>
-                    <div class="safe-box-outline horizontal-safe"></div>
                 </div>
 
                 <!-- TikTok Overlay Mask -->
@@ -481,8 +451,6 @@
                         <div class="username">@creator_brand</div>
                         <div class="caption">Layout safe margins checked and approved inside crop helper simulator context! #design #mockup</div>
                     </div>
-
-                    <div class="safe-box-outline vertical-safe"></div>
                 </div>
 
                 <!-- Instagram Overlay Mask -->
@@ -506,8 +474,6 @@
                         </div>
                         <div class="ig-likes">2,482 likes</div>
                     </div>
-
-                    <div class="safe-box-outline square-safe"></div>
                 </div>
 
                 <!-- Twitter / X Overlay Mask -->
@@ -518,7 +484,6 @@
                         <span>🔁 38</span>
                         <span>❤️ 512</span>
                     </div>
-                    <div class="safe-box-outline horizontal-safe"></div>
                 </div>
 
             </div>
