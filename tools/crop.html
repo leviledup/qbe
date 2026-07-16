@@ -6,285 +6,330 @@
     <title>Thumbnail Preview | qbe.</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        /* --- Reset & Base --- */
+        /* --- Reset & Layout --- */
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
         }
 
-        /* 
-           Moving Blue Grid Background 
-           Kept transparent/layered so it doesn't clash with any canvas scripts 
-        */
+        /* Keep background transparent so the site's moving canvas grid shows through */
         html, body {
             width: 100%;
             min-height: 100vh;
+            background: transparent !important;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: #f4f9fd;
-            background-image: 
-                linear-gradient(to right, rgba(0, 149, 255, 0.08) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(0, 149, 255, 0.08) 1px, transparent 1px);
-            background-size: 32px 32px;
-            animation: movingGrid 8s linear infinite;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            color: #000000;
             overflow-x: hidden;
         }
 
-        @keyframes movingGrid {
-            from {
-                background-position: 0 0;
-            }
-            to {
-                background-position: 32px 32px;
-            }
+        /* --- Top Navigation Bar --- */
+        .topbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+            height: 64px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+            background: transparent;
         }
 
-        /* --- Container --- */
-        .main-container {
-            width: 100%;
+        .logo-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            font-weight: 800;
+            font-size: 1.2rem;
+            color: #000000;
+        }
+
+        .logo-img {
+            height: 24px;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .theme-toggle-btn {
+            background: #ffffff;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            color: #000000;
+            padding: 8px 14px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        /* --- Main Content Container --- */
+        .preview-container {
             max-width: 600px;
-            padding: 40px 20px;
+            margin: 0 auto;
+            padding: 32px 16px 80px;
             display: flex;
             flex-direction: column;
             align-items: center;
             text-align: center;
         }
 
-        .main-container h1 {
-            font-size: 2.5rem;
+        .preview-container h1 {
+            font-size: 2.2rem;
             font-weight: 900;
-            color: #000000;
-            letter-spacing: -1px;
-            margin-bottom: 6px;
+            letter-spacing: -1.2px;
+            margin-bottom: 4px;
         }
 
-        .main-container p {
-            font-size: 1.1rem;
-            font-weight: 600;
+        .preview-subtitle {
+            font-size: 1rem;
+            font-weight: 700;
             color: #4a5568;
-            margin-bottom: 32px;
+            margin-bottom: 24px;
         }
 
-        /* --- The "Liquid Ass" Apple Crop-Fail Card --- */
-        .preview-card {
-            background: #ffffff;
-            border-radius: 24px;
-            box-shadow: 0 15px 35px rgba(0, 149, 255, 0.1);
-            border: 1px solid rgba(0, 149, 255, 0.15);
+        /* --- Fail Example Card (Apple Liquid Ass) --- */
+        .fail-card-wrapper {
             width: 100%;
-            max-width: 380px;
-            overflow: hidden;
-            position: relative;
-            padding: 12px;
-            margin-bottom: 12px;
+            max-width: 340px;
+            margin-bottom: 8px;
         }
 
-        .card-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 4px 8px 10px 8px;
-            border-bottom: 1px solid #f0f0f0;
+        .fail-image {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 20px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
         }
 
-        .brand-info {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .apple-logo {
-            width: 16px;
-            height: 16px;
-            fill: #000;
-        }
-
-        .brand-text {
-            font-size: 0.75rem;
+        .disclaimer-text {
+            font-size: 0.7rem;
+            color: #718096;
+            margin-top: 8px;
             font-weight: 600;
-            color: #86868b;
         }
 
-        .menu-dots {
-            display: flex;
-            flex-direction: column;
-            gap: 3px;
+        /* --- Choose Asset Upload Action --- */
+        .upload-section {
+            margin: 16px 0 28px;
+        }
+
+        #assetInput {
+            display: none;
+        }
+
+        .action-btn {
+            background-color: #000000;
+            color: #ffffff;
+            padding: 12px 28px;
+            border-radius: 50px;
+            font-weight: 800;
+            font-size: 0.95rem;
             cursor: pointer;
+            border: none;
+            transition: transform 0.15s ease;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            display: inline-block;
         }
 
-        .menu-dots span {
-            width: 4px;
-            height: 4px;
-            background-color: #86868b;
-            border-radius: 50%;
+        .action-btn:hover {
+            transform: scale(1.03);
         }
 
-        /* Render container of the crop fail graphics */
-        .crop-fail-container {
+        /* --- Active Live Mockup Card (e.g., Twitter 16:9) --- */
+        .active-mockup-wrapper {
+            width: 100%;
+            max-width: 440px;
+            background: #ffffff;
+            border: 2px solid #000000;
+            border-radius: 24px;
+            padding: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            margin-bottom: 24px;
+            position: relative;
+        }
+
+        .mockup-media-container {
             position: relative;
             width: 100%;
             aspect-ratio: 16 / 9;
-            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+            background-color: #e2e8f0;
             border-radius: 16px;
             overflow: hidden;
-            margin-top: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
         }
 
-        /* Soft blurred colorful Apple graphic blobs in the background */
-        .blob {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(16px);
-            opacity: 0.85;
+        .mockup-media-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: none;
         }
 
-        .blob-yellow { width: 80px; height: 80px; background: #f9d976; top: 10%; right: 25%; }
-        .blob-red { width: 90px; height: 90px; background: #ff758c; top: 5%; right: 10%; }
-        .blob-blue { width: 100px; height: 100px; background: #a1c4fd; bottom: 5%; right: 5%; }
-        .blob-green { width: 70px; height: 70px; background: #c2ffd8; bottom: 10%; left: 10%; }
-
-        /* The masterfully offset "Liquid Ass" text */
-        .fail-text-container {
+        /* Placeholder graphic if no user asset is uploaded yet */
+        .mockup-placeholder {
             position: absolute;
             inset: 0;
             display: flex;
             align-items: center;
-            justify-content: flex-start;
-            padding-left: 16px;
-            font-family: -apple-system, sans-serif;
-            z-index: 1;
-        }
-
-        .text-part {
-            font-size: 1.8rem;
+            justify-content: center;
+            color: #a0aec0;
             font-weight: 700;
-            letter-spacing: -0.5px;
+            font-size: 0.9rem;
         }
 
-        .text-liquid {
-            color: #3a6073;
-        }
-
-        .text-ass {
-            color: #727a82;
-            margin-left: 46px; /* Offset spacing to leave room for the play button */
-        }
-
-        /* The giant misplaced YouTube Play Button covering "Gl" of "Glass" */
-        .yt-play-button {
+        /* Twitter Overlay Badges */
+        .alt-badge {
             position: absolute;
-            left: 112px;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 52px;
-            height: 36px;
-            background-color: #ff0000;
-            border-radius: 10px;
+            left: 12px;
+            top: 12px;
+            background: rgba(0, 0, 0, 0.75);
+            color: #ffffff;
+            font-size: 0.65rem;
+            font-weight: 800;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        .twitter-metrics-bar {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
             display: flex;
             align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 10px rgba(255, 0, 0, 0.3);
-            z-index: 2;
-        }
-
-        .yt-play-button::after {
-            content: '';
-            width: 0;
-            height: 0;
-            border-top: 6px solid transparent;
-            border-bottom: 6px solid transparent;
-            border-left: 11px solid #ffffff;
-            margin-left: 2px;
-        }
-
-        /* Disclaimer Label */
-        .trademark-disclaimer {
-            font-size: 0.65rem;
-            color: #86868b;
-            margin-top: 8px;
-            font-weight: 500;
-        }
-
-        /* --- Interactive Button --- */
-        .action-button {
-            background-color: #000000;
+            justify-content: space-around;
+            padding: 8px 12px;
             color: #ffffff;
-            border: none;
-            padding: 12px 32px;
-            border-radius: 50px;
-            font-size: 0.95rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .metric-item {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        /* --- Platform Filter Selection Tabs --- */
+        .platform-tabs {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .tab-btn {
+            background: #ffffff;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            color: #000000;
+            padding: 10px 18px;
+            border-radius: 20px;
+            font-size: 0.85rem;
             font-weight: 700;
             cursor: pointer;
-            transition: transform 0.15s ease, background-color 0.15s ease;
-            margin-top: 24px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.03);
         }
 
-        .action-button:hover {
-            transform: scale(1.03);
-            background-color: #1a1a1a;
+        .tab-btn:hover {
+            background: #f7fafc;
         }
 
-        .action-button:active {
-            transform: scale(0.98);
+        .tab-btn.active {
+            background: #000000;
+            color: #ffffff;
+            border-color: #000000;
         }
     </style>
 </head>
 <body>
 
-    <main class="main-container">
+    <!-- Header Navigation Bar -->
+    <nav class="topbar">
+        <a href="index.html" class="logo-group">
+            <img src="qbe.png" alt="Logo" class="logo-img" onerror="this.style.display='none'">
+            <span>qbe</span>
+        </a>
+        <div class="header-actions">
+            <button class="theme-toggle-btn">
+                <span>☀️</span>
+                <span>Light Mode</span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Workspace Container -->
+    <main class="preview-container">
         <h1>Thumbnail Preview</h1>
-        <p>So this doesn't happen to you:</p>
+        <p class="preview-subtitle">So this doesn't happen to you:</p>
 
-        <!-- Preview Card Showcase -->
-        <div class="preview-card">
-            <div class="card-header">
-                <div class="brand-info">
-                    <!-- Inline Apple SVG -->
-                    <svg class="apple-logo" viewBox="0 0 170 170">
-                        <path d="M150.37 130.25c-2.45 5.66-5.35 10.87-8.71 15.66-4.58 6.53-8.33 11.05-11.22 13.56-4.48 4.12-9.28 6.23-14.42 6.35-3.69 0-8.14-1.05-13.32-3.18-5.19-2.12-9.97-3.17-14.34-3.17-4.58 0-9.49 1.05-14.75 3.17-5.26 2.13-9.5 3.24-12.74 3.35-4.37.13-9.13-1.9-14.34-6.07-3.47-2.85-7.33-7.59-11.57-14.22-9.28-14.53-13.92-29.23-13.92-44.11 0-11.38 2.81-21.03 8.44-28.93 5.62-7.9 12.87-11.89 21.74-11.95 4.37 0 9.24 1.25 14.62 3.75 5.37 2.49 9.07 3.74 11.1 3.74 2.24 0 6.07-1.29 11.48-3.86 5.4-2.58 10.02-3.81 13.85-3.69 10.74.5 19.09 4.4 25.04 11.69-9.39 5.72-14.01 13.43-13.86 23.13.19 7.74 3.05 14.2 8.58 19.38 5.53 5.17 12.16 8.01 19.89 8.52 1.48 4.12 3.19 8.48 5.13 13.06zM119.22 28.16c0-7.74 2.77-14.82 8.31-21.24 1.88-2.13 4.14-4.12 6.78-5.97.42-.31.81-.46 1.16-.46.35 0 .54.18.57.54.43 4.96-1.05 10.15-4.44 15.58-3.39 5.43-8.08 9.51-14.07 12.24-.26.13-.53.19-.8.19-.36 0-.51-.11-.51-.33-.04-.18-.04-.37-.04-.56z"/>
-                    </svg>
-                    <span class="brand-text">Introducing Liquid Glass | Apple</span>
+        <!-- Static Apple Liquid Ass Fail Example -->
+        <div class="fail-card-wrapper">
+            <img class="fail-image" src="assets/cropexample.png" alt="Apple Crop Fail Example">
+            <p class="disclaimer-text">The Apple logo is a trademark of Apple Inc.</p>
+        </div>
+
+        <!-- Asset Upload Action Trigger -->
+        <div class="upload-section">
+            <label class="action-btn" for="assetInput">Choose Asset Image</label>
+            <input type="file" id="assetInput" accept="image/*">
+        </div>
+
+        <!-- Active Live Preview Card -->
+        <div class="active-mockup-wrapper">
+            <div class="mockup-media-container">
+                <div class="mockup-placeholder" id="placeholderText">No Image Uploaded</div>
+                <img id="userPreviewImg" src="" alt="Live Preview Asset">
+                
+                <!-- Platform Overlays -->
+                <div class="alt-badge">ALT</div>
+                
+                <div class="twitter-metrics-bar">
+                    <div class="metric-item">💬 <span>14</span></div>
+                    <div class="metric-item">🔁 <span>38</span></div>
+                    <div class="metric-item">❤️ <span>512</span></div>
                 </div>
-                <div class="menu-dots">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </div>
-            </div>
-
-            <!-- The Crop Fail Graphics Container -->
-            <div class="crop-fail-container">
-                <!-- Decorative Blur Blobs -->
-                <div class="blob blob-yellow"></div>
-                <div class="blob blob-red"></div>
-                <div class="blob blob-blue"></div>
-                <div class="blob blob-green"></div>
-
-                <!-- Strategic Crop Text Offset -->
-                <div class="fail-text-container">
-                    <span class="text-part text-liquid">Liquid</span>
-                    <span class="text-part text-ass">ass</span>
-                </div>
-
-                <!-- The overlapping play button hiding the "Gl" -->
-                <div class="yt-play-button"></div>
             </div>
         </div>
 
-        <span class="trademark-disclaimer">The Apple logo is a trademark of Apple Inc.</span>
-
-        <!-- Primary Action Trigger -->
-        <button class="action-button">Choose Asset Image</button>
+        <!-- Platform Switcher Filters -->
+        <div class="platform-tabs">
+            <button class="tab-btn">Instagram (1:1)</button>
+            <button class="tab-btn active">Twitter (16:9)</button>
+            <button class="tab-btn">YouTube (16:9)</button>
+        </div>
     </main>
 
-    <!-- External Canvas Animation Loader (If any) -->
+    <!-- Global canvas background grid initiator -->
     <script src="script.js"></script>
+    <script>
+        const assetInput = document.getElementById('assetInput');
+        const userPreviewImg = document.getElementById('userPreviewImg');
+        const placeholderText = document.getElementById('placeholderText');
+
+        // Handle local image upload preview
+        assetInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    userPreviewImg.src = event.target.result;
+                    userPreviewImg.style.display = 'block';
+                    placeholderText.style.display = 'none';
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    </script>
 </body>
 </html>
