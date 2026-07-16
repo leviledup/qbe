@@ -209,8 +209,10 @@
             width: 100%;
             background: #212121;
             border-radius: 12px;
+            -webkit-border-radius: 12px;
             overflow: hidden;
             -webkit-mask-image: -webkit-radial-gradient(white, black); /* Standard iOS Rounding Fix */
+            will-change: transform; /* Force hardware acceleration clipping */
             box-shadow: 0 4px 12px rgba(0,0,0,0.15);
         }
 
@@ -221,6 +223,7 @@
             object-fit: cover;
             display: none;
             border-radius: 12px;
+            -webkit-border-radius: 12px;
         }
 
         /* Default fallback icon inside empty thumbnails */
@@ -234,6 +237,7 @@
             background: linear-gradient(135deg, #1f1f2e, #0d0d13);
             border: 2px dashed #334155;
             border-radius: 12px;
+            -webkit-border-radius: 12px;
             -webkit-mask-image: -webkit-radial-gradient(white, black);
         }
 
@@ -249,6 +253,8 @@
             color: #64748b;
             font-weight: 700;
             text-transform: uppercase;
+            text-align: center;
+            padding: 0 8px;
         }
 
         /* Proportional Aspect Ratios mapping to exact layout templates */
@@ -320,6 +326,7 @@
             flex-direction: column;
             gap: 3px;
             overflow: hidden;
+            flex: 1;
         }
 
         .title {
@@ -350,41 +357,34 @@
             text-overflow: ellipsis;
         }
 
-        /* --- Horizontal/Sidebar Layout Specs --- */
+        /* --- Horizontal/Sidebar Layout Specs (Guarantees side-by-side on mobile) --- */
         .yt-mock-horizontal {
             display: flex;
+            flex-direction: row; /* Force side-by-side positioning always */
+            align-items: flex-start;
             gap: 12px;
             text-align: left;
             width: 100%;
         }
 
-        .yt-mock-horizontal .thumb-wrapper {
-            flex-shrink: 0;
-        }
-
-        .yt-mock-horizontal .info-col {
-            justify-content: flex-start;
-            padding-top: 2px;
-        }
-
         /* Sidebar Suggested ($168 x $94) */
         .mock-sidebar { max-width: 360px; }
-        .mock-sidebar .thumb-wrapper { width: 168px; aspect-ratio: 168 / 94; }
+        .mock-sidebar .thumb-wrapper { flex: 0 0 45%; aspect-ratio: 168 / 94; }
         .mock-sidebar .title { font-size: 0.8rem; line-height: 1.1rem; -webkit-line-clamp: 2; }
         .mock-sidebar .creator, .mock-sidebar .meta { font-size: 0.75rem; }
 
         /* Watch Later horizontal list row */
         .mock-watch-later { width: 100%; max-width: 720px; grid-column: 1 / -1; }
-        .mock-watch-later .thumb-wrapper { width: 220px; aspect-ratio: 220 / 124; }
-        .mock-watch-later .title { font-size: 1.1rem; line-height: 1.5rem; }
+        .mock-watch-later .thumb-wrapper { flex: 0 0 35%; aspect-ratio: 220 / 124; }
+        .mock-watch-later .title { font-size: 1.1rem; line-height: 1.4rem; }
 
         /* Search Result Large Horizontal Card */
         .mock-search-large { width: 100%; max-width: 840px; grid-column: 1 / -1; }
-        .mock-search-large .thumb-wrapper { width: 360px; aspect-ratio: 360 / 202; }
-        .mock-search-large .title { font-size: 1.15rem; line-height: 1.6rem; margin-bottom: 4px; }
-        .mock-search-large .creator-row { display: flex; align-items: center; gap: 8px; margin: 10px 0; }
+        .mock-search-large .thumb-wrapper { flex: 0 0 40%; aspect-ratio: 360 / 202; }
+        .mock-search-large .title { font-size: 1.15rem; line-height: 1.5rem; margin-bottom: 4px; }
+        .mock-search-large .creator-row { display: flex; align-items: center; gap: 8px; margin: 8px 0; }
         .mock-search-large .creator-row .avatar { width: 24px; height: 24px; font-size: 0.7rem; }
-        .mock-search-large .snippet { font-size: 0.8rem; color: var(--yt-text-sub); display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; }
+        .mock-search-large .snippet { font-size: 0.8rem; color: var(--yt-text-sub); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 
         /* --- Discord Social Embed Preview Card --- */
         .mock-discord-card {
@@ -434,6 +434,7 @@
             aspect-ratio: 16 / 9;
             background: #1e1f22;
             border-radius: 8px;
+            -webkit-border-radius: 8px;
             overflow: hidden;
             -webkit-mask-image: -webkit-radial-gradient(white, black);
             margin-top: 4px;
@@ -464,30 +465,17 @@
             margin-left: 4px;
         }
 
-        /* Mobile specific styling overrides to prevent squash text overlap */
-        @media (max-width: 640px) {
-            .yt-mock-horizontal {
-                align-items: center;
+        /* Adjust sizing/spacing slightly for tiny screens to keep layout snug */
+        @media (max-width: 480px) {
+            .mock-search-large .snippet {
+                display: none; /* Hide snippet text on extra tiny screens to save room */
             }
-            
-            .mock-watch-later {
-                flex-direction: column;
-                align-items: flex-start;
+            .mock-search-large .creator-row {
+                margin: 4px 0;
             }
-
-            .mock-watch-later .thumb-wrapper {
-                width: 100%;
-                max-width: 100%;
-            }
-
-            .mock-search-large {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
-            .mock-search-large .thumb-wrapper {
-                width: 100%;
-                max-width: 100%;
+            .mock-watch-later .title {
+                font-size: 0.9rem;
+                line-height: 1.2rem;
             }
         }
 
@@ -562,7 +550,7 @@
                 <div class="thumb-wrapper">
                     <div class="thumb-fallback">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
-                        <span>360 x 205 (Home Large)</span>
+                        <span>360 x 205</span>
                     </div>
                     <img class="thumb-img" src="" alt="thumbnail">
                     <div class="yt-duration-badge">14:57</div>
@@ -582,7 +570,7 @@
                 <div class="thumb-wrapper">
                     <div class="thumb-fallback">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
-                        <span>240 x 135 (Home Small)</span>
+                        <span>240 x 135</span>
                     </div>
                     <img class="thumb-img" src="" alt="thumbnail">
                     <div class="yt-duration-badge">14:57</div>
@@ -619,7 +607,7 @@
                 <div class="thumb-wrapper">
                     <div class="thumb-fallback">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
-                        <span>270 x 150 (Channel)</span>
+                        <span>270 x 150</span>
                     </div>
                     <img class="thumb-img" src="" alt="thumbnail">
                     <div class="yt-duration-badge">14:57</div>
@@ -637,7 +625,7 @@
                 <div class="thumb-wrapper">
                     <div class="thumb-fallback">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
-                        <span>198 x 112 (Small)</span>
+                        <span>198 x 112</span>
                     </div>
                     <img class="thumb-img" src="" alt="thumbnail">
                     <div class="yt-duration-badge">14:57</div>
@@ -655,7 +643,7 @@
                 <div class="thumb-wrapper">
                     <div class="thumb-fallback">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
-                        <span>Watch Later (PC List)</span>
+                        <span>Watch Later</span>
                     </div>
                     <img class="thumb-img" src="" alt="thumbnail">
                     <div class="yt-duration-badge">14:57</div>
@@ -674,12 +662,12 @@
                 <div class="thumb-wrapper">
                     <div class="thumb-fallback">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
-                        <span>360 x 202 (Search Page)</span>
+                        <span>Search Page</span>
                     </div>
                     <img class="thumb-img" src="" alt="thumbnail">
                     <div class="yt-duration-badge">14:57</div>
                 </div>
-                <div class="info-col" style="flex: 1;">
+                <div class="info-col">
                     <div class="title sim-title">Stop paying others for easy work | qbe</div>
                     <div class="meta sim-meta">123K views • 1 hour ago</div>
                     <div class="creator-row">
@@ -699,7 +687,7 @@
                 <div class="thumb-wrapper">
                     <div class="thumb-fallback">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
-                        <span>320 x 180 (Mobile Feed)</span>
+                        <span>320 x 180</span>
                     </div>
                     <img class="thumb-img" src="" alt="thumbnail">
                     <div class="yt-duration-badge">14:57</div>
@@ -717,7 +705,7 @@
 
             <!-- Mobile Suggested Horizontal Card -->
             <div class="yt-mock-horizontal mock-sidebar" data-section="mobile">
-                <div class="thumb-wrapper" style="width: 140px; aspect-ratio: 140 / 78;">
+                <div class="thumb-wrapper" style="flex: 0 0 40%; aspect-ratio: 140 / 78;">
                     <div class="thumb-fallback">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
                         <span>140 x 78</span>
@@ -741,7 +729,7 @@
                 <div class="thumb-wrapper">
                     <div class="thumb-fallback">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
-                        <span>512 x 288 (TV Recommended)</span>
+                        <span>512 x 288</span>
                     </div>
                     <img class="thumb-img" src="" alt="thumbnail">
                     <div class="yt-duration-badge">14:57</div>
@@ -762,7 +750,7 @@
                 <div class="thumb-wrapper">
                     <div class="thumb-fallback">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
-                        <span>360 x 200 (TV List Card)</span>
+                        <span>360 x 200</span>
                     </div>
                     <img class="thumb-img" src="" alt="thumbnail">
                     <div class="yt-duration-badge">14:57</div>
@@ -792,7 +780,7 @@
                     <div class="discord-play-btn"></div>
                     <div class="thumb-fallback">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
-                        <span>Social Embed Preview</span>
+                        <span>Social Embed</span>
                     </div>
                     <img class="thumb-img" src="" alt="thumbnail">
                 </div>
