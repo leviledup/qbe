@@ -11,18 +11,17 @@
             box-sizing: border-box;
         }
 
-        /* --- Dynamic Seamless Themes --- */
+        /* --- Dynamic Theme Variables --- */
         :root {
-            /* Dark Theme (Default) */
-            --site-bg: #0f0f0f;
-            --site-grid: rgba(255, 255, 255, 0.05);
+            /* Keep body transparent so the moving background canvas grid is visible */
+            --body-bg: transparent;
             --card-text-main: #f1f1f1;
             --card-text-sub: #aaaaaa;
             --card-border: #3f3f3f;
             --card-avatar-bg: #2d2d2d;
             --card-avatar-text: #cccccc;
             
-            /* UI Controls stay dark for professional utility look */
+            /* Controls stay dark for sleek tool style */
             --deck-bg: #1a1a1a;
             --deck-border: #2e2e2e;
             --deck-input-bg: #272727;
@@ -30,9 +29,6 @@
         }
 
         body.light-mode {
-            /* Light Theme */
-            --site-bg: #ffffff;
-            --site-grid: rgba(0, 0, 0, 0.05);
             --card-text-main: #0f0f0f;
             --card-text-sub: #606060;
             --card-border: #e5e5e5;
@@ -40,27 +36,15 @@
             --card-avatar-text: #606060;
         }
 
+        /* Prevent covering up your background canvas moving grid */
         html, body {
             overflow-x: hidden;
             width: 100%;
             margin: 0;
             padding: 0;
-            background-color: var(--site-bg);
+            background: transparent !important;
             color: var(--card-text-main);
-            transition: background-color 0.25s ease, color 0.25s ease;
-        }
-
-        /* Geometric Background Grid */
-        .grid-bg {
-            position: fixed;
-            inset: 0;
-            z-index: -1;
-            background-image: 
-                linear-gradient(var(--site-grid) 1px, transparent 1px),
-                linear-gradient(90deg, var(--site-grid) 1px, transparent 1px);
-            background-size: 20px 20px;
-            pointer-events: none;
-            transition: background-image 0.25s ease;
+            transition: color 0.25s ease;
         }
 
         .tool-container {
@@ -90,16 +74,15 @@
             margin-bottom: 24px;
         }
 
-        /* --- Header Navigation Updates --- */
+        /* --- Header Navigation Elements --- */
         .topbar {
             display: flex;
             align-items: center;
             justify-content: space-between;
             padding: 0 24px;
             height: 64px;
-            background-color: var(--site-bg);
             border-bottom: 1px solid var(--card-border);
-            transition: background-color 0.25s ease, border-color 0.25s ease;
+            transition: border-color 0.25s ease;
         }
 
         .logo-text {
@@ -239,7 +222,7 @@
 
         .filter-btn.active {
             background: var(--card-text-main);
-            color: var(--site-bg);
+            color: #000000;
             border-color: var(--card-text-main);
         }
 
@@ -287,7 +270,7 @@
             border-radius: 12px;
             -webkit-border-radius: 12px;
             overflow: hidden;
-            -webkit-mask-image: -webkit-radial-gradient(white, black); /* iOS Clip Bug Fix */
+            -webkit-mask-image: -webkit-radial-gradient(white, black);
             will-change: transform;
             box-shadow: 0 4px 12px rgba(0,0,0,0.15);
         }
@@ -301,7 +284,7 @@
             -webkit-border-radius: 12px;
         }
 
-        /* Default placeholder screen inside empty thumbnails */
+        /* Placeholder graphic if no thumbnail is selected */
         .thumb-fallback {
             position: absolute;
             inset: 0;
@@ -358,7 +341,7 @@
         .mock-tv-watch-later { max-width: 360px; }
         .mock-tv-watch-later .thumb-wrapper { aspect-ratio: 360 / 200; }
 
-        /* Duration Badge */
+        /* Duration Stamp */
         .yt-duration-badge {
             position: absolute;
             bottom: 8px;
@@ -373,7 +356,7 @@
             z-index: 2;
         }
 
-        /* Video Detail layout */
+        /* Video Details text container styling */
         .yt-card-details {
             display: flex;
             gap: 12px;
@@ -436,7 +419,7 @@
             transition: color 0.25s ease;
         }
 
-        /* --- Horizontal Layout Elements (Resizes proportionally on mobile) --- */
+        /* --- Horizontal / Sidebar Items --- */
         .yt-mock-horizontal {
             display: flex;
             flex-direction: row;
@@ -447,18 +430,15 @@
             background: transparent;
         }
 
-        /* Sidebar Suggested */
         .mock-sidebar { max-width: 360px; }
         .mock-sidebar .thumb-wrapper { flex: 0 0 45%; aspect-ratio: 168 / 94; }
         .mock-sidebar .title { font-size: 0.8rem; line-height: 1.1rem; -webkit-line-clamp: 2; }
         .mock-sidebar .creator, .mock-sidebar .meta { font-size: 0.75rem; }
 
-        /* Watch Later Row */
         .mock-watch-later { width: 100%; max-width: 720px; grid-column: 1 / -1; }
         .mock-watch-later .thumb-wrapper { flex: 0 0 35%; aspect-ratio: 220 / 124; }
         .mock-watch-later .title { font-size: 1.1rem; line-height: 1.4rem; }
 
-        /* Search Layout Row */
         .mock-search-large { width: 100%; max-width: 840px; grid-column: 1 / -1; }
         .mock-search-large .thumb-wrapper { flex: 0 0 40%; aspect-ratio: 360 / 202; }
         .mock-search-large .title { font-size: 1.15rem; line-height: 1.5rem; margin-bottom: 4px; }
@@ -560,7 +540,6 @@
     </style>
 </head>
 <body>
-    <div class="grid-bg"></div>
 
     <nav class="topbar">
         <a href="../index.html" class="logo-group">
@@ -875,7 +854,7 @@
         const fallbacks = document.querySelectorAll('.thumb-fallback');
         const images = document.querySelectorAll('.thumb-img');
 
-        // Theme Switcher Logic
+        // Toggle Theme Control Engine
         const themeToggleBtn = document.getElementById('themeToggleBtn');
         const themeToggleIcon = document.getElementById('themeToggleIcon');
         const themeToggleText = document.getElementById('themeToggleText');
@@ -897,7 +876,7 @@
             localStorage.setItem('theme', isLight ? 'light' : 'dark');
         });
 
-        // Dynamic synchronizer state logic
+        // Sync inputs with elements dynamically
         function syncInputs() {
             const titleVal = titleInput.value.trim() || "Untitled Video";
             const creatorVal = creatorInput.value.trim() || "Channel Name";
@@ -926,7 +905,7 @@
             });
         }
 
-        // Handle Image Upload File Loader
+        // Live Thumbnail Render logic
         imageInput.addEventListener('change', function(e) {
             const file = e.target.files[0];
             if (file) {
