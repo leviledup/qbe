@@ -67,6 +67,54 @@
             text-align: center;
         }
 
+        /* --- Details Customizer Panel --- */
+        .details-form {
+            width: 100%;
+            max-width: 440px;
+            background: rgba(255, 255, 255, 0.8);
+            border: 1.5px solid #cbd5e1;
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+        }
+
+        .form-row {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            align-items: flex-start;
+        }
+
+        .form-row label {
+            font-size: 0.75rem;
+            font-weight: 800;
+            color: #475569;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .form-row input, .form-row textarea {
+            width: 100%;
+            background: #fff;
+            border: 1.5px solid #cbd5e1;
+            border-radius: 10px;
+            padding: 8px 12px;
+            font-size: 0.9rem;
+            font-family: inherit;
+            color: #1e293b;
+            outline: none;
+            transition: all 0.2s ease;
+        }
+
+        .form-row input:focus, .form-row textarea:focus {
+            border-color: var(--text);
+            box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.05);
+        }
+
         /* --- File Upload Trigger --- */
         #imageInput {
             display: none;
@@ -108,24 +156,85 @@
             box-shadow: 0 20px 40px rgba(0,0,0,0.2);
             border: 5px solid #000;
             transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            display: flex;
+            flex-direction: column;
         }
 
-        /* Responsive Form Factor Ratios */
-        .preview-wrapper.platform-youtube {
-            max-width: 440px;
-            aspect-ratio: 16 / 9;
+        /* Mock Web Browser Header Layer (Activated in PC layouts) */
+        .browser-bar {
+            display: none;
+            height: 32px;
+            background: #1e293b;
+            border-bottom: 1.5px solid #334155;
+            align-items: center;
+            padding: 0 12px;
+            gap: 6px;
+            width: 100%;
+            z-index: 4;
         }
-        .preview-wrapper.platform-tiktok {
-            max-width: 280px;
+        .browser-bar .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+        .browser-bar .dot.red { background: #ff5f56; }
+        .browser-bar .dot.yellow { background: #ffbd2e; }
+        .browser-bar .dot.green { background: #27c93f; }
+        .browser-bar .browser-address {
+            margin-left: 12px;
+            background: rgba(255,255,255,0.1);
+            color: #94a3b8;
+            font-size: 0.65rem;
+            padding: 2px 16px;
+            border-radius: 4px;
+            width: 50%;
+            text-align: center;
+            font-family: monospace;
+        }
+
+        /* Active Combination Form Factors - Responsive Scale Rules */
+        /* --- YouTube --- */
+        .preview-wrapper.platform-youtube.device-mobile { max-width: 320px; aspect-ratio: 16 / 9; }
+        .preview-wrapper.platform-youtube.device-pc { max-width: 480px; aspect-ratio: 16 / 9; }
+        .preview-wrapper.platform-youtube.device-embed { max-width: 440px; aspect-ratio: 16 / 9; }
+        .preview-wrapper.platform-youtube.device-tv { max-width: 520px; aspect-ratio: 16 / 9; border-width: 10px; }
+
+        /* --- TikTok --- */
+        .preview-wrapper.platform-tiktok.device-mobile { max-width: 240px; aspect-ratio: 9 / 16; }
+        .preview-wrapper.platform-tiktok.device-pc { max-width: 440px; aspect-ratio: 16 / 9; background: #000; align-items: center; justify-content: center; }
+        .preview-wrapper.platform-tiktok.device-embed { max-width: 280px; aspect-ratio: 9 / 16; }
+        .preview-wrapper.platform-tiktok.device-tv { max-width: 300px; aspect-ratio: 9 / 16; border-width: 10px; }
+
+        /* --- Instagram --- */
+        .preview-wrapper.platform-instagram.device-mobile { max-width: 280px; aspect-ratio: 1 / 1; }
+        .preview-wrapper.platform-instagram.device-pc { max-width: 380px; aspect-ratio: 1 / 1; }
+        .preview-wrapper.platform-instagram.device-embed { max-width: 320px; aspect-ratio: 1 / 1; }
+        .preview-wrapper.platform-instagram.device-tv { max-width: 400px; aspect-ratio: 1 / 1; border-width: 10px; }
+
+        /* --- Twitter --- */
+        .preview-wrapper.platform-twitter.device-mobile { max-width: 320px; aspect-ratio: 16 / 9; }
+        .preview-wrapper.platform-twitter.device-pc { max-width: 460px; aspect-ratio: 16 / 9; }
+        .preview-wrapper.platform-twitter.device-embed { max-width: 400px; aspect-ratio: 16 / 9; }
+        .preview-wrapper.platform-twitter.device-tv { max-width: 500px; aspect-ratio: 16 / 9; border-width: 10px; }
+
+        /* Dynamic PC Wrapper Modifier Rules */
+        .preview-wrapper.device-pc .browser-bar {
+            display: flex;
+        }
+
+        /* Center vertical layout context when running inside widescreen platform monitors */
+        .preview-wrapper.platform-tiktok.device-pc #simulatorImg {
+            height: 100%;
+            width: auto;
             aspect-ratio: 9 / 16;
+            object-fit: cover;
         }
-        .preview-wrapper.platform-instagram {
-            max-width: 320px;
-            aspect-ratio: 1 / 1;
-        }
-        .preview-wrapper.platform-twitter {
-            max-width: 440px;
-            aspect-ratio: 16 / 9;
+        .preview-wrapper.platform-tiktok.device-pc .tiktok-overlay {
+            width: auto;
+            height: 100%;
+            aspect-ratio: 9 / 16;
+            left: 50%;
+            transform: translateX(-50%);
         }
 
         #simulatorImg {
@@ -148,6 +257,9 @@
             text-align: center;
             padding: 20px;
             z-index: 1;
+        }
+        .preview-wrapper.device-pc .empty-placeholder {
+            top: 32px; /* Avoid overlapping the address bar */
         }
         .empty-placeholder svg {
             width: 40px;
@@ -176,12 +288,35 @@
             z-index: 2;
             opacity: 0.95;
         }
+        .preview-wrapper.device-pc .overlay-layer {
+            top: 32px;
+        }
 
         /* YouTube UI Specs */
         .youtube-overlay {
             position: absolute;
             inset: 0;
             background: rgba(0, 0, 0, 0.1);
+        }
+        .youtube-overlay .yt-header {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(180deg, rgba(0,0,0,0.6) 0%, transparent 100%);
+            padding: 10px 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.8rem;
+            font-weight: 600;
+            z-index: 3;
+        }
+        .youtube-overlay .yt-header .yt-title {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 80%;
         }
         .youtube-overlay .yt-duration {
             position: absolute;
@@ -233,7 +368,7 @@
             border-top: 8px solid transparent;
             border-bottom: 8px solid transparent;
             border-left: 14px solid #ffffff;
-            margin-left: 4px; /* visually centers the play arrow */
+            margin-left: 4px;
         }
 
         /* TikTok UI Specs */
@@ -329,6 +464,7 @@
             color: #fff;
         }
         .instagram-overlay .ig-likes { font-weight: 700; }
+        .instagram-overlay .ig-caption { margin-top: 4px; opacity: 0.95; line-height: 1.2; }
 
         /* Twitter UI Specs */
         .twitter-overlay {
@@ -365,7 +501,7 @@
         }
 
         /* --- Scrollable Button Row with Left & Right Gradient Mask Fade --- */
-        .platform-tabs-container {
+        .platform-tabs-container, .device-tabs-container {
             width: 100%;
             position: relative;
             overflow: hidden;
@@ -375,7 +511,7 @@
             mask-image: linear-gradient(to right, transparent, #000 32px, #000 calc(100% - 32px), transparent);
         }
 
-        .platform-tabs {
+        .platform-tabs, .device-tabs {
             display: flex;
             gap: 10px;
             width: 100%;
@@ -385,11 +521,11 @@
             scrollbar-width: none;
             -webkit-overflow-scrolling: touch;
         }
-        .platform-tabs::-webkit-scrollbar {
+        .platform-tabs::-webkit-scrollbar, .device-tabs::-webkit-scrollbar {
             display: none;
         }
 
-        .tab-btn {
+        .tab-btn, .device-btn {
             flex-shrink: 0;
             background: rgba(255, 255, 255, 0.85);
             border: 1.5px solid #cbd5e1;
@@ -405,24 +541,34 @@
             transition: all 0.2s ease;
             box-shadow: 0 2px 6px rgba(0,0,0,0.05);
         }
-        .tab-btn svg {
+        .tab-btn svg, .device-btn svg {
             width: 16px;
             height: 16px;
-            transition: fill 0.2s ease;
         }
-        .tab-btn:hover {
+        .tab-btn:hover, .device-btn:hover {
             background: #f1f5f9;
         }
-        .tab-btn.active {
+        .tab-btn.active, .device-btn.active {
             background: var(--text);
             color: var(--bg);
             border-color: var(--text);
+        }
+
+        /* Device Specific Smaller Buttons Modifier */
+        .device-btn {
+            padding: 6px 14px;
+            font-size: 0.8rem;
+        }
+        .device-btn svg {
+            width: 14px;
+            height: 14px;
         }
     </style>
 </head>
 <body>
     <div class="grid-bg"></div>
 
+    <!-- Navigation Header -->
     <nav class="topbar">
         <a href="../index.html" class="logo-group">
             <img src="../qbe.png" alt="Logo" class="logo-img" onerror="this.style.display='none'">
@@ -435,10 +581,12 @@
         </div>
     </nav>
 
+    <!-- Main Workspace -->
     <main class="tool-container">
         <h2>Video Upload Preview</h2>
         <p class="tool-subtitle">So this doesn't happen to you:</p>
         
+        <!-- Static Warning Block (Where the bad crop lives) -->
         <div class="bad-example-wrapper">
             <div class="bad-example-card">
                 <img src="../assets/cropexample.png" alt="Crop Warning Example" onerror="handleMissingWarning(this)">
@@ -446,12 +594,35 @@
             <p class="disclaimer-text">Apple logo is a trademark of Apple Inc.</p>
         </div>
 
+        <!-- Custom Upload Trigger -->
         <label class="file-upload-btn" for="imageInput">Choose Asset Image</label>
         <input type="file" id="imageInput" accept="image/*">
 
+        <!-- Real-Time Interactive Editing Panel -->
+        <div class="details-form">
+            <div class="form-row">
+                <label for="creatorInput">Creator Name</label>
+                <input type="text" id="creatorInput" value="creator_brand" placeholder="e.g. apple, creator_brand">
+            </div>
+            <div class="form-row">
+                <label for="titleInput">Title / Caption Text</label>
+                <textarea id="titleInput" rows="2" placeholder="e.g. Introducing Liquid Glass | Apple">Introducing Liquid Glass | Apple</textarea>
+            </div>
+        </div>
+
+        <!-- Interactive Simulator Screen Display Window -->
         <div class="preview-frame-container">
-            <div class="preview-wrapper platform-youtube" id="previewWrapper">
+            <div class="preview-wrapper platform-youtube device-mobile" id="previewWrapper">
                 
+                <!-- Custom Web Address/Top Bar Layer for PC Views -->
+                <div class="browser-bar">
+                    <div class="dot red"></div>
+                    <div class="dot yellow"></div>
+                    <div class="dot green"></div>
+                    <div class="browser-address" id="browserAddress">youtube.com</div>
+                </div>
+
+                <!-- Default Empty State Inside the Simulator -->
                 <div class="empty-placeholder" id="emptyPlaceholder">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
@@ -460,9 +631,21 @@
                     <p>Your uploaded target asset will render directly inside this frame context</p>
                 </div>
 
+                <!-- Custom Image display holder -->
                 <img id="simulatorImg" src="" alt="Simulator Frame">
                 
+                <!-- YouTube Overlay Mask -->
                 <div class="overlay-layer youtube-overlay" id="youtubeOverlay">
+                    <div class="yt-header">
+                        <span class="yt-title sim-title">Introducing Liquid Glass | Apple</span>
+                        <div class="yt-header-icons">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <line x1="12" y1="16" x2="12" y2="12"></line>
+                                <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                            </svg>
+                        </div>
+                    </div>
                     <div class="yt-play-btn"></div>
                     <div class="yt-duration">10:15</div>
                     <div class="yt-progress-bar">
@@ -470,6 +653,7 @@
                     </div>
                 </div>
 
+                <!-- TikTok Overlay Mask (SVG Icons) -->
                 <div class="overlay-layer tiktok-overlay" id="tiktokOverlay" style="display: none;">
                     <div class="ui-top-shadow">
                         <span>Following</span>
@@ -507,11 +691,12 @@
                     </div>
 
                     <div class="ui-bottom-shadow">
-                        <div class="username">@creator_brand</div>
-                        <div class="caption">Layout safe margins checked and approved inside crop helper simulator context! #design #mockup</div>
+                        <div class="username sim-creator-name">@creator_brand</div>
+                        <div class="caption sim-title">Introducing Liquid Glass | Apple</div>
                     </div>
                 </div>
 
+                <!-- Instagram Overlay Mask (SVG Icons) -->
                 <div class="overlay-layer instagram-overlay" id="instagramOverlay" style="display: none;">
                     <div class="ig-header">
                         <div class="ig-user">
@@ -521,7 +706,7 @@
                                     <circle cx="12" cy="7" r="4"></circle>
                                 </svg>
                             </div>
-                            <span class="ig-username">creator_brand</span>
+                            <span class="ig-username sim-creator-name">creator_brand</span>
                         </div>
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14">
                             <circle cx="12" cy="12" r="1"></circle>
@@ -549,9 +734,14 @@
                             </svg>
                         </div>
                         <div class="ig-likes">2,482 likes</div>
+                        <div class="ig-caption">
+                            <span class="ig-username sim-creator-name" style="margin-right:4px;">creator_brand</span>
+                            <span class="sim-title">Introducing Liquid Glass | Apple</span>
+                        </div>
                     </div>
                 </div>
 
+                <!-- Twitter / X Overlay Mask (SVG Icons) -->
                 <div class="overlay-layer twitter-overlay" id="twitterOverlay" style="display: none;">
                     <div class="tw-badge">ALT</div>
                     <div class="tw-footer-bar">
@@ -582,6 +772,7 @@
             </div>
         </div>
 
+        <!-- Scrollable Platform Switcher Tabs Panel -->
         <div class="platform-tabs-container">
             <div class="platform-tabs">
                 <button class="tab-btn active" data-platform="youtube">
@@ -612,8 +803,45 @@
                 </button>
             </div>
         </div>
+
+        <!-- Device Swapper Tabs Panel (Supports Mobile, PC/Web, Embedded, and Television specs) -->
+        <div class="device-tabs-container">
+            <div class="device-tabs">
+                <button class="device-btn active" data-device="mobile">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect>
+                        <line x1="12" y1="18" x2="12.01" y2="18"></line>
+                    </svg>
+                    Mobile
+                </button>
+                <button class="device-btn" data-device="pc">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                        <line x1="8" y1="21" x2="16" y2="21"></line>
+                        <line x1="12" y1="17" x2="12" y2="21"></line>
+                    </svg>
+                    PC / Desktop
+                </button>
+                <button class="device-btn" data-device="embed">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+                        <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+                    </svg>
+                    Embed Player
+                </button>
+                <button class="device-btn" data-device="tv">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="2" y="3" width="20" height="15" rx="2"></rect>
+                        <line x1="12" y1="18" x2="12" y2="21"></line>
+                        <line x1="7" y1="21" x2="17" y2="21"></line>
+                    </svg>
+                    Television
+                </button>
+            </div>
+        </div>
     </main>
 
+    <!-- Side Panel Panel Navigation drawer -->
     <div id="toolDrawer" class="tool-drawer">
         <div class="drawer-header">
             <h2>Studio Tools</h2>
@@ -656,10 +884,41 @@
             });
         }
 
-        // Handle Interactive Tab Changing
-        const tabs = document.querySelectorAll('.tab-btn');
+        // Real-Time Editing Synchronization logic
+        const creatorInput = document.getElementById('creatorInput');
+        const titleInput = document.getElementById('titleInput');
+
+        function syncInputDetails() {
+            const creatorValue = creatorInput.value.trim() || "creator_brand";
+            const titleValue = titleInput.value.trim() || "Your video/caption layout preview text matches here.";
+
+            // Sync creator names
+            document.querySelectorAll('.sim-creator-name').forEach(el => {
+                if (el.classList.contains('username')) {
+                    el.textContent = creatorValue.startsWith('@') ? creatorValue : `@${creatorValue}`;
+                } else {
+                    el.textContent = creatorValue;
+                }
+            });
+
+            // Sync video titles / descriptions
+            document.querySelectorAll('.sim-title').forEach(el => {
+                el.textContent = titleValue;
+            });
+        }
+
+        creatorInput.addEventListener('input', syncInputDetails);
+        titleInput.addEventListener('input', syncInputDetails);
+
+        // Core Viewport State Management (Platform + Device configuration)
+        const platformTabs = document.querySelectorAll('.tab-btn');
+        const deviceTabs = document.querySelectorAll('.device-btn');
         const wrapper = document.getElementById('previewWrapper');
-        
+        const browserAddress = document.getElementById('browserAddress');
+
+        let currentPlatform = 'youtube';
+        let currentDevice = 'mobile';
+
         const overlays = {
             youtube: document.getElementById('youtubeOverlay'),
             tiktok: document.getElementById('tiktokOverlay'),
@@ -667,22 +926,40 @@
             twitter: document.getElementById('twitterOverlay')
         };
 
-        tabs.forEach(tab => {
+        function updatePreviewClasses() {
+            if (wrapper) {
+                wrapper.className = `preview-wrapper platform-${currentPlatform} device-${currentDevice}`;
+            }
+            if (browserAddress) {
+                browserAddress.textContent = `${currentPlatform}.com`;
+            }
+        }
+
+        // Handle Platform Click Swappings
+        platformTabs.forEach(tab => {
             tab.addEventListener('click', () => {
-                tabs.forEach(t => t.classList.remove('active'));
+                platformTabs.forEach(t => t.classList.remove('active'));
                 tab.classList.add('active');
 
-                const platform = tab.dataset.platform;
-
-                if (wrapper) {
-                    wrapper.className = `preview-wrapper platform-${platform}`;
-                }
+                currentPlatform = tab.dataset.platform;
+                updatePreviewClasses();
 
                 Object.keys(overlays).forEach(key => {
                     if (overlays[key]) {
-                        overlays[key].style.display = (key === platform) ? 'flex' : 'none';
+                        overlays[key].style.display = (key === currentPlatform) ? 'flex' : 'none';
                     }
                 });
+            });
+        });
+
+        // Handle Device Click Swappings
+        deviceTabs.forEach(btn => {
+            btn.addEventListener('click', () => {
+                deviceTabs.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                currentDevice = btn.dataset.device;
+                updatePreviewClasses();
             });
         });
     </script>
