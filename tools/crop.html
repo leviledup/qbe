@@ -3,14 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Video Upload Preview | qbe.</title>
+    <title>YouTube Thumbnail Tester | qbe.</title>
     <link rel="stylesheet" href="../style.css">
     <style>
-        /* --- Compact Layout Spacing Rules --- */
+        /* --- YouTube Dark Mode Color Palette --- */
+        :root {
+            --yt-black: #0f0f0f;
+            --yt-card-bg: #1f1f1f;
+            --yt-text-main: #f1f1f1;
+            --yt-text-sub: #aaaaaa;
+            --yt-accent-blue: #3ea6ff;
+            --yt-border: #3f3f3f;
+            --discord-bg: #2b2d31;
+            --discord-border: #1e1f22;
+        }
+
         .tool-container {
-            max-width: 600px;
+            max-width: 1200px;
             margin: 0 auto;
-            padding: 10px 16px 60px;
+            padding: 10px 16px 80px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -18,350 +29,414 @@
         }
 
         .tool-container h2 {
-            font-size: 2.2rem;
+            font-size: 2.4rem;
             font-weight: 900;
             margin-bottom: 4px;
             text-align: center;
-            letter-spacing: -1px;
+            letter-spacing: -1.5px;
         }
 
         .tool-subtitle {
             font-size: 1.1rem;
-            font-weight: 700;
-            color: #475569;
-            text-align: center;
-            margin-bottom: 12px;
-        }
-
-        /* --- Static Bad Example Warning Block --- */
-        .bad-example-wrapper {
-            width: 100%;
-            max-width: 320px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-bottom: 18px;
-        }
-
-        .bad-example-card {
-            width: 100%;
-            aspect-ratio: 16 / 9;
-            background: #1e293b;
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-            border: 3px solid #cbd5e1;
-        }
-
-        .bad-example-card img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .disclaimer-text {
-            font-size: 0.75rem;
-            color: #64748b;
             font-weight: 600;
-            margin-top: 6px;
+            color: #64748b;
             text-align: center;
+            margin-bottom: 24px;
         }
 
-        /* --- Details Customizer Panel --- */
-        .details-form {
+        /* --- Interactive Control Deck --- */
+        .control-deck {
             width: 100%;
-            max-width: 440px;
-            background: rgba(255, 255, 255, 0.8);
-            border: 1.5px solid #cbd5e1;
-            border-radius: 16px;
-            padding: 16px;
-            margin-bottom: 24px;
+            max-width: 900px;
+            background: rgba(15, 15, 15, 0.95);
+            border: 1.5px solid var(--yt-border);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 32px;
+            box-shadow: 0 12px 36px rgba(0,0,0,0.3);
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+        }
+
+        .deck-full-width {
+            grid-column: 1 / -1;
             display: flex;
             flex-direction: column;
             gap: 12px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+            align-items: center;
+            border-bottom: 1px solid var(--yt-border);
+            padding-bottom: 16px;
+            margin-bottom: 8px;
         }
 
         .form-row {
             display: flex;
             flex-direction: column;
-            gap: 4px;
-            align-items: flex-start;
+            gap: 6px;
+            width: 100%;
         }
 
         .form-row label {
             font-size: 0.75rem;
             font-weight: 800;
-            color: #475569;
+            color: var(--yt-text-sub);
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
 
-        .form-row input, .form-row textarea {
-            width: 100%;
-            background: #fff;
-            border: 1.5px solid #cbd5e1;
-            border-radius: 10px;
-            padding: 8px 12px;
+        .form-row input {
+            background: #272727;
+            border: 1px solid var(--yt-border);
+            border-radius: 8px;
+            padding: 10px 14px;
             font-size: 0.9rem;
             font-family: inherit;
-            color: #1e293b;
+            color: var(--yt-text-main);
             outline: none;
             transition: all 0.2s ease;
         }
 
-        .form-row input:focus, .form-row textarea:focus {
-            border-color: var(--text);
-            box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.05);
+        .form-row input:focus {
+            border-color: #aaa;
+            box-shadow: 0 0 0 2px rgba(255,255,255,0.1);
         }
 
-        /* --- File Upload Trigger --- */
+        /* --- File Upload Input --- */
         #imageInput {
             display: none;
         }
 
         .file-upload-btn {
-            background-color: var(--text);
-            color: var(--bg);
-            padding: 12px 28px;
+            background-color: var(--yt-text-main);
+            color: var(--yt-black);
+            padding: 12px 32px;
             border-radius: 50px;
-            font-weight: 700;
-            font-size: 0.95rem;
+            font-weight: 800;
+            font-size: 1rem;
             cursor: pointer;
             transition: all 0.2s ease-in-out;
-            display: inline-block;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            margin-bottom: 24px;
             text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
         }
+
         .file-upload-btn:hover {
             transform: scale(1.03);
+            background-color: #fff;
         }
 
-        /* --- Simulator Screen Display Window --- */
-        .preview-frame-container {
-            width: 100%;
+        /* --- Workspace Filter Tabs --- */
+        .workspace-filters {
             display: flex;
+            gap: 8px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
             justify-content: center;
-            align-items: center;
-            margin-bottom: 18px;
         }
 
-        .preview-wrapper {
-            position: relative;
-            width: 100%;
-            background-color: #111827;
+        .filter-btn {
+            background: #272727;
+            border: 1px solid var(--yt-border);
+            color: var(--yt-text-main);
+            padding: 8px 16px;
             border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-            border: 5px solid #000;
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-            display: flex;
-            flex-direction: column;
-        }
-
-        /* Mock Web Browser Header Layer (Activated in PC layouts) */
-        .browser-bar {
-            display: none;
-            height: 32px;
-            background: #1e293b;
-            border-bottom: 1.5px solid #334155;
-            align-items: center;
-            padding: 0 12px;
-            gap: 6px;
-            width: 100%;
-            z-index: 4;
-        }
-        .browser-bar .dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-        }
-        .browser-bar .dot.red { background: #ff5f56; }
-        .browser-bar .dot.yellow { background: #ffbd2e; }
-        .browser-bar .dot.green { background: #27c93f; }
-        .browser-bar .browser-address {
-            margin-left: 12px;
-            background: rgba(255,255,255,0.1);
-            color: #94a3b8;
-            font-size: 0.65rem;
-            padding: 2px 16px;
-            border-radius: 4px;
-            width: 50%;
-            text-align: center;
-            font-family: monospace;
-        }
-
-        /* Active Combination Form Factors - Responsive Scale Rules */
-        /* --- YouTube --- */
-        .preview-wrapper.platform-youtube.device-mobile { max-width: 320px; aspect-ratio: 16 / 9; }
-        .preview-wrapper.platform-youtube.device-pc { max-width: 480px; aspect-ratio: 16 / 9; }
-        .preview-wrapper.platform-youtube.device-embed { max-width: 440px; aspect-ratio: 16 / 9; }
-        .preview-wrapper.platform-youtube.device-tv { max-width: 520px; aspect-ratio: 16 / 9; border-width: 10px; }
-
-        /* --- TikTok --- */
-        .preview-wrapper.platform-tiktok.device-mobile { max-width: 240px; aspect-ratio: 9 / 16; }
-        .preview-wrapper.platform-tiktok.device-pc { max-width: 440px; aspect-ratio: 16 / 9; background: #000; align-items: center; justify-content: center; }
-        .preview-wrapper.platform-tiktok.device-embed { max-width: 280px; aspect-ratio: 9 / 16; }
-        .preview-wrapper.platform-tiktok.device-tv { max-width: 300px; aspect-ratio: 9 / 16; border-width: 10px; }
-
-        /* --- Instagram --- */
-        .preview-wrapper.platform-instagram.device-mobile { max-width: 280px; aspect-ratio: 1 / 1; }
-        .preview-wrapper.platform-instagram.device-pc { max-width: 380px; aspect-ratio: 1 / 1; }
-        .preview-wrapper.platform-instagram.device-embed { max-width: 320px; aspect-ratio: 1 / 1; }
-        .preview-wrapper.platform-instagram.device-tv { max-width: 400px; aspect-ratio: 1 / 1; border-width: 10px; }
-
-        /* --- Twitter --- */
-        .preview-wrapper.platform-twitter.device-mobile { max-width: 320px; aspect-ratio: 16 / 9; }
-        .preview-wrapper.platform-twitter.device-pc { max-width: 460px; aspect-ratio: 16 / 9; }
-        .preview-wrapper.platform-twitter.device-embed { max-width: 400px; aspect-ratio: 16 / 9; }
-        .preview-wrapper.platform-twitter.device-tv { max-width: 500px; aspect-ratio: 16 / 9; border-width: 10px; }
-
-        /* Dynamic PC Wrapper Modifier Rules */
-        .preview-wrapper.device-pc .browser-bar {
-            display: flex;
-        }
-
-        /* Center vertical layout context when running inside widescreen platform monitors */
-        .preview-wrapper.platform-tiktok.device-pc #simulatorImg {
-            height: 100%;
-            width: auto;
-            aspect-ratio: 9 / 16;
-            object-fit: cover;
-        }
-        .preview-wrapper.platform-tiktok.device-pc .tiktok-overlay {
-            width: auto;
-            height: 100%;
-            aspect-ratio: 9 / 16;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-
-        #simulatorImg {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: none; /* Hidden by default until upload */
-        }
-
-        /* Default Empty State Placeholder Styling */
-        .empty-placeholder {
-            position: absolute;
-            inset: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            background: #1e293b;
-            color: #64748b;
-            text-align: center;
-            padding: 20px;
-            z-index: 1;
-        }
-        .preview-wrapper.device-pc .empty-placeholder {
-            top: 32px; /* Avoid overlapping the address bar */
-        }
-        .empty-placeholder svg {
-            width: 40px;
-            height: 40px;
-            margin-bottom: 8px;
-            opacity: 0.6;
-            color: #64748b;
-        }
-        .empty-placeholder p {
             font-size: 0.85rem;
             font-weight: 700;
-            max-width: 180px;
-            line-height: 1.3;
+            cursor: pointer;
+            transition: all 0.2s ease;
         }
 
-        /* --- Real-world App Mask Elements --- */
-        .overlay-layer {
+        .filter-btn:hover {
+            background: #3f3f3f;
+        }
+
+        .filter-btn.active {
+            background: var(--yt-text-main);
+            color: var(--yt-black);
+            border-color: var(--yt-text-main);
+        }
+
+        /* --- Main Preview Section Grid Layout --- */
+        .preview-grid {
+            width: 100%;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+            gap: 24px;
+            justify-items: center;
+            align-items: start;
+        }
+
+        /* Group headers */
+        .group-header {
+            grid-column: 1 / -1;
+            width: 100%;
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--yt-text-main);
+            margin: 24px 0 12px 0;
+            border-bottom: 1.5px solid var(--yt-border);
+            padding-bottom: 8px;
+            text-align: left;
+        }
+
+        /* --- Standard YouTube Mockup Cards --- */
+        .yt-mock-card {
+            background: var(--yt-black);
+            font-family: Roboto, Arial, sans-serif;
+            color: var(--yt-text-main);
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+            position: relative;
+        }
+
+        /* Container sizes matching user's specs exactly */
+        .mock-home-large { width: 360px; }
+        .mock-home-large .thumb-wrapper { width: 360px; height: 205px; }
+
+        .mock-home-small { width: 240px; }
+        .mock-home-small .thumb-wrapper { width: 240px; height: 135px; }
+        .mock-home-small .avatar { width: 28px; height: 28px; }
+        .mock-home-small .title { font-size: 0.8rem; line-height: 1.1rem; }
+        .mock-home-small .meta { font-size: 0.75rem; }
+
+        .mock-channel { width: 270px; }
+        .mock-channel .thumb-wrapper { width: 270px; height: 150px; }
+        
+        .mock-channel-small { width: 198px; }
+        .mock-channel-small .thumb-wrapper { width: 198px; height: 112px; }
+
+        .mock-mobile-home { width: 320px; }
+        .mock-mobile-home .thumb-wrapper { width: 320px; height: 180px; }
+
+        .mock-tv-home { width: 512px; }
+        .mock-tv-home .thumb-wrapper { width: 512px; height: 288px; }
+        .mock-tv-home .title { font-size: 1.1rem; line-height: 1.5rem; }
+
+        .mock-tv-watch-later { width: 360px; }
+        .mock-tv-watch-later .thumb-wrapper { width: 360px; height: 200px; }
+
+        /* Thumb Image Frame base class */
+        .thumb-wrapper {
+            position: relative;
+            background: #212121;
+            border-radius: 12px;
+            overflow: hidden;
+            aspect-ratio: 16 / 9;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        /* Default fallback icon inside empty thumbnails */
+        .thumb-fallback {
             position: absolute;
             inset: 0;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
-            pointer-events: none;
-            color: #ffffff;
-            font-family: system-ui, sans-serif;
-            z-index: 2;
-            opacity: 0.95;
-        }
-        .preview-wrapper.device-pc .overlay-layer {
-            top: 32px;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #1f1f2e, #0d0d13);
+            border: 2px dashed #334155;
+            border-radius: 12px;
         }
 
-        /* YouTube UI Specs */
-        .youtube-overlay {
-            position: absolute;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.1);
+        .thumb-fallback svg {
+            width: 32px;
+            height: 32px;
+            color: #475569;
+            margin-bottom: 4px;
         }
-        .youtube-overlay .yt-header {
+
+        .thumb-fallback span {
+            font-size: 0.65rem;
+            color: #64748b;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .thumb-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: none;
+        }
+
+        /* Duration Stamp bottom right */
+        .yt-duration-badge {
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            background: linear-gradient(180deg, rgba(0,0,0,0.6) 0%, transparent 100%);
-            padding: 10px 12px;
+            bottom: 8px;
+            right: 8px;
+            background: rgba(0, 0, 0, 0.8);
+            color: #fff;
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 3px 6px;
+            border-radius: 4px;
+            letter-spacing: 0.5px;
+            z-index: 2;
+        }
+
+        /* Video Detail layout (Vertical Stack) */
+        .yt-card-details {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 0.8rem;
-            font-weight: 600;
-            z-index: 3;
+            gap: 12px;
+            margin-top: 12px;
+            width: 100%;
         }
-        .youtube-overlay .yt-header .yt-title {
+
+        .avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: #2d2d2d;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 0.85rem;
+            color: #ccc;
+            border: 1px solid var(--yt-border);
+        }
+
+        .info-col {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+            overflow: hidden;
+        }
+
+        .title {
+            font-weight: 700;
+            font-size: 0.95rem;
+            line-height: 1.3rem;
+            color: var(--yt-text-main);
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .creator {
+            font-size: 0.85rem;
+            color: var(--yt-text-sub);
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            max-width: 80%;
         }
-        .youtube-overlay .yt-duration {
-            position: absolute;
-            right: 10px;
-            bottom: 10px;
-            background: rgba(0, 0, 0, 0.85);
-            color: #fff;
-            font-size: 0.7rem;
-            padding: 2px 5px;
+
+        .meta {
+            font-size: 0.85rem;
+            color: var(--yt-text-sub);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* --- Horizontal/Sidebar Layout Specs --- */
+        .yt-mock-horizontal {
+            display: flex;
+            gap: 12px;
+            text-align: left;
+            width: 100%;
+        }
+
+        .yt-mock-horizontal .thumb-wrapper {
+            flex-shrink: 0;
+        }
+
+        .yt-mock-horizontal .info-col {
+            justify-content: flex-start;
+            padding-top: 2px;
+        }
+
+        /* Sidebar Suggested ($168 x $94) */
+        .mock-sidebar { width: 360px; }
+        .mock-sidebar .thumb-wrapper { width: 168px; height: 94px; }
+        .mock-sidebar .title { font-size: 0.8rem; line-height: 1.1rem; -webkit-line-clamp: 2; }
+        .mock-sidebar .creator, .mock-sidebar .meta { font-size: 0.75rem; }
+
+        /* Watch Later horizontal list row ($540 x $106 thumbnail height mapping) */
+        .mock-watch-later { width: 100%; max-width: 720px; grid-column: 1 / -1; }
+        .mock-watch-later .thumb-wrapper { width: 220px; height: 124px; }
+        .mock-watch-later .title { font-size: 1.1rem; line-height: 1.5rem; }
+
+        /* Search Result Large Horizontal Card */
+        .mock-search-large { width: 100%; max-width: 840px; grid-column: 1 / -1; }
+        .mock-search-large .thumb-wrapper { width: 360px; height: 202px; }
+        .mock-search-large .title { font-size: 1.15rem; line-height: 1.6rem; margin-bottom: 4px; }
+        .mock-search-large .creator-row { display: flex; align-items: center; gap: 8px; margin: 10px 0; }
+        .mock-search-large .creator-row .avatar { width: 24px; height: 24px; font-size: 0.7rem; }
+        .mock-search-large .snippet { font-size: 0.8rem; color: var(--yt-text-sub); display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; }
+
+        /* --- Discord Social Embed Preview Card --- */
+        .mock-discord-card {
+            width: 100%;
+            max-width: 480px;
+            background: var(--discord-bg);
+            border-left: 4px solid #1e1f22;
             border-radius: 4px;
-            font-weight: 700;
-            z-index: 3;
+            padding: 12px 16px;
+            color: #dbdee1;
+            font-family: "gg sans", "Helvetica Neue", Arial, sans-serif;
+            text-align: left;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
         }
-        .youtube-overlay .yt-progress-bar {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: rgba(255,255,255,0.3);
-            z-index: 3;
+
+        .discord-source {
+            font-size: 0.75rem;
+            color: #949ba4;
         }
-        .youtube-overlay .yt-progress-red {
-            width: 35%;
-            height: 100%;
-            background: #ff0000;
+
+        .discord-creator {
+            font-size: 0.85rem;
+            color: #ffffff;
+            font-weight: 600;
         }
-        
-        /* Authentic Red YouTube Play Button */
-        .yt-play-btn {
+
+        .discord-title {
+            font-size: 1rem;
+            font-weight: 500;
+            color: #00a8fc;
+            text-decoration: none;
+            cursor: pointer;
+            line-height: 1.3;
+        }
+
+        .discord-title:hover {
+            text-decoration: underline;
+        }
+
+        .discord-media {
+            position: relative;
+            width: 100%;
+            max-width: 400px;
+            aspect-ratio: 16 / 9;
+            background: #1e1f22;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-top: 4px;
+        }
+
+        .discord-play-btn {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background: #ff0000;
-            width: 54px;
-            height: 38px;
-            border-radius: 12px;
+            background: rgba(0, 0, 0, 0.7);
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            z-index: 3;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            z-index: 2;
         }
-        .yt-play-btn::after {
+
+        .discord-play-btn::after {
             content: "";
             width: 0;
             height: 0;
@@ -371,201 +446,9 @@
             margin-left: 4px;
         }
 
-        /* TikTok UI Specs */
-        .tiktok-overlay {
-            padding: 12px 10px;
-            background: linear-gradient(180deg, rgba(0,0,0,0.3) 0%, transparent 15%, transparent 80%, rgba(0,0,0,0.4) 100%);
-        }
-        .tiktok-overlay .ui-top-shadow {
-            display: flex;
-            justify-content: center;
-            gap: 14px;
-            font-size: 0.8rem;
-            font-weight: 700;
-        }
-        .tiktok-overlay .ui-top-shadow span { opacity: 0.7; }
-        .tiktok-overlay .ui-top-shadow span.active-tab { opacity: 1; border-bottom: 2px solid #fff; padding-bottom: 2px; }
-
-        .tiktok-overlay .ui-side-icons {
-            position: absolute;
-            right: 10px;
-            bottom: 100px;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-        .tiktok-overlay .ui-icon-circle {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.15);
-            backdrop-filter: blur(4px);
-            border: 1px solid rgba(255,255,255,0.25);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #fff;
-        }
-        .tiktok-overlay .ui-icon-circle svg {
-            width: 16px;
-            height: 16px;
-        }
-
-        .tiktok-overlay .ui-bottom-shadow {
-            margin-top: auto;
-            padding-right: 36px;
-        }
-        .tiktok-overlay .username { font-weight: 700; font-size: 0.8rem; margin-bottom: 2px; }
-        .tiktok-overlay .caption { font-size: 0.7rem; line-height: 1.2; opacity: 0.9; }
-
-        /* Instagram UI Specs */
-        .instagram-overlay {
-            justify-content: space-between;
-        }
-        .instagram-overlay .ig-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 6px 10px;
-            background: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(8px);
-            width: 100%;
-            font-size: 0.7rem;
-        }
-        .instagram-overlay .ig-user { display: flex; align-items: center; gap: 6px; }
-        .instagram-overlay .ig-avatar {
-            width: 18px;
-            height: 18px;
-            border-radius: 50%;
-            background: #fff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #000;
-        }
-        .instagram-overlay .ig-avatar svg {
-            width: 12px;
-            height: 12px;
-        }
-        .instagram-overlay .ig-username { font-weight: 700; }
-
-        .instagram-overlay .ig-footer {
-            background: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(8px);
-            padding: 8px 10px;
-            width: 100%;
-            font-size: 0.7rem;
-        }
-        .instagram-overlay .ig-actions { display: flex; justify-content: space-between; margin-bottom: 2px; }
-        .instagram-overlay .ig-left-actions { display: flex; gap: 8px; }
-        .instagram-overlay .ig-left-actions svg, .instagram-overlay .ig-actions > svg {
-            width: 16px;
-            height: 16px;
-            color: #fff;
-        }
-        .instagram-overlay .ig-likes { font-weight: 700; }
-        .instagram-overlay .ig-caption { margin-top: 4px; opacity: 0.95; line-height: 1.2; }
-
-        /* Twitter UI Specs */
-        .twitter-overlay {
-            background: rgba(0, 0, 0, 0.15);
-            justify-content: space-between;
-            padding: 10px;
-        }
-        .twitter-overlay .tw-badge {
-            background: rgba(0, 0, 0, 0.75);
-            padding: 3px 6px;
-            border-radius: 4px;
-            font-size: 0.7rem;
-            align-self: flex-start;
-        }
-        .twitter-overlay .tw-footer-bar {
-            background: rgba(0, 0, 0, 0.75);
-            padding: 6px 10px;
-            border-radius: 6px;
-            font-size: 0.7rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            width: 100%;
-        }
-        .twitter-overlay .tw-footer-bar .tw-stat {
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-        .twitter-overlay .tw-footer-bar svg {
-            width: 12px;
-            height: 12px;
-            color: #fff;
-        }
-
-        /* --- Scrollable Button Row with Left & Right Gradient Mask Fade --- */
-        .platform-tabs-container, .device-tabs-container {
-            width: 100%;
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            justify-content: center;
-            -webkit-mask-image: linear-gradient(to right, transparent, #000 32px, #000 calc(100% - 32px), transparent);
-            mask-image: linear-gradient(to right, transparent, #000 32px, #000 calc(100% - 32px), transparent);
-        }
-
-        .platform-tabs, .device-tabs {
-            display: flex;
-            gap: 10px;
-            width: 100%;
-            overflow-x: auto;
-            padding: 8px 32px;
-            justify-content: flex-start;
-            scrollbar-width: none;
-            -webkit-overflow-scrolling: touch;
-        }
-        .platform-tabs::-webkit-scrollbar, .device-tabs::-webkit-scrollbar {
-            display: none;
-        }
-
-        .tab-btn, .device-btn {
-            flex-shrink: 0;
-            background: rgba(255, 255, 255, 0.85);
-            border: 1.5px solid #cbd5e1;
-            color: #475569;
-            padding: 8px 16px;
-            border-radius: 50px;
-            font-weight: 700;
-            font-size: 0.85rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: all 0.2s ease;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-        }
-        .tab-btn svg, .device-btn svg {
-            width: 16px;
-            height: 16px;
-        }
-        .tab-btn:hover, .device-btn:hover {
-            background: #f1f5f9;
-        }
-        .tab-btn.active, .device-btn.active {
-            background: var(--text);
-            color: var(--bg);
-            border-color: var(--text);
-        }
-
-        /* Device Specific Smaller Buttons Modifier */
-        .device-btn {
-            padding: 6px 14px;
-            font-size: 0.8rem;
-        }
-        .device-btn svg {
-            width: 14px;
-            height: 14px;
-        }
     </style>
 </head>
-<body>
+<body class="yt-theme">
     <div class="grid-bg"></div>
 
     <!-- Navigation Header -->
@@ -583,272 +466,304 @@
 
     <!-- Main Workspace -->
     <main class="tool-container">
-        <h2>Video Upload Preview</h2>
-        <p class="tool-subtitle">So this doesn't happen to you:</p>
+        <h2>YouTube Thumbnail Simulator</h2>
+        <p class="tool-subtitle">Instantly test image scaling and cropping presets across official YouTube formats</p>
         
-        <!-- Static Warning Block (Where the bad crop lives) -->
-        <div class="bad-example-wrapper">
-            <div class="bad-example-card">
-                <img src="../assets/cropexample.png" alt="Crop Warning Example" onerror="handleMissingWarning(this)">
+        <!-- Deck Controller Interface -->
+        <div class="control-deck">
+            <div class="deck-full-width">
+                <label class="file-upload-btn" for="imageInput">Upload Thumbnail Image</label>
+                <input type="file" id="imageInput" accept="image/*">
             </div>
-            <p class="disclaimer-text">Apple logo is a trademark of Apple Inc.</p>
-        </div>
-
-        <!-- Custom Upload Trigger -->
-        <label class="file-upload-btn" for="imageInput">Choose Asset Image</label>
-        <input type="file" id="imageInput" accept="image/*">
-
-        <!-- Real-Time Interactive Editing Panel -->
-        <div class="details-form">
+            
             <div class="form-row">
-                <label for="creatorInput">Creator Name</label>
-                <input type="text" id="creatorInput" value="creator_brand" placeholder="e.g. apple, creator_brand">
+                <label for="titleInput">Video Title</label>
+                <input type="text" id="titleInput" value="Stop paying others for easy work | qbe" placeholder="e.g. Master Design Layouts">
             </div>
+
             <div class="form-row">
-                <label for="titleInput">Title / Caption Text</label>
-                <textarea id="titleInput" rows="2" placeholder="e.g. Introducing Liquid Glass | Apple">Introducing Liquid Glass | Apple</textarea>
+                <label for="creatorInput">Channel Name</label>
+                <input type="text" id="creatorInput" value="qbe" placeholder="e.g. Marques Brownlee">
+            </div>
+
+            <div class="form-row">
+                <label for="durationInput">Duration</label>
+                <input type="text" id="durationInput" value="14:57" placeholder="e.g. 10:15">
+            </div>
+
+            <div class="form-row">
+                <label for="viewsInput">Views & Date</label>
+                <input type="text" id="viewsInput" value="123K views • 1 hour ago" placeholder="e.g. 1.2M views • 2 days ago">
             </div>
         </div>
 
-        <!-- Interactive Simulator Screen Display Window -->
-        <div class="preview-frame-container">
-            <div class="preview-wrapper platform-youtube device-mobile" id="previewWrapper">
+        <!-- Filter tabs to quickly toggle viewpoints -->
+        <div class="workspace-filters">
+            <button class="filter-btn active" data-filter="all">Show All Layouts</button>
+            <button class="filter-btn" data-filter="desktop">PC Browser</button>
+            <button class="filter-btn" data-filter="mobile">Mobile App</button>
+            <button class="filter-btn" data-filter="tv">Smart TV</button>
+            <button class="filter-btn" data-filter="embed">Embeds (Discord)</button>
+        </div>
+
+        <!-- Main Simulated Grids Workspace -->
+        <div class="preview-grid" id="previewGrid">
+
+            <!-- ================= DESKTOP LAYOUTS ================= -->
+            <div class="group-header" data-section="desktop">Desktop / PC Browser Layouts</div>
+
+            <!-- Homepage Large -->
+            <div class="yt-mock-card mock-home-large" data-section="desktop">
+                <div class="thumb-wrapper">
+                    <div class="thumb-fallback">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
+                        <span>360 x 205 (Home Large)</span>
+                    </div>
+                    <img class="thumb-img" src="" alt="thumbnail">
+                    <div class="yt-duration-badge">14:57</div>
+                </div>
+                <div class="yt-card-details">
+                    <div class="avatar">Q</div>
+                    <div class="info-col">
+                        <div class="title sim-title">Stop paying others for easy work | qbe</div>
+                        <div class="creator sim-creator">qbe</div>
+                        <div class="meta sim-meta">123K views • 1 hour ago</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Homepage Small -->
+            <div class="yt-mock-card mock-home-small" data-section="desktop">
+                <div class="thumb-wrapper">
+                    <div class="thumb-fallback">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
+                        <span>240 x 135 (Home Small)</span>
+                    </div>
+                    <img class="thumb-img" src="" alt="thumbnail">
+                    <div class="yt-duration-badge">14:57</div>
+                </div>
+                <div class="yt-card-details">
+                    <div class="avatar" style="width:24px; height:24px; font-size:0.7rem;">Q</div>
+                    <div class="info-col">
+                        <div class="title sim-title">Stop paying others for easy work | qbe</div>
+                        <div class="creator sim-creator">qbe</div>
+                        <div class="meta sim-meta">123K views • 1 hour ago</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar Suggested Video -->
+            <div class="yt-mock-horizontal mock-sidebar" data-section="desktop">
+                <div class="thumb-wrapper">
+                    <div class="thumb-fallback">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
+                        <span>168 x 94</span>
+                    </div>
+                    <img class="thumb-img" src="" alt="thumbnail">
+                    <div class="yt-duration-badge">14:57</div>
+                </div>
+                <div class="info-col">
+                    <div class="title sim-title">Stop paying others for easy work | qbe</div>
+                    <div class="creator sim-creator">qbe</div>
+                    <div class="meta sim-meta">123K views • 1 hour ago</div>
+                </div>
+            </div>
+
+            <!-- Channel Page -->
+            <div class="yt-mock-card mock-channel" data-section="desktop">
+                <div class="thumb-wrapper">
+                    <div class="thumb-fallback">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
+                        <span>270 x 150 (Channel)</span>
+                    </div>
+                    <img class="thumb-img" src="" alt="thumbnail">
+                    <div class="yt-duration-badge">14:57</div>
+                </div>
+                <div class="yt-card-details" style="margin-top: 8px;">
+                    <div class="info-col">
+                        <div class="title sim-title" style="font-size:0.85rem;">Stop paying others for easy work | qbe</div>
+                        <div class="meta sim-meta" style="font-size:0.75rem; margin-top:2px;">123K views • 1 hour ago</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Channel Page Small -->
+            <div class="yt-mock-card mock-channel-small" data-section="desktop">
+                <div class="thumb-wrapper">
+                    <div class="thumb-fallback">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
+                        <span>198 x 112 (Small)</span>
+                    </div>
+                    <img class="thumb-img" src="" alt="thumbnail">
+                    <div class="yt-duration-badge">14:57</div>
+                </div>
+                <div class="yt-card-details" style="margin-top: 6px;">
+                    <div class="info-col">
+                        <div class="title sim-title" style="font-size:0.75rem; line-height:1.1;">Stop paying others for easy work | qbe</div>
+                        <div class="meta sim-meta" style="font-size:0.7rem; margin-top:2px;">123K views • 1 hour ago</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Watch Later Playlist Row -->
+            <div class="yt-mock-horizontal mock-watch-later" data-section="desktop">
+                <div class="thumb-wrapper">
+                    <div class="thumb-fallback">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
+                        <span>Watch Later (PC List)</span>
+                    </div>
+                    <img class="thumb-img" src="" alt="thumbnail">
+                    <div class="yt-duration-badge">14:57</div>
+                </div>
+                <div class="info-col">
+                    <div class="title sim-title">Stop paying others for easy work | qbe</div>
+                    <div class="meta" style="margin-top: 4px; display:flex; align-items:center; gap:8px;">
+                        <span class="sim-creator" style="font-weight:600; color:var(--yt-text-main);">qbe</span>
+                        <span class="sim-meta">123K views • 1 hour ago</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Search Result Page Large -->
+            <div class="yt-mock-horizontal mock-search-large" data-section="desktop">
+                <div class="thumb-wrapper">
+                    <div class="thumb-fallback">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
+                        <span>360 x 202 (Search Page)</span>
+                    </div>
+                    <img class="thumb-img" src="" alt="thumbnail">
+                    <div class="yt-duration-badge">14:57</div>
+                </div>
+                <div class="info-col" style="flex: 1;">
+                    <div class="title sim-title">Stop paying others for easy work | qbe</div>
+                    <div class="meta sim-meta">123K views • 1 hour ago</div>
+                    <div class="creator-row">
+                        <div class="avatar">Q</div>
+                        <span class="sim-creator" style="font-size: 0.85rem; color: var(--yt-text-sub);">qbe</span>
+                    </div>
+                    <div class="snippet">Learn how to automate task flows and stop outsourcing your regular technical routines. Complete design walkthrough and live preview specs in this modular deployment.</div>
+                </div>
+            </div>
+
+
+            <!-- ================= MOBILE LAYOUTS ================= -->
+            <div class="group-header" data-section="mobile">Mobile Layouts</div>
+
+            <!-- Mobile Homepage Feed -->
+            <div class="yt-mock-card mock-mobile-home" data-section="mobile">
+                <div class="thumb-wrapper">
+                    <div class="thumb-fallback">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
+                        <span>320 x 180 (Mobile Feed)</span>
+                    </div>
+                    <img class="thumb-img" src="" alt="thumbnail">
+                    <div class="yt-duration-badge">14:57</div>
+                </div>
+                <div class="yt-card-details">
+                    <div class="avatar">Q</div>
+                    <div class="info-col">
+                        <div class="title sim-title">Stop paying others for easy work | qbe</div>
+                        <div class="meta" style="font-size:0.75rem;">
+                            <span class="sim-creator">qbe</span> • <span class="sim-meta">123K views • 1 hour ago</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mobile Suggested Horizontal Card -->
+            <div class="yt-mock-horizontal mock-sidebar" data-section="mobile">
+                <div class="thumb-wrapper" style="width: 140px; height: 78px;">
+                    <div class="thumb-fallback">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
+                        <span>140 x 78</span>
+                    </div>
+                    <img class="thumb-img" src="" alt="thumbnail">
+                    <div class="yt-duration-badge">14:57</div>
+                </div>
+                <div class="info-col">
+                    <div class="title sim-title" style="font-size:0.75rem; line-height: 1;">Stop paying others for easy work | qbe</div>
+                    <div class="creator sim-creator" style="font-size:0.7rem; margin-top:2px;">qbe</div>
+                    <div class="meta sim-meta" style="font-size:0.7rem;">123K views • 1 hour ago</div>
+                </div>
+            </div>
+
+
+            <!-- ================= TELEVISION LAYOUTS ================= -->
+            <div class="group-header" data-section="tv">Smart TV Layouts</div>
+
+            <!-- Apple TV Youtube Homepage Block -->
+            <div class="yt-mock-card mock-tv-home" data-section="tv">
+                <div class="thumb-wrapper">
+                    <div class="thumb-fallback">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
+                        <span>512 x 288 (TV Recommended)</span>
+                    </div>
+                    <img class="thumb-img" src="" alt="thumbnail">
+                    <div class="yt-duration-badge">14:57</div>
+                </div>
+                <div class="yt-card-details">
+                    <div class="avatar" style="width:40px; height:40px; font-size:1rem;">Q</div>
+                    <div class="info-col">
+                        <div class="title sim-title">Stop paying others for easy work | qbe</div>
+                        <div class="meta" style="font-size:0.9rem; margin-top:2px;">
+                            <span class="sim-creator" style="color:var(--yt-text-main); font-weight:600;">qbe</span> • <span class="sim-meta">123K views • 1 hour ago</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Apple TV Recommended Watch Later -->
+            <div class="yt-mock-card mock-tv-watch-later" data-section="tv">
+                <div class="thumb-wrapper">
+                    <div class="thumb-fallback">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
+                        <span>360 x 200 (TV List Card)</span>
+                    </div>
+                    <img class="thumb-img" src="" alt="thumbnail">
+                    <div class="yt-duration-badge">14:57</div>
+                </div>
+                <div class="yt-card-details">
+                    <div class="avatar" style="width:32px; height:32px; font-size:0.8rem;">Q</div>
+                    <div class="info-col">
+                        <div class="title sim-title" style="font-size:0.85rem; line-height:1.2;">Stop paying others for easy work | qbe</div>
+                        <div class="meta" style="font-size:0.8rem;">
+                            <span class="sim-creator" style="color:var(--yt-text-main);">qbe</span> • <span class="sim-meta">123K views • 1 hour ago</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- ================= EMBED LAYOUTS ================= -->
+            <div class="group-header" data-section="embed">Link & Social Embeds</div>
+
+            <!-- Discord Embed Card -->
+            <div class="mock-discord-card" data-section="embed">
+                <div class="discord-source">YouTube</div>
+                <div class="discord-creator sim-creator">qbe</div>
+                <a class="discord-title sim-title" href="#">Stop paying others for easy work | qbe</a>
                 
-                <!-- Custom Web Address/Top Bar Layer for PC Views -->
-                <div class="browser-bar">
-                    <div class="dot red"></div>
-                    <div class="dot yellow"></div>
-                    <div class="dot green"></div>
-                    <div class="browser-address" id="browserAddress">youtube.com</div>
+                <div class="discord-media">
+                    <div class="discord-play-btn"></div>
+                    <div class="thumb-fallback">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
+                        <span>Social Embed Preview</span>
+                    </div>
+                    <img class="thumb-img" src="" alt="thumbnail">
                 </div>
-
-                <!-- Default Empty State Inside the Simulator -->
-                <div class="empty-placeholder" id="emptyPlaceholder">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
-                        <circle cx="12" cy="13" r="4"></circle>
-                    </svg>
-                    <p>Your uploaded target asset will render directly inside this frame context</p>
-                </div>
-
-                <!-- Custom Image display holder -->
-                <img id="simulatorImg" src="" alt="Simulator Frame">
-                
-                <!-- YouTube Overlay Mask -->
-                <div class="overlay-layer youtube-overlay" id="youtubeOverlay">
-                    <div class="yt-header">
-                        <span class="yt-title sim-title">Introducing Liquid Glass | Apple</span>
-                        <div class="yt-header-icons">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14">
-                                <circle cx="12" cy="12" r="10"></circle>
-                                <line x1="12" y1="16" x2="12" y2="12"></line>
-                                <line x1="12" y1="8" x2="12.01" y2="8"></line>
-                            </svg>
-                        </div>
-                    </div>
-                    <div class="yt-play-btn"></div>
-                    <div class="yt-duration">10:15</div>
-                    <div class="yt-progress-bar">
-                        <div class="yt-progress-red"></div>
-                    </div>
-                </div>
-
-                <!-- TikTok Overlay Mask (SVG Icons) -->
-                <div class="overlay-layer tiktok-overlay" id="tiktokOverlay" style="display: none;">
-                    <div class="ui-top-shadow">
-                        <span>Following</span>
-                        <span class="active-tab">For You</span>
-                    </div>
-                    
-                    <div class="ui-side-icons">
-                        <div class="ui-icon-circle">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                                <circle cx="12" cy="7" r="4"></circle>
-                            </svg>
-                        </div>
-                        <div class="ui-icon-circle">
-                            <svg viewBox="0 0 24 24" fill="currentColor" style="color:#ff3b30;">
-                                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"></path>
-                            </svg>
-                        </div>
-                        <div class="ui-icon-circle">
-                            <svg viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"></path>
-                            </svg>
-                        </div>
-                        <div class="ui-icon-circle">
-                            <svg viewBox="0 0 24 24" fill="currentColor">
-                                <polygon points="19 21 12 16 5 21 5 3 19 3"></polygon>
-                            </svg>
-                        </div>
-                        <div class="ui-icon-circle">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                <line x1="22" y1="2" x2="11" y2="13"></line>
-                                <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
-                            </svg>
-                        </div>
-                    </div>
-
-                    <div class="ui-bottom-shadow">
-                        <div class="username sim-creator-name">@creator_brand</div>
-                        <div class="caption sim-title">Introducing Liquid Glass | Apple</div>
-                    </div>
-                </div>
-
-                <!-- Instagram Overlay Mask (SVG Icons) -->
-                <div class="overlay-layer instagram-overlay" id="instagramOverlay" style="display: none;">
-                    <div class="ig-header">
-                        <div class="ig-user">
-                            <div class="ig-avatar">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                                    <circle cx="12" cy="7" r="4"></circle>
-                                </svg>
-                            </div>
-                            <span class="ig-username sim-creator-name">creator_brand</span>
-                        </div>
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14">
-                            <circle cx="12" cy="12" r="1"></circle>
-                            <circle cx="12" cy="5" r="1"></circle>
-                            <circle cx="12" cy="19" r="1"></circle>
-                        </svg>
-                    </div>
-                    
-                    <div class="ig-footer">
-                        <div class="ig-actions">
-                            <div class="ig-left-actions">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
-                                </svg>
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
-                                </svg>
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <line x1="22" y1="2" x2="11" y2="13"></line>
-                                    <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
-                                </svg>
-                            </div>
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
-                            </svg>
-                        </div>
-                        <div class="ig-likes">2,482 likes</div>
-                        <div class="ig-caption">
-                            <span class="ig-username sim-creator-name" style="margin-right:4px;">creator_brand</span>
-                            <span class="sim-title">Introducing Liquid Glass | Apple</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Twitter / X Overlay Mask (SVG Icons) -->
-                <div class="overlay-layer twitter-overlay" id="twitterOverlay" style="display: none;">
-                    <div class="tw-badge">ALT</div>
-                    <div class="tw-footer-bar">
-                        <span class="tw-stat">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
-                            </svg>
-                            14
-                        </span>
-                        <span class="tw-stat">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <polyline points="17 1 21 5 17 9"></polyline>
-                                <path d="M3 11V9a4 4 0 0 1 4-4h14"></path>
-                                <polyline points="7 23 3 19 7 15"></polyline>
-                                <path d="M21 13v2a4 4 0 0 1-4 4H3"></path>
-                            </svg>
-                            38
-                        </span>
-                        <span class="tw-stat">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
-                            </svg>
-                            512
-                        </span>
-                    </div>
-                </div>
-
             </div>
-        </div>
 
-        <!-- Scrollable Platform Switcher Tabs Panel -->
-        <div class="platform-tabs-container">
-            <div class="platform-tabs">
-                <button class="tab-btn active" data-platform="youtube">
-                    <svg viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M23.498 6.163a3.003 3.003 0 0 0-2.11-2.11C19.517 3.545 12 3.545 12 3.545s-7.517 0-9.388.508a3.003 3.003 0 0 0-2.11 2.11C0 8.033 0 12 0 12s0 3.967.502 5.837a3.003 3.003 0 0 0 2.11 2.11c1.871.508 9.388.508 9.388.508s7.517 0 9.388-.508a3.003 3.003 0 0 0 2.11-2.11C24 15.967 24 12 24 12s0-3.967-.502-5.837zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
-                    </svg>
-                    YouTube (16:9)
-                </button>
-                <button class="tab-btn" data-platform="tiktok">
-                    <svg viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.01 1.61 4.19.95.12 1.93-.03 2.87-.27-.01 1.43-.01 2.86-.01 4.29-.98.13-1.97.03-2.92-.25-.06 2.05-.01 4.11-.02 6.16a5.795 5.795 0 0 1-5.07 5.75c-1.63.16-3.32-.23-4.64-1.25a5.852 5.852 0 0 1-2.48-5.36c.26-2.07 1.63-3.96 3.59-4.66.01 1.42.02 2.83.02 4.25-.85.25-1.62.91-1.84 1.79-.31 1.13.25 2.45 1.3 2.91.95.44 2.14.2 2.8-.59.39-.42.58-.98.57-1.55-.01-3.78-.01-7.56-.01-11.34h3.92z"/>
-                    </svg>
-                    TikTok (9:16)
-                </button>
-                <button class="tab-btn" data-platform="instagram">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-                        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-                        <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
-                    </svg>
-                    Instagram (1:1)
-                </button>
-                <button class="tab-btn" data-platform="twitter">
-                    <svg viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-                    </svg>
-                    Twitter (16:9)
-                </button>
-            </div>
-        </div>
-
-        <!-- Device Swapper Tabs Panel (Supports Mobile, PC/Web, Embedded, and Television specs) -->
-        <div class="device-tabs-container">
-            <div class="device-tabs">
-                <button class="device-btn active" data-device="mobile">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect>
-                        <line x1="12" y1="18" x2="12.01" y2="18"></line>
-                    </svg>
-                    Mobile
-                </button>
-                <button class="device-btn" data-device="pc">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
-                        <line x1="8" y1="21" x2="16" y2="21"></line>
-                        <line x1="12" y1="17" x2="12" y2="21"></line>
-                    </svg>
-                    PC / Desktop
-                </button>
-                <button class="device-btn" data-device="embed">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
-                        <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
-                    </svg>
-                    Embed Player
-                </button>
-                <button class="device-btn" data-device="tv">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <rect x="2" y="3" width="20" height="15" rx="2"></rect>
-                        <line x1="12" y1="18" x2="12" y2="21"></line>
-                        <line x1="7" y1="21" x2="17" y2="21"></line>
-                    </svg>
-                    Television
-                </button>
-            </div>
         </div>
     </main>
 
-    <!-- Side Panel Panel Navigation drawer -->
+    <!-- Side Panel Navigation drawer -->
     <div id="toolDrawer" class="tool-drawer">
         <div class="drawer-header">
             <h2>Studio Tools</h2>
             <span class="close-btn" id="closeDrawer">✕</span>
         </div>
         <div class="tool-grid">
-            <a href="crop.html" class="tool-card">Video Upload Preview</a>
+            <a href="crop.html" class="tool-card">YouTube Thumbnail Tester</a>
             <a href="#" class="tool-card disabled">Color Picker (Soon)</a>
             <a href="#" class="tool-card disabled">Script Timer (Soon)</a>
         </div>
@@ -856,112 +771,102 @@
 
     <script src="../script.js"></script>
     <script>
-        // Fallback helper in case local/hosted asset isn't resolved
-        function handleMissingWarning(imageElement) {
-            imageElement.onerror = null; 
-            imageElement.src = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'><rect width='100%' height='100%' fill='%231e293b'/><text x='50%' y='54%' dominant-baseline='middle' text-anchor='middle' fill='%2364748b' font-family='sans-serif' font-size='8' font-weight='600'>cropexample.png missing</text></svg>";
-        }
-
-        // Handle client image loading inside preview frame
+        // DOM Controls Integration
         const imageInput = document.getElementById('imageInput');
-        const simulatorImg = document.getElementById('simulatorImg');
-        const emptyPlaceholder = document.getElementById('emptyPlaceholder');
-
-        if (imageInput && simulatorImg) {
-            imageInput.addEventListener('change', function(e) {
-                const file = e.target.files[0];
-                if (file) {
-                    const reader = new FileReader();
-                    reader.onload = function(event) {
-                        simulatorImg.src = event.target.result;
-                        simulatorImg.style.display = 'block';
-                        if (emptyPlaceholder) {
-                            emptyPlaceholder.style.display = 'none';
-                        }
-                    };
-                    reader.readAsDataURL(file);
-                }
-            });
-        }
-
-        // Real-Time Editing Synchronization logic
-        const creatorInput = document.getElementById('creatorInput');
         const titleInput = document.getElementById('titleInput');
+        const creatorInput = document.getElementById('creatorInput');
+        const durationInput = document.getElementById('durationInput');
+        const viewsInput = document.getElementById('viewsInput');
 
-        function syncInputDetails() {
-            const creatorValue = creatorInput.value.trim() || "creator_brand";
-            const titleValue = titleInput.value.trim() || "Your video/caption layout preview text matches here.";
+        const fallbacks = document.querySelectorAll('.thumb-fallback');
+        const images = document.querySelectorAll('.thumb-img');
 
-            // Sync creator names
-            document.querySelectorAll('.sim-creator-name').forEach(el => {
-                if (el.classList.contains('username')) {
-                    el.textContent = creatorValue.startsWith('@') ? creatorValue : `@${creatorValue}`;
-                } else {
-                    el.textContent = creatorValue;
-                }
-            });
+        // Dynamic State synchronization logic
+        function syncInputs() {
+            const titleVal = titleInput.value.trim() || "Untitled Video";
+            const creatorVal = creatorInput.value.trim() || "Channel Name";
+            const durationVal = durationInput.value.trim() || "0:00";
+            const viewsVal = viewsInput.value.trim() || "No views • just now";
 
-            // Sync video titles / descriptions
+            // Update title classes
             document.querySelectorAll('.sim-title').forEach(el => {
-                el.textContent = titleValue;
+                el.textContent = titleVal;
+            });
+
+            // Update creator/author classes
+            document.querySelectorAll('.sim-creator').forEach(el => {
+                el.textContent = creatorVal;
+            });
+
+            // Update channel avatar letters
+            const initialLetter = creatorVal.charAt(0).toUpperCase() || 'Q';
+            document.querySelectorAll('.avatar').forEach(avatar => {
+                avatar.textContent = initialLetter;
+            });
+
+            // Update metadata details
+            document.querySelectorAll('.sim-meta').forEach(el => {
+                el.textContent = viewsVal;
+            });
+
+            // Update duration markers
+            document.querySelectorAll('.yt-duration-badge').forEach(badge => {
+                badge.textContent = durationVal;
             });
         }
 
-        creatorInput.addEventListener('input', syncInputDetails);
-        titleInput.addEventListener('input', syncInputDetails);
+        // Handle Dynamic Thumbnail Asset Updates
+        imageInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    const dataUrl = event.target.result;
+                    
+                    // Render uploaded thumbnail on all templates
+                    images.forEach(img => {
+                        img.src = dataUrl;
+                        img.style.display = 'block';
+                    });
 
-        // Core Viewport State Management (Platform + Device configuration)
-        const platformTabs = document.querySelectorAll('.tab-btn');
-        const deviceTabs = document.querySelectorAll('.device-btn');
-        const wrapper = document.getElementById('previewWrapper');
-        const browserAddress = document.getElementById('browserAddress');
-
-        let currentPlatform = 'youtube';
-        let currentDevice = 'mobile';
-
-        const overlays = {
-            youtube: document.getElementById('youtubeOverlay'),
-            tiktok: document.getElementById('tiktokOverlay'),
-            instagram: document.getElementById('instagramOverlay'),
-            twitter: document.getElementById('twitterOverlay')
-        };
-
-        function updatePreviewClasses() {
-            if (wrapper) {
-                wrapper.className = `preview-wrapper platform-${currentPlatform} device-${currentDevice}`;
+                    // Hide placeholder screens
+                    fallbacks.forEach(fb => {
+                        fb.style.display = 'none';
+                    });
+                };
+                reader.readAsDataURL(file);
             }
-            if (browserAddress) {
-                browserAddress.textContent = `${currentPlatform}.com`;
-            }
-        }
+        });
 
-        // Handle Platform Click Swappings
-        platformTabs.forEach(tab => {
-            tab.addEventListener('click', () => {
-                platformTabs.forEach(t => t.classList.remove('active'));
-                tab.classList.add('active');
+        // Fire input event listeners to synchronize states
+        [titleInput, creatorInput, durationInput, viewsInput].forEach(input => {
+            input.addEventListener('input', syncInputs);
+        });
 
-                currentPlatform = tab.dataset.platform;
-                updatePreviewClasses();
+        // Quick Workspace Navigation Filter Logic
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const gridItems = document.querySelectorAll('[data-section]');
 
-                Object.keys(overlays).forEach(key => {
-                    if (overlays[key]) {
-                        overlays[key].style.display = (key === currentPlatform) ? 'flex' : 'none';
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                const currentFilter = btn.dataset.filter;
+
+                gridItems.forEach(item => {
+                    const section = item.dataset.section;
+                    if (currentFilter === 'all' || section === currentFilter) {
+                        item.style.display = '';
+                    } else {
+                        item.style.display = 'none';
                     }
                 });
             });
         });
 
-        // Handle Device Click Swappings
-        deviceTabs.forEach(btn => {
-            btn.addEventListener('click', () => {
-                deviceTabs.forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-
-                currentDevice = btn.dataset.device;
-                updatePreviewClasses();
-            });
-        });
+        // Start initialization sequence
+        syncInputs();
     </script>
 </body>
 </html>
