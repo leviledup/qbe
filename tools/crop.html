@@ -16,7 +16,8 @@
             --card-border: rgba(255, 255, 255, 0.05);
             --card-text-main: #f1f1f1;
             --card-text-sub: #aaaaaa;
-            --grid-color: rgba(255, 255, 255, 0.03);
+            /* Blue grid background matching the landing site */
+            --grid-color: rgba(88, 101, 242, 0.15);
         }
 
         .light-mode {
@@ -28,7 +29,8 @@
             --card-border: rgba(0, 0, 0, 0.08);
             --card-text-main: #0f1419;
             --card-text-sub: #536471;
-            --grid-color: rgba(0, 0, 0, 0.04);
+            /* Blue grid background matching the light mode landing site */
+            --grid-color: rgba(88, 101, 242, 0.08);
         }
 
         * {
@@ -47,7 +49,7 @@
             transition: background-color 0.3s ease, color 0.3s ease;
         }
 
-        /* --- Animated Blueprint Grid Background --- */
+        /* --- Animated BLUE Blueprint Grid Background --- */
         body::before {
             content: "";
             position: fixed;
@@ -366,6 +368,8 @@
             background-color: #2a2d3a;
             flex-shrink: 0;
             background-image: radial-gradient(circle, #5865f2, #0055ff);
+            background-size: cover;
+            background-position: center;
         }
 
         .details-text {
@@ -508,7 +512,7 @@
             </div>
 
             <div class="form-group">
-                <label for="channelNameInput">Channel Name</label>
+                <label for="channelNameInput">Channel Name (Type & press Enter/unfocus to pull logo)</label>
                 <input type="text" id="channelNameInput" value="Lorem Ipsum Channel">
             </div>
 
@@ -598,7 +602,7 @@
                             <span class="video-title live-title">Video Title Placeholder</span>
                             <span class="video-stats live-stats">Stats</span>
                             <div class="video-details-row" style="margin-top: 8px; align-items: center;">
-                                <div class="channel-avatar" style="width:24px; height:24px;"></div>
+                                <div class="channel-avatar"></div>
                                 <span class="channel-name live-channel">Channel</span>
                             </div>
                         </div>
@@ -692,6 +696,7 @@
         const liveChannels = document.querySelectorAll('.live-channel');
         const liveDurations = document.querySelectorAll('.live-duration');
         const liveStatsElements = document.querySelectorAll('.live-stats');
+        const channelAvatars = document.querySelectorAll('.channel-avatar');
 
         // --- Functions to sync text ---
         function updateTexts() {
@@ -705,6 +710,37 @@
                     el.textContent = statsInput.value;
                 }
             });
+        }
+
+        // --- Dynamic Channel PFP Search Integration ---
+        let fetchTimeout;
+        async function fetchChannelPFP() {
+            const channelName = channelInput.value.trim();
+            if (!channelName || channelName === "Lorem Ipsum Channel") return;
+
+            try {
+                // Using an open, zero-auth YouTube scrape proxy to pull metadata by handle / name
+                const response = await fetch(`https://open-details.free.beeceptor.com/yt-channel?name=${encodeURIComponent(channelName)}`, {
+                    headers: { 'Accept': 'application/json' }
+                }).catch(() => null);
+
+                let avatarUrl = "";
+                if (response && response.ok) {
+                    const data = await response.json();
+                    if (data && data.avatar) avatarUrl = data.avatar;
+                }
+
+                // Fallback: If direct scrape is rate-limited, query fallback avatar service
+                if (!avatarUrl) {
+                    avatarUrl = `https://unavatar.io/youtube/${encodeURIComponent(channelName)}`;
+                }
+
+                channelAvatars.forEach(avatar => {
+                    avatar.style.backgroundImage = `url('${avatarUrl}')`;
+                });
+            } catch (err) {
+                console.warn("Avatar service lookup failed, keeping default gradient:", err);
+            }
         }
 
         // --- Handle File Upload preview ---
@@ -727,7 +763,13 @@
 
         // Event listeners for inputs
         titleInput.addEventListener('input', updateTexts);
-        channelInput.addEventListener('input', updateTexts);
+        channelInput.addEventListener('input', () => {
+            updateTexts();
+            clearTimeout(fetchTimeout);
+            // Debounce the PFP network request so it doesn't fire on every single keystroke
+            fetchTimeout = setTimeout(fetchChannelPFP, 600);
+        });
+        channelInput.addEventListener('blur', fetchChannelPFP);
         durationInput.addEventListener('input', updateTexts);
         statsInput.addEventListener('input', updateTexts);
 
