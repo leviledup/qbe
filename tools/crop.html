@@ -585,7 +585,7 @@
                         <div class="details-text">
                             <span class="video-title live-title" style="font-size:0.85rem;">Video Title Placeholder</span>
                             <span class="channel-name live-channel" style="font-size:0.75rem;">Channel</span>
-                            <span class="video-stats live-stats" style="font-size:0.75rem;">Stats</span>
+                            <span class="video-stats live-stats">Stats</span>
                         </div>
                     </div>
                 </div>
@@ -624,7 +624,7 @@
                         <div class="channel-avatar"></div>
                         <div class="details-text">
                             <span class="video-title live-title">Video Title Placeholder</span>
-                            <span class="video-stats live-stats"><span class="live-channel">Channel</span> • Stats</span>
+                            <span class="video-stats"><span class="live-channel">Channel</span> • <span class="live-stats">Stats</span></span>
                         </div>
                     </div>
                 </div>
@@ -658,7 +658,7 @@
                     </div>
                     <div class="details-text">
                         <span class="video-title live-title" style="font-size:1.1rem; margin-top:4px;">Video Title Placeholder</span>
-                        <span class="video-stats live-stats" style="font-size:0.85rem;"><span class="live-channel">Channel</span> • Stats</span>
+                        <span class="video-stats"><span class="live-channel">Channel</span> • <span class="live-stats">Stats</span></span>
                     </div>
                 </div>
             </div>
@@ -704,11 +704,7 @@
             liveChannels.forEach(el => el.textContent = channelInput.value);
             liveDurations.forEach(el => el.textContent = durationInput.value);
             liveStatsElements.forEach(el => {
-                if (el.textContent.includes('•')) {
-                    el.innerHTML = `${channelInput.value} • ${statsInput.value}`;
-                } else {
-                    el.textContent = statsInput.value;
-                }
+                el.textContent = statsInput.value;
             });
         }
 
@@ -719,22 +715,9 @@
             if (!channelName || channelName === "Lorem Ipsum Channel") return;
 
             try {
-                // Using an open, zero-auth YouTube scrape proxy to pull metadata by handle / name
-                const response = await fetch(`https://open-details.free.beeceptor.com/yt-channel?name=${encodeURIComponent(channelName)}`, {
-                    headers: { 'Accept': 'application/json' }
-                }).catch(() => null);
-
-                let avatarUrl = "";
-                if (response && response.ok) {
-                    const data = await response.json();
-                    if (data && data.avatar) avatarUrl = data.avatar;
-                }
-
-                // Fallback: If direct scrape is rate-limited, query fallback avatar service
-                if (!avatarUrl) {
-                    avatarUrl = `https://unavatar.io/youtube/${encodeURIComponent(channelName)}`;
-                }
-
+                // Querying open unavatar profile matching service
+                const avatarUrl = `https://unavatar.io/youtube/${encodeURIComponent(channelName)}`;
+                
                 channelAvatars.forEach(avatar => {
                     avatar.style.backgroundImage = `url('${avatarUrl}')`;
                 });
