@@ -11,9 +11,9 @@
             box-sizing: border-box;
         }
 
-        /* --- Seamless Theme Variables --- */
+        /* --- Dynamic Seamless Themes --- */
         :root {
-            /* Global Dark Theme (Default) */
+            /* Dark Theme (Default) */
             --site-bg: #0f0f0f;
             --site-grid: rgba(255, 255, 255, 0.05);
             --card-text-main: #f1f1f1;
@@ -22,19 +22,17 @@
             --card-avatar-bg: #2d2d2d;
             --card-avatar-text: #cccccc;
             
-            /* Control Deck Colors (Stays dark for sleek tool aesthetic) */
+            /* UI Controls stay dark for professional utility look */
             --deck-bg: #1a1a1a;
             --deck-border: #2e2e2e;
             --deck-input-bg: #272727;
-
-            /* Fixed Embed Specs */
             --discord-bg: #2b2d31;
         }
 
         body.light-mode {
-            /* Global Light Theme */
+            /* Light Theme */
             --site-bg: #ffffff;
-            --site-grid: rgba(0, 0, 0, 0.04);
+            --site-grid: rgba(0, 0, 0, 0.05);
             --card-text-main: #0f0f0f;
             --card-text-sub: #606060;
             --card-border: #e5e5e5;
@@ -49,10 +47,10 @@
             padding: 0;
             background-color: var(--site-bg);
             color: var(--card-text-main);
-            transition: background-color 0.3s ease, color 0.3s ease;
+            transition: background-color 0.25s ease, color 0.25s ease;
         }
 
-        /* Adaptive Dynamic Grid Background */
+        /* Geometric Background Grid */
         .grid-bg {
             position: fixed;
             inset: 0;
@@ -62,7 +60,7 @@
                 linear-gradient(90deg, var(--site-grid) 1px, transparent 1px);
             background-size: 20px 20px;
             pointer-events: none;
-            transition: background-image 0.3s ease;
+            transition: background-image 0.25s ease;
         }
 
         .tool-container {
@@ -92,16 +90,16 @@
             margin-bottom: 24px;
         }
 
-        /* --- Header Styling Updates --- */
+        /* --- Header Navigation Updates --- */
         .topbar {
-            background-color: var(--site-bg);
-            border-bottom: 1px solid var(--card-border);
             display: flex;
             align-items: center;
             justify-content: space-between;
             padding: 0 24px;
             height: 64px;
-            transition: background-color 0.3s ease, border-color 0.3s ease;
+            background-color: var(--site-bg);
+            border-bottom: 1px solid var(--card-border);
+            transition: background-color 0.25s ease, border-color 0.25s ease;
         }
 
         .logo-text {
@@ -114,7 +112,7 @@
             gap: 16px;
         }
 
-        /* Mode Toggle Switch Styling */
+        /* Seamless Mode Toggle Pill */
         .theme-toggle-btn {
             background: none;
             border: 1px solid var(--card-border);
@@ -134,7 +132,7 @@
             background-color: var(--card-border);
         }
 
-        /* --- Control Deck --- */
+        /* --- Control Deck Settings UI --- */
         .control-deck {
             width: 100%;
             max-width: 900px;
@@ -143,7 +141,7 @@
             border-radius: 20px;
             padding: 20px;
             margin-bottom: 32px;
-            box-shadow: 0 12px 36px rgba(0,0,0,0.15);
+            box-shadow: 0 12px 36px rgba(0,0,0,0.25);
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 16px;
@@ -266,12 +264,12 @@
             border-bottom: 1.5px solid var(--card-border);
             padding-bottom: 8px;
             text-align: left;
-            transition: border-color 0.3s ease, color 0.3s ease;
+            transition: border-color 0.25s ease, color 0.25s ease;
         }
 
         /* --- Seamless YouTube Mockup Cards --- */
         .yt-mock-card {
-            background: transparent; /* Seamless blend with active theme background */
+            background: transparent;
             font-family: Roboto, Arial, sans-serif;
             color: var(--card-text-main);
             display: flex;
@@ -289,8 +287,8 @@
             border-radius: 12px;
             -webkit-border-radius: 12px;
             overflow: hidden;
-            -webkit-mask-image: -webkit-radial-gradient(white, black); /* Standard iOS Rounding Fix */
-            will-change: transform; /* Force hardware acceleration clipping */
+            -webkit-mask-image: -webkit-radial-gradient(white, black); /* iOS Clip Bug Fix */
+            will-change: transform;
             box-shadow: 0 4px 12px rgba(0,0,0,0.15);
         }
 
@@ -303,7 +301,7 @@
             -webkit-border-radius: 12px;
         }
 
-        /* Default fallback icon inside empty thumbnails */
+        /* Default placeholder screen inside empty thumbnails */
         .thumb-fallback {
             position: absolute;
             inset: 0;
@@ -334,7 +332,7 @@
             padding: 0 8px;
         }
 
-        /* Proportional Aspect Ratios mapping to exact layout templates */
+        /* Aspect ratio templates */
         .mock-home-large { max-width: 360px; }
         .mock-home-large .thumb-wrapper { aspect-ratio: 360 / 205; }
 
@@ -360,7 +358,7 @@
         .mock-tv-watch-later { max-width: 360px; }
         .mock-tv-watch-later .thumb-wrapper { aspect-ratio: 360 / 200; }
 
-        /* Duration Stamp bottom right */
+        /* Duration Badge */
         .yt-duration-badge {
             position: absolute;
             bottom: 8px;
@@ -396,7 +394,7 @@
             font-size: 0.85rem;
             color: var(--card-avatar-text);
             border: 1px solid var(--card-border);
-            transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+            transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease;
         }
 
         .info-col {
@@ -417,7 +415,7 @@
             -webkit-box-orient: vertical;
             overflow: hidden;
             text-overflow: ellipsis;
-            transition: color 0.3s ease;
+            transition: color 0.25s ease;
         }
 
         .creator {
@@ -426,7 +424,7 @@
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            transition: color 0.3s ease;
+            transition: color 0.25s ease;
         }
 
         .meta {
@@ -435,10 +433,10 @@
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            transition: color 0.3s ease;
+            transition: color 0.25s ease;
         }
 
-        /* --- Horizontal/Sidebar Layout Specs --- */
+        /* --- Horizontal Layout Elements (Resizes proportionally on mobile) --- */
         .yt-mock-horizontal {
             display: flex;
             flex-direction: row;
@@ -449,26 +447,26 @@
             background: transparent;
         }
 
-        /* Sidebar Suggested ($168 x $94) */
+        /* Sidebar Suggested */
         .mock-sidebar { max-width: 360px; }
         .mock-sidebar .thumb-wrapper { flex: 0 0 45%; aspect-ratio: 168 / 94; }
         .mock-sidebar .title { font-size: 0.8rem; line-height: 1.1rem; -webkit-line-clamp: 2; }
         .mock-sidebar .creator, .mock-sidebar .meta { font-size: 0.75rem; }
 
-        /* Watch Later horizontal list row */
+        /* Watch Later Row */
         .mock-watch-later { width: 100%; max-width: 720px; grid-column: 1 / -1; }
         .mock-watch-later .thumb-wrapper { flex: 0 0 35%; aspect-ratio: 220 / 124; }
         .mock-watch-later .title { font-size: 1.1rem; line-height: 1.4rem; }
 
-        /* Search Result Large Horizontal Card */
+        /* Search Layout Row */
         .mock-search-large { width: 100%; max-width: 840px; grid-column: 1 / -1; }
         .mock-search-large .thumb-wrapper { flex: 0 0 40%; aspect-ratio: 360 / 202; }
         .mock-search-large .title { font-size: 1.15rem; line-height: 1.5rem; margin-bottom: 4px; }
         .mock-search-large .creator-row { display: flex; align-items: center; gap: 8px; margin: 8px 0; }
         .mock-search-large .creator-row .avatar { width: 24px; height: 24px; font-size: 0.7rem; }
-        .mock-search-large .snippet { font-size: 0.8rem; color: var(--card-text-sub); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; transition: color 0.3s ease; }
+        .mock-search-large .snippet { font-size: 0.8rem; color: var(--card-text-sub); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; transition: color 0.25s ease; }
 
-        /* --- Discord Social Embed Preview Card --- */
+        /* --- Discord Social Preview Embed --- */
         .mock-discord-card {
             width: 100%;
             max-width: 480px;
@@ -559,20 +557,17 @@
                 line-height: 1.2rem;
             }
         }
-
     </style>
 </head>
 <body>
     <div class="grid-bg"></div>
 
-    <!-- Navigation Header with Seamless Mode Toggle Button -->
     <nav class="topbar">
         <a href="../index.html" class="logo-group">
             <img src="../qbe.png" alt="Logo" class="logo-img" onerror="this.style.display='none'">
             <span class="logo-text">qbe</span>
         </a>
         <div class="header-actions">
-            <!-- Theme Toggle Switch -->
             <button class="theme-toggle-btn" id="themeToggleBtn">
                 <span id="themeToggleIcon">☀️</span>
                 <span id="themeToggleText">Light Mode</span>
@@ -585,12 +580,10 @@
         </div>
     </nav>
 
-    <!-- Main Workspace -->
     <main class="tool-container">
         <h2>YouTube Thumbnail Simulator</h2>
         <p class="tool-subtitle">Instantly test image scaling and cropping presets across official YouTube formats</p>
         
-        <!-- Deck Controller Interface -->
         <div class="control-deck">
             <div class="deck-full-width">
                 <label class="file-upload-btn" for="imageInput">Upload Thumbnail Image</label>
@@ -599,12 +592,12 @@
             
             <div class="form-row">
                 <label for="titleInput">Video Title</label>
-                <input type="text" id="titleInput" value="Stop paying others for easy work | qbe" placeholder="e.g. Master Design Layouts">
+                <input type="text" id="titleInput" value="I bought 100 gallons of Liquid Ass | qbe labs" placeholder="e.g. Master Design Layouts">
             </div>
 
             <div class="form-row">
                 <label for="creatorInput">Channel Name</label>
-                <input type="text" id="creatorInput" value="qbe" placeholder="e.g. Marques Brownlee">
+                <input type="text" id="creatorInput" value="qbe labs" placeholder="e.g. Marques Brownlee">
             </div>
 
             <div class="form-row">
@@ -618,7 +611,6 @@
             </div>
         </div>
 
-        <!-- Filter tabs to quickly toggle viewpoints -->
         <div class="workspace-filters">
             <button class="filter-btn active" data-filter="all">Show All Layouts</button>
             <button class="filter-btn" data-filter="desktop">PC Browser</button>
@@ -627,13 +619,10 @@
             <button class="filter-btn" data-filter="embed">Embeds (Discord)</button>
         </div>
 
-        <!-- Main Simulated Grids Workspace -->
         <div class="preview-grid" id="previewGrid">
 
-            <!-- ================= DESKTOP LAYOUTS ================= -->
             <div class="group-header" data-section="desktop">Desktop / PC Browser Layouts</div>
 
-            <!-- Homepage Large -->
             <div class="yt-mock-card mock-home-large" data-section="desktop">
                 <div class="thumb-wrapper">
                     <div class="thumb-fallback">
@@ -646,14 +635,13 @@
                 <div class="yt-card-details">
                     <div class="avatar">Q</div>
                     <div class="info-col">
-                        <div class="title sim-title">Stop paying others for easy work | qbe</div>
-                        <div class="creator sim-creator">qbe</div>
+                        <div class="title sim-title">I bought 100 gallons of Liquid Ass | qbe labs</div>
+                        <div class="creator sim-creator">qbe labs</div>
                         <div class="meta sim-meta">123K views • 1 hour ago</div>
                     </div>
                 </div>
             </div>
 
-            <!-- Homepage Small -->
             <div class="yt-mock-card mock-home-small" data-section="desktop">
                 <div class="thumb-wrapper">
                     <div class="thumb-fallback">
@@ -666,14 +654,13 @@
                 <div class="yt-card-details">
                     <div class="avatar" style="width:24px; height:24px; font-size:0.7rem;">Q</div>
                     <div class="info-col">
-                        <div class="title sim-title">Stop paying others for easy work | qbe</div>
-                        <div class="creator sim-creator">qbe</div>
+                        <div class="title sim-title">I bought 100 gallons of Liquid Ass | qbe labs</div>
+                        <div class="creator sim-creator">qbe labs</div>
                         <div class="meta sim-meta">123K views • 1 hour ago</div>
                     </div>
                 </div>
             </div>
 
-            <!-- Sidebar Suggested Video -->
             <div class="yt-mock-horizontal mock-sidebar" data-section="desktop">
                 <div class="thumb-wrapper">
                     <div class="thumb-fallback">
@@ -684,13 +671,12 @@
                     <div class="yt-duration-badge">14:57</div>
                 </div>
                 <div class="info-col">
-                    <div class="title sim-title">Stop paying others for easy work | qbe</div>
-                    <div class="creator sim-creator">qbe</div>
+                    <div class="title sim-title">I bought 100 gallons of Liquid Ass | qbe labs</div>
+                    <div class="creator sim-creator">qbe labs</div>
                     <div class="meta sim-meta">123K views • 1 hour ago</div>
                 </div>
             </div>
 
-            <!-- Channel Page -->
             <div class="yt-mock-card mock-channel" data-section="desktop">
                 <div class="thumb-wrapper">
                     <div class="thumb-fallback">
@@ -702,13 +688,12 @@
                 </div>
                 <div class="yt-card-details" style="margin-top: 8px;">
                     <div class="info-col">
-                        <div class="title sim-title" style="font-size:0.85rem;">Stop paying others for easy work | qbe</div>
+                        <div class="title sim-title" style="font-size:0.85rem;">I bought 100 gallons of Liquid Ass | qbe labs</div>
                         <div class="meta sim-meta" style="font-size:0.75rem; margin-top:2px;">123K views • 1 hour ago</div>
                     </div>
                 </div>
             </div>
 
-            <!-- Channel Page Small -->
             <div class="yt-mock-card mock-channel-small" data-section="desktop">
                 <div class="thumb-wrapper">
                     <div class="thumb-fallback">
@@ -720,13 +705,12 @@
                 </div>
                 <div class="yt-card-details" style="margin-top: 6px;">
                     <div class="info-col">
-                        <div class="title sim-title" style="font-size:0.75rem; line-height:1.1;">Stop paying others for easy work | qbe</div>
+                        <div class="title sim-title" style="font-size:0.75rem; line-height:1.1;">I bought 100 gallons of Liquid Ass | qbe labs</div>
                         <div class="meta sim-meta" style="font-size:0.7rem; margin-top:2px;">123K views • 1 hour ago</div>
                     </div>
                 </div>
             </div>
 
-            <!-- Watch Later Playlist Row -->
             <div class="yt-mock-horizontal mock-watch-later" data-section="desktop">
                 <div class="thumb-wrapper">
                     <div class="thumb-fallback">
@@ -737,15 +721,14 @@
                     <div class="yt-duration-badge">14:57</div>
                 </div>
                 <div class="info-col">
-                    <div class="title sim-title">Stop paying others for easy work | qbe</div>
+                    <div class="title sim-title">I bought 100 gallons of Liquid Ass | qbe labs</div>
                     <div class="meta" style="margin-top: 4px; display:flex; align-items:center; gap:8px;">
-                        <span class="sim-creator" style="font-weight:600; color:var(--card-text-main);">qbe</span>
+                        <span class="sim-creator" style="font-weight:600; color:var(--card-text-main);">qbe labs</span>
                         <span class="sim-meta">123K views • 1 hour ago</span>
                     </div>
                 </div>
             </div>
 
-            <!-- Search Result Page Large -->
             <div class="yt-mock-horizontal mock-search-large" data-section="desktop">
                 <div class="thumb-wrapper">
                     <div class="thumb-fallback">
@@ -756,21 +739,19 @@
                     <div class="yt-duration-badge">14:57</div>
                 </div>
                 <div class="info-col">
-                    <div class="title sim-title">Stop paying others for easy work | qbe</div>
+                    <div class="title sim-title">I bought 100 gallons of Liquid Ass | qbe labs</div>
                     <div class="meta sim-meta">123K views • 1 hour ago</div>
                     <div class="creator-row">
                         <div class="avatar">Q</div>
-                        <span class="sim-creator" style="font-size: 0.85rem; color: var(--card-text-sub);">qbe</span>
+                        <span class="sim-creator" style="font-size: 0.85rem; color: var(--card-text-sub);">qbe labs</span>
                     </div>
                     <div class="snippet">Learn how to automate task flows and stop outsourcing your regular technical routines. Complete design walkthrough and live preview specs in this modular deployment.</div>
                 </div>
             </div>
 
 
-            <!-- ================= MOBILE LAYOUTS ================= -->
             <div class="group-header" data-section="mobile">Mobile Layouts</div>
 
-            <!-- Mobile Homepage Feed -->
             <div class="yt-mock-card mock-mobile-home" data-section="mobile">
                 <div class="thumb-wrapper">
                     <div class="thumb-fallback">
@@ -783,15 +764,14 @@
                 <div class="yt-card-details">
                     <div class="avatar">Q</div>
                     <div class="info-col">
-                        <div class="title sim-title">Stop paying others for easy work | qbe</div>
+                        <div class="title sim-title">I bought 100 gallons of Liquid Ass | qbe labs</div>
                         <div class="meta" style="font-size:0.75rem;">
-                            <span class="sim-creator">qbe</span> • <span class="sim-meta">123K views • 1 hour ago</span>
+                            <span class="sim-creator">qbe labs</span> • <span class="sim-meta">123K views • 1 hour ago</span>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Mobile Suggested Horizontal Card -->
             <div class="yt-mock-horizontal mock-sidebar" data-section="mobile">
                 <div class="thumb-wrapper" style="flex: 0 0 40%; aspect-ratio: 140 / 78;">
                     <div class="thumb-fallback">
@@ -802,17 +782,15 @@
                     <div class="yt-duration-badge">14:57</div>
                 </div>
                 <div class="info-col">
-                    <div class="title sim-title" style="font-size:0.75rem; line-height: 1;">Stop paying others for easy work | qbe</div>
-                    <div class="creator sim-creator" style="font-size:0.7rem; margin-top:2px;">qbe</div>
+                    <div class="title sim-title" style="font-size:0.75rem; line-height: 1;">I bought 100 gallons of Liquid Ass | qbe labs</div>
+                    <div class="creator sim-creator" style="font-size:0.7rem; margin-top:2px;">qbe labs</div>
                     <div class="meta sim-meta" style="font-size:0.7rem;">123K views • 1 hour ago</div>
                 </div>
             </div>
 
 
-            <!-- ================= TELEVISION LAYOUTS ================= -->
             <div class="group-header" data-section="tv">Smart TV Layouts</div>
 
-            <!-- Apple TV Youtube Homepage Block -->
             <div class="yt-mock-card mock-tv-home" data-section="tv">
                 <div class="thumb-wrapper">
                     <div class="thumb-fallback">
@@ -825,15 +803,14 @@
                 <div class="yt-card-details">
                     <div class="avatar" style="width:40px; height:40px; font-size:1rem;">Q</div>
                     <div class="info-col">
-                        <div class="title sim-title">Stop paying others for easy work | qbe</div>
+                        <div class="title sim-title">I bought 100 gallons of Liquid Ass | qbe labs</div>
                         <div class="meta" style="font-size:0.9rem; margin-top:2px;">
-                            <span class="sim-creator" style="color:var(--card-text-main); font-weight:600;">qbe</span> • <span class="sim-meta">123K views • 1 hour ago</span>
+                            <span class="sim-creator" style="color:var(--card-text-main); font-weight:600;">qbe labs</span> • <span class="sim-meta">123K views • 1 hour ago</span>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Apple TV Recommended Watch Later -->
             <div class="yt-mock-card mock-tv-watch-later" data-section="tv">
                 <div class="thumb-wrapper">
                     <div class="thumb-fallback">
@@ -846,23 +823,21 @@
                 <div class="yt-card-details">
                     <div class="avatar" style="width:32px; height:32px; font-size:0.8rem;">Q</div>
                     <div class="info-col">
-                        <div class="title sim-title" style="font-size:0.85rem; line-height:1.2;">Stop paying others for easy work | qbe</div>
+                        <div class="title sim-title" style="font-size:0.85rem; line-height:1.2;">I bought 100 gallons of Liquid Ass | qbe labs</div>
                         <div class="meta" style="font-size:0.8rem;">
-                            <span class="sim-creator" style="color:var(--card-text-main);">qbe</span> • <span class="sim-meta">123K views • 1 hour ago</span>
+                            <span class="sim-creator" style="color:var(--card-text-main);">qbe labs</span> • <span class="sim-meta">123K views • 1 hour ago</span>
                         </div>
                     </div>
                 </div>
             </div>
 
 
-            <!-- ================= EMBED LAYOUTS ================= -->
             <div class="group-header" data-section="embed">Link & Social Embeds</div>
 
-            <!-- Discord Embed Card -->
             <div class="mock-discord-card" data-section="embed">
                 <div class="discord-source">YouTube</div>
-                <div class="discord-creator sim-creator">qbe</div>
-                <a class="discord-title sim-title" href="#">Stop paying others for easy work | qbe</a>
+                <div class="discord-creator sim-creator">qbe labs</div>
+                <a class="discord-title sim-title" href="#">I bought 100 gallons of Liquid Ass | qbe labs</a>
                 
                 <div class="discord-media">
                     <div class="discord-play-btn"></div>
@@ -877,7 +852,6 @@
         </div>
     </main>
 
-    <!-- Side Panel Navigation drawer -->
     <div id="toolDrawer" class="tool-drawer">
         <div class="drawer-header">
             <h2>Studio Tools</h2>
@@ -892,7 +866,6 @@
 
     <script src="../script.js"></script>
     <script>
-        // DOM Controls Integration
         const imageInput = document.getElementById('imageInput');
         const titleInput = document.getElementById('titleInput');
         const creatorInput = document.getElementById('creatorInput');
@@ -907,7 +880,6 @@
         const themeToggleIcon = document.getElementById('themeToggleIcon');
         const themeToggleText = document.getElementById('themeToggleText');
 
-        // Check user preferences or default to dark
         const savedTheme = localStorage.getItem('theme');
         if (savedTheme === 'light') {
             document.body.classList.add('light-mode');
@@ -925,55 +897,46 @@
             localStorage.setItem('theme', isLight ? 'light' : 'dark');
         });
 
-        // Dynamic State synchronization logic
+        // Dynamic synchronizer state logic
         function syncInputs() {
             const titleVal = titleInput.value.trim() || "Untitled Video";
             const creatorVal = creatorInput.value.trim() || "Channel Name";
             const durationVal = durationInput.value.trim() || "0:00";
             const viewsVal = viewsInput.value.trim() || "No views • just now";
 
-            // Update title classes
             document.querySelectorAll('.sim-title').forEach(el => {
                 el.textContent = titleVal;
             });
 
-            // Update creator/author classes
             document.querySelectorAll('.sim-creator').forEach(el => {
                 el.textContent = creatorVal;
             });
 
-            // Update channel avatar letters
             const initialLetter = creatorVal.charAt(0).toUpperCase() || 'Q';
             document.querySelectorAll('.avatar').forEach(avatar => {
                 avatar.textContent = initialLetter;
             });
 
-            // Update metadata details
             document.querySelectorAll('.sim-meta').forEach(el => {
                 el.textContent = viewsVal;
             });
 
-            // Update duration markers
             document.querySelectorAll('.yt-duration-badge').forEach(badge => {
                 badge.textContent = durationVal;
             });
         }
 
-        // Handle Dynamic Thumbnail Asset Updates
+        // Handle Image Upload File Loader
         imageInput.addEventListener('change', function(e) {
             const file = e.target.files[0];
             if (file) {
                 const reader = new FileReader();
                 reader.onload = function(event) {
                     const dataUrl = event.target.result;
-                    
-                    // Render uploaded thumbnail on all templates
                     images.forEach(img => {
                         img.src = dataUrl;
                         img.style.display = 'block';
                     });
-
-                    // Hide placeholder screens
                     fallbacks.forEach(fb => {
                         fb.style.display = 'none';
                     });
@@ -982,12 +945,11 @@
             }
         });
 
-        // Fire input event listeners to synchronize states
         [titleInput, creatorInput, durationInput, viewsInput].forEach(input => {
             input.addEventListener('input', syncInputs);
         });
 
-        // Quick Workspace Navigation Filter Logic
+        // Tab category filtering
         const filterBtns = document.querySelectorAll('.filter-btn');
         const gridItems = document.querySelectorAll('[data-section]');
 
@@ -1009,7 +971,6 @@
             });
         });
 
-        // Start initialization sequence
         syncInputs();
     </script>
 </body>
