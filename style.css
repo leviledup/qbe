@@ -6,7 +6,7 @@
     --divider-color: #cbd5e1;
 }
 
-/* Hard CSS reset to lock responsive viewport sizing */
+/* Global resets */
 * { 
     box-sizing: border-box; 
     margin: 0; 
@@ -17,14 +17,14 @@ body {
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
     background: var(--bg);
     color: var(--text);
-    height: 100vh;
+    min-height: 100vh;
     width: 100vw;
     overflow-x: hidden;
     overflow-y: auto;
     position: relative;
 }
 
-/* Animating Blueprint Grid */
+/* Animating Blueprint Grid Background */
 .grid-bg {
     position: fixed;
     inset: -50%;
@@ -43,16 +43,17 @@ body {
     to { transform: translate(40px, 40px); }
 }
 
-/* Topbar Header */
+/* Topbar Header Layout */
 .topbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 20px 24px;
-    position: sticky;
-    top: 0;
+    position: relative;
     z-index: 10;
     width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 .logo-group {
@@ -97,7 +98,6 @@ body {
     opacity: 0.95;
 }
 
-/* Hamburger Menu Icon */
 .staircase-menu {
     display: flex;
     flex-direction: column;
@@ -113,7 +113,9 @@ body {
     border-radius: 2px;
 }
 
-/* Scrollable Webpage Content wrapper */
+/* ==========================================================================
+   LANDING PAGE LAYOUT STYLES
+   ========================================================================== */
 .page-container {
     max-width: 600px;
     margin: 0 auto;
@@ -123,7 +125,6 @@ body {
     align-items: center;
 }
 
-/* Clean Divider Rules */
 .divider {
     width: 85%;
     border: none;
@@ -132,7 +133,6 @@ body {
     margin: 40px auto;
 }
 
-/* Hero Title and CTA Area */
 .hero-section {
     width: 100%;
     text-align: center;
@@ -151,7 +151,6 @@ body {
     background-color: var(--text);
     color: var(--bg);
     border: none;
-    outline: none;
     padding: 14px 28px;
     border-radius: 50px;
     font-size: 1.1rem;
@@ -163,20 +162,12 @@ body {
     box-shadow: 0 4px 15px rgba(0,0,0,0.1);
     transition: all 0.2s ease-in-out;
 }
-
 .cta-pill:hover {
     transform: scale(1.05);
-    box-shadow: 0 6px 20px rgba(0,0,0,0.15);
 }
+.cta-pill .arrow { transition: transform 0.2s; }
+.cta-pill:hover .arrow { transform: translateX(4px); }
 
-.cta-pill .arrow {
-    transition: transform 0.2s;
-}
-.cta-pill:hover .arrow {
-    transform: translateX(4px);
-}
-
-/* --- THE FIX: Force columns to allow shrinking below image min-content sizes --- */
 .team-section {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); 
@@ -186,7 +177,6 @@ body {
     margin: 0 auto;
 }
 
-/* --- THE FIX: Block card flex items from expanding beyond parent boundary --- */
 .profile-card {
     display: flex;
     flex-direction: column;
@@ -194,11 +184,9 @@ body {
     text-align: center;
     text-decoration: none;
     color: inherit;
-    transition: transform 0.2s;
     min-width: 0; 
 }
 
-/* --- THE FIX: Explicitly lock the container size to 90px --- */
 .avatar-holder {
     width: 90px;
     height: 90px;
@@ -214,23 +202,17 @@ body {
     border: 3px solid transparent;
     transition: border-color 0.2s, transform 0.2s;
     background-color: rgba(137, 207, 240, 0.1);
-    position: relative;
 }
-
 .profile-card:hover .avatar-holder {
     transform: scale(1.08);
     border-color: var(--primary);
 }
 
-/* --- THE FIX: Circular crop the image and constrain it to container limits --- */
 .avatar-img {
     width: 100%;
     height: 100%;
-    max-width: 100%;
-    max-height: 100%;
     object-fit: cover;
-    border-radius: 50%; /* Direct rounding fixes Safari & mobile WebView overflow clipping */
-    display: block;
+    border-radius: 50%;
 }
 
 .profile-name {
@@ -239,40 +221,167 @@ body {
     color: var(--text);
     margin-bottom: 2px;
 }
+.profile-card:hover .profile-name { color: var(--primary); }
+.profile-role { font-size: 0.9rem; color: #64748b; font-weight: 600; }
 
-.profile-card:hover .profile-name {
-    color: var(--primary);
-}
+.about-section { width: 100%; text-align: center; padding: 10px 12px; }
+.about-title { font-size: 1.8rem; font-weight: 800; margin-bottom: 14px; }
+.about-text { font-size: 0.95rem; line-height: 1.6; color: #475569; max-width: 460px; margin: 0 auto; font-weight: 500; }
 
-.profile-role {
-    font-size: 0.9rem;
-    color: #64748b;
-    font-weight: 600;
-}
-
-/* Explainer/About Section */
-.about-section {
-    width: 100%;
-    text-align: center;
-    padding: 10px 12px;
-}
-
-.about-title {
-    font-size: 1.8rem;
-    font-weight: 800;
-    margin-bottom: 14px;
-}
-
-.about-text {
-    font-size: 0.95rem;
-    line-height: 1.6;
-    color: #475569;
-    max-width: 460px;
+/* ==========================================================================
+   FIXESED SMART CROP HELPER ENGINE STYLES
+   ========================================================================== */
+.tool-container {
+    max-width: 600px;
     margin: 0 auto;
-    font-weight: 500;
+    padding: 10px 24px 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
 }
 
-/* Slide-In Side Drawer Navigation Panel */
+.tool-container h2 {
+    font-size: 2.2rem;
+    font-weight: 900;
+    margin-bottom: 8px;
+    text-align: center;
+    letter-spacing: -0.5px;
+}
+
+.tool-subtitle {
+    font-size: 0.95rem;
+    color: #475569;
+    text-align: center;
+    margin-bottom: 24px;
+    line-height: 1.5;
+    max-width: 445px;
+}
+
+#imageInput {
+    display: none; /* Hides raw upload element button */
+}
+
+.file-upload-btn {
+    background-color: var(--text);
+    color: var(--bg);
+    padding: 12px 24px;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: opacity 0.2s, transform 0.2s;
+    margin-bottom: 30px;
+    display: inline-block;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+.file-upload-btn:hover {
+    transform: translateY(-1px);
+    opacity: 0.9;
+}
+
+/* 9:16 Aspect Display Simulator Frame Mockup */
+.preview-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 330px;
+    aspect-ratio: 9 / 16;
+    background-color: #1e293b;
+    border-radius: 32px;
+    overflow: hidden;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    border: 6px solid #050505;
+}
+
+#preview {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* User Interface Mask Overlay Layer */
+.safe-zone-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    pointer-events: none; /* Allows direct interaction passes */
+    color: #ffffff;
+    padding: 24px 16px;
+    font-family: system-ui, -apple-system, sans-serif;
+    z-index: 2;
+}
+
+.ui-top-shadow {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+    padding-top: 8px;
+}
+
+.ui-side-icons {
+    position: absolute;
+    right: 12px;
+    bottom: 160px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: center;
+}
+
+.ui-icon-circle {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+.ui-icon-circle.profile {
+    border: 2px solid #ffffff;
+    background: rgba(255, 255, 255, 0.4);
+}
+
+.ui-bottom-shadow {
+    margin-top: auto;
+    padding-bottom: 8px;
+    padding-right: 48px;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.7);
+}
+
+.ui-bottom-shadow .username {
+    font-weight: 700;
+    font-size: 0.95rem;
+    margin-bottom: 4px;
+}
+
+.ui-bottom-shadow .caption {
+    font-size: 0.8rem;
+    line-height: 1.4;
+    opacity: 0.95;
+}
+
+/* Dashed Safe Bound Action Line Guides Box */
+.safe-box-outline {
+    position: absolute;
+    top: 12%;
+    bottom: 22%;
+    left: 4%;
+    right: 18%;
+    border: 2px dashed rgba(255, 255, 255, 0.7);
+    border-radius: 12px;
+    box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.35); /* Darkens all layout bleeding areas */
+}
+
+/* ==========================================================================
+   GLOBAL DRAWER NAVIGATION SLIDE PANEL
+   ========================================================================== */
 .tool-drawer {
     position: fixed;
     top: 0;
@@ -290,38 +399,12 @@ body {
     flex-direction: column;
 }
 
-.tool-drawer.active {
-    transform: translateX(0);
-}
-
-.drawer-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 30px;
-}
-
-.drawer-header h2 { 
-    font-size: 1.6rem; 
-    font-weight: 800; 
-}
-
-.close-btn {
-    font-size: 1.75rem;
-    cursor: pointer;
-    font-weight: bold;
-    color: #94a3b8;
-    transition: color 0.15s;
-}
-.close-btn:hover {
-    color: var(--text);
-}
-
-.tool-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
+.tool-drawer.active { transform: translateX(0); }
+.drawer-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+.drawer-header h2 { font-size: 1.6rem; font-weight: 800; }
+.close-btn { font-size: 1.75rem; cursor: pointer; font-weight: bold; color: #94a3b8; transition: color 0.15s; }
+.close-btn:hover { color: var(--text); }
+.tool-grid { display: flex; flex-direction: column; gap: 12px; }
 
 .tool-card {
     display: block;
@@ -341,8 +424,4 @@ body {
     transform: translateX(-4px);
     box-shadow: 0 4px 12px rgba(88, 101, 242, 0.08);
 }
-
-.tool-card.disabled {
-    opacity: 0.45;
-    cursor: not-allowed;
-}
+.tool-card.disabled { opacity: 0.45; cursor: not-allowed; }
