@@ -91,9 +91,9 @@
         }
 
         .logo-img {
-            width: 28px;
-            height: 28px;
-            object-fit: contain;
+            height: 24px;
+            width: auto;
+            display: block;
         }
 
         .header-actions {
@@ -159,9 +159,11 @@
 
         .fail-image {
             width: 100%;
+            height: auto;
             border-radius: 16px;
             box-shadow: 0 8px 24px rgba(0,0,0,0.2);
             border: 1px solid var(--card-border);
+            display: block;
         }
 
         .disclaimer-text {
@@ -472,7 +474,7 @@
 
     <nav class="topbar">
         <a href="https://leviledup.github.io/qbe" class="logo-group">
-            <img src="./qbe.png" alt="qbe logo" class="logo-img" onerror="this.style.display='none'">
+            <img src="qbe.png" alt="qbe logo" class="logo-img">
             <span>qbe</span>
         </a>
         <div class="header-actions">
@@ -490,7 +492,7 @@
         <p class="subtitle">So this doesn't happen to you:</p>
 
         <div class="fail-card-wrapper">
-            <img class="fail-image" src="./assets/cropexample.png" alt="Apple Crop Fail Example" onerror="this.src='assets/cropexample.png'">
+            <img class="fail-image" src="assets/cropexample.png" alt="Apple Crop Fail Example">
             <p class="disclaimer-text">The Apple logo is a trademark of Apple Inc.</p>
         </div>
 
