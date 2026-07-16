@@ -172,14 +172,14 @@
             color: #ffffff;
             font-family: system-ui, sans-serif;
             z-index: 2;
-            opacity: 0.85;
+            opacity: 0.95;
         }
 
         /* YouTube UI Specs */
         .youtube-overlay {
             position: absolute;
             inset: 0;
-            background: rgba(0, 0, 0, 0.15);
+            background: rgba(0, 0, 0, 0.1);
         }
         .youtube-overlay .yt-duration {
             position: absolute;
@@ -207,23 +207,31 @@
             height: 100%;
             background: #ff0000;
         }
+        
+        /* Authentic Red YouTube Play Button */
         .yt-play-btn {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background: rgba(0, 0, 0, 0.6);
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
+            background: #ff0000;
+            width: 54px;
+            height: 38px;
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.1rem;
-            color: #fff;
-            border: 2px solid rgba(255, 255, 255, 0.8);
             z-index: 3;
-            padding-left: 3px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+        .yt-play-btn::after {
+            content: "";
+            width: 0;
+            height: 0;
+            border-top: 8px solid transparent;
+            border-bottom: 8px solid transparent;
+            border-left: 14px solid #ffffff;
+            margin-left: 4px; /* visually centers the play arrow */
         }
 
         /* TikTok UI Specs */
@@ -321,39 +329,41 @@
             width: 100%;
         }
 
-        /* --- Safe Boundary Guideline Boxes --- */
+        /* --- Perfect Outer Edge-Aligned Guides --- */
         .safe-box-outline {
             position: absolute;
-            border: 1.5px dashed rgba(255, 255, 255, 0.75);
-            border-radius: 6px;
-            box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.35);
-            z-index: 1;
+            border: 2px dashed rgba(255, 255, 255, 0.9);
+            border-radius: 8px;
+            pointer-events: none;
+            z-index: 4;
+            box-shadow: none; /* Removed heavy mask shading to prevent cramped look */
+            filter: drop-shadow(0px 0px 3px rgba(0, 0, 0, 0.8)); /* Sharp contrast on dark/light assets */
         }
         .safe-box-outline.horizontal-safe {
-            top: 6%;
-            bottom: 6%;
+            top: 4%;
+            bottom: 4%;
             left: 4%;
             right: 4%;
         }
         .safe-box-outline.vertical-safe {
-            top: 10%;
-            bottom: 20%;
+            top: 4%;
+            bottom: 4%;
             left: 4%;
-            right: 18%;
+            right: 4%;
         }
         .safe-box-outline.square-safe {
-            top: 15%;
-            bottom: 15%;
-            left: 5%;
-            right: 5%;
+            top: 4%;
+            bottom: 4%;
+            left: 4%;
+            right: 4%;
         }
 
-        /* --- Horizontal Platform Switcher (Fully Scrollable on Mobile) --- */
+        /* --- Optimized Horizontal Platform Switcher (Fully Scrollable on Mobile) --- */
         .platform-tabs-container {
             width: 100%;
-            position: relative;
             display: flex;
-            align-items: center;
+            justify-content: center;
+            overflow: hidden;
         }
 
         .platform-tabs {
@@ -361,8 +371,8 @@
             gap: 10px;
             width: 100%;
             overflow-x: auto;
-            padding: 8px 4px;
-            justify-content: flex-start; /* Permits scroll overflow from the left starting edge */
+            padding: 8px 16px;
+            justify-content: flex-start; /* Preserves smooth scrolling overflow boundaries on touch displays */
             scrollbar-width: none;
             -webkit-overflow-scrolling: touch;
         }
@@ -371,7 +381,7 @@
         }
 
         .tab-btn {
-            flex-shrink: 0; /* Prevents text squeezing on narrow viewports */
+            flex-shrink: 0; /* Keeps pills perfectly rounded and prevents text truncation */
             background: rgba(255, 255, 255, 0.85);
             border: 1.5px solid #cbd5e1;
             color: #475569;
@@ -417,7 +427,7 @@
         <h2>Smart Crop Helper</h2>
         <p class="tool-subtitle">So this doesn't happen to you:</p>
         
-        <!-- Static Bad Example Warn Box (Your sketch's Liquid Ass error) -->
+        <!-- Static Warning Block (Where the bad crop lives) -->
         <div class="bad-example-wrapper">
             <div class="bad-example-card">
                 <img src="../assets/cropexample.png" alt="Crop Warning Example" onerror="handleMissingWarning(this)">
@@ -425,15 +435,15 @@
             <p class="disclaimer-text">Apple logo is a trademark of Apple Inc.</p>
         </div>
 
-        <!-- Custom Upload Trigger (Direct Layout Pillar) -->
+        <!-- Custom Upload Trigger -->
         <label class="file-upload-btn" for="imageInput">Choose Asset Image</label>
         <input type="file" id="imageInput" accept="image/*">
 
-        <!-- Simulator Screen context frame -->
+        <!-- Interactive Simulator Screen Display Window -->
         <div class="preview-frame-container">
             <div class="preview-wrapper platform-youtube" id="previewWrapper">
                 
-                <!-- Default Empty State State (Inside of preview is empty) -->
+                <!-- Default Empty State Inside the Simulator -->
                 <div class="empty-placeholder" id="emptyPlaceholder">
                     <div class="placeholder-icon">📸</div>
                     <p>Your uploaded target asset will render directly inside this frame context</p>
@@ -442,9 +452,9 @@
                 <!-- Custom Image display holder -->
                 <img id="simulatorImg" src="" alt="Simulator Frame">
                 
-                <!-- YouTube Overlay Mask -->
+                <!-- YouTube Overlay Mask (Featuring Authentic Play Button) -->
                 <div class="overlay-layer youtube-overlay" id="youtubeOverlay">
-                    <div class="yt-play-btn">▶</div>
+                    <div class="yt-play-btn"></div>
                     <div class="yt-duration">10:15</div>
                     <div class="yt-progress-bar">
                         <div class="yt-progress-red"></div>
@@ -463,8 +473,8 @@
                         <div class="ui-icon-circle">👤</div>
                         <div class="ui-icon-circle">❤️</div>
                         <div class="ui-icon-circle">💬</div>
-                        <div class="ui-icon-circle">🏷️</div>
-                        <div class="ui-icon-circle">📨</div>
+                        <div class="ui-icon-circle">🔖</div>
+                        <div class="ui-icon-circle">✈️</div>
                     </div>
 
                     <div class="ui-bottom-shadow">
@@ -490,9 +500,9 @@
                             <div class="ig-left-actions">
                                 <span>❤️</span>
                                 <span>💬</span>
-                                <span>📨</span>
+                                <span>✈️</span>
                             </div>
-                            <span>🏷️</span>
+                            <span>🔖</span>
                         </div>
                         <div class="ig-likes">2,482 likes</div>
                     </div>
@@ -514,7 +524,7 @@
             </div>
         </div>
 
-        <!-- Scrollable Platform Switcher Tabs Panel (Anchor at bottom) -->
+        <!-- Scrollable Platform Switcher Tabs Panel (Scroll-safe on all devices) -->
         <div class="platform-tabs-container">
             <div class="platform-tabs">
                 <button class="tab-btn active" data-platform="youtube">▶ YouTube (16:9)</button>
@@ -540,13 +550,13 @@
 
     <script src="../script.js"></script>
     <script>
-        // Clean fallback handling for missing images
+        // Fallback helper in case local/hosted asset isn't resolved
         function handleMissingWarning(imageElement) {
             imageElement.onerror = null; 
             imageElement.src = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'><rect width='100%' height='100%' fill='%231e293b'/><text x='50%' y='54%' dominant-baseline='middle' text-anchor='middle' fill='%2364748b' font-family='sans-serif' font-size='8' font-weight='600'>cropexample.png missing</text></svg>";
         }
 
-        // Live Custom Image Asset Upload Logic
+        // Handle client image loading inside preview frame
         const imageInput = document.getElementById('imageInput');
         const simulatorImg = document.getElementById('simulatorImg');
         const emptyPlaceholder = document.getElementById('emptyPlaceholder');
@@ -557,7 +567,6 @@
                 if (file) {
                     const reader = new FileReader();
                     reader.onload = function(event) {
-                        // Switch source elements and clear fallback states
                         simulatorImg.src = event.target.result;
                         simulatorImg.style.display = 'block';
                         if (emptyPlaceholder) {
@@ -569,7 +578,7 @@
             });
         }
 
-        // Interactive Platform Tab Controller Switching
+        // Handle Interactive Tab Changing
         const tabs = document.querySelectorAll('.tab-btn');
         const wrapper = document.getElementById('previewWrapper');
         
@@ -582,18 +591,15 @@
 
         tabs.forEach(tab => {
             tab.addEventListener('click', () => {
-                // Style Active state updates
                 tabs.forEach(t => t.classList.remove('active'));
                 tab.classList.add('active');
 
                 const platform = tab.dataset.platform;
 
-                // Adjust viewport mock layouts
                 if (wrapper) {
                     wrapper.className = `preview-wrapper platform-${platform}`;
                 }
 
-                // Render matching active mask layouts
                 Object.keys(overlays).forEach(key => {
                     if (overlays[key]) {
                         overlays[key].style.display = (key === platform) ? 'flex' : 'none';
